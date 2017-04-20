@@ -14,7 +14,7 @@ protected static WebDriver driver;
 	@BeforeClass
 	public static void setUp(){
 		System.setProperty("webdriver.chrome.driver",
-				"Resources/chromedriver.exe");
+				"Resources/chromedriver");
 		driver = new ChromeDriver();
 	}
 	

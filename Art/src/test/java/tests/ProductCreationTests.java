@@ -33,16 +33,17 @@ public class ProductCreationTests extends FunctionalTest{
 	@Test(invocationCount = 1)
 	public void testCreateCampaignWithImage()
 	{
-		driver.get("https://www.shirtee.de");
-		driver.manage().window().maximize();
-		MainPage mainPage = new MainPage(driver);
-		mainPage.performLogin();
+//		driver.get("https://www.shirtee.de");
+//		driver.manage().window().maximize();
+//		MainPage mainPage = new MainPage(driver);
+//		mainPage.performLogin();
 		
 		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		step1.goToImgTab();
 		step1.waitForImgLink();
-		step1.browseForImage();
+		step1.sikuliBrowse();
 		step1.waitForPictureToLoad();
 		step1.continueClick();
 		

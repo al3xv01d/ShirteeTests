@@ -17,6 +17,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Screen;
 
 public class DesignerPageStep_1 extends PageObject{
 
@@ -49,7 +51,7 @@ public class DesignerPageStep_1 extends PageObject{
 	@FindBy(xpath="//*[@id='product_designer_image_upload-loading']/div[3]")
 	private WebElement loadingPopup;
 	
-	private String filePath = "c:\\1.png";
+	private String filePath = "/home/dglazov/1.png";
 	
 	public DesignerPageStep_1(WebDriver driver)
 	{
@@ -94,7 +96,7 @@ public class DesignerPageStep_1 extends PageObject{
 		waitForElement(imgLink);
 	}
 	
-	public void browseForImage()
+	/*public void browseForImage()
 	{
 		imgLink.click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -129,8 +131,28 @@ public class DesignerPageStep_1 extends PageObject{
 		
 		
 		
-	}
+	}*/
 	
+	
+	public void sikuliBrowse()
+	{
+		imgLink.click();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		Screen s = new Screen();
+		
+		try
+		{
+			s.wait("Resources/img/folder.png");
+			s.click("Resources/img/folder.png");
+			s.wait("Resources/img/image.png");
+			s.click("Resources/img/image.png");
+			s.click("Resources/img/open-button.png");
+			
+		} catch (FindFailed e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void waitForPictureToLoad()
 	{
