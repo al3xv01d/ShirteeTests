@@ -21,6 +21,7 @@ protected static WebDriver driver;
 	@AfterMethod
 	public void cleanUp(){
 		driver.manage().deleteAllCookies();
+		//driver.quit();
 	}
 	
 	@AfterClass

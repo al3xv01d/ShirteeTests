@@ -29,6 +29,8 @@ import pageobjects.MainPage;
 
 public class ProductCreationTests extends FunctionalTest{
 	
+	//private enum image {FIRST, SECOND , BIG};
+	
 	//TODO: Assert that campaign is created
 	@Test(invocationCount = 1)
 	public void testCreateCampaignWithImage()
@@ -43,8 +45,16 @@ public class ProductCreationTests extends FunctionalTest{
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		step1.goToImgTab();
 		step1.waitForImgLink();
-		step1.sikuliBrowse();
+		//step1.sikuliBrowse();
+		
+		step1.sikuliBrowseAll(pageobjects.DesignerPageStep_1.Image.FIRST);
 		step1.waitForPictureToLoad();
+		
+		step1.backSideClick();
+		//step1.sikuliBrowse2();
+		step1.sikuliBrowseAll(pageobjects.DesignerPageStep_1.Image.SECOND);
+		step1.waitForPictureToLoad();
+
 		step1.continueClick();
 		
 		DesignerPageStep_2 step2 = new DesignerPageStep_2(driver);
@@ -55,7 +65,7 @@ public class ProductCreationTests extends FunctionalTest{
 		DesignerPageStep_3 step3 = new DesignerPageStep_3(driver);
 		step3.waitForTitle();
 		step3.sendInfoOn3rdStep();
-		step3.submitCampain();
+		//step3.submitCampain();
 				
 	}
 	
@@ -82,20 +92,10 @@ public class ProductCreationTests extends FunctionalTest{
 		DesignerPageStep_3 step3 = new DesignerPageStep_3(driver);
 		step3.waitForTitle();
 		step3.sendInfoOn3rdStep();
-		step3.submitCampain();
+		//step3.submitCampain();
 				
 	}
 	
-	@Test 
-	public void testNoDesign()
-	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
-		driver.manage().window().maximize();
-		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
-		step1.continueClick();
-		
-		assertEquals(true, step1.returnCanvasError());
-
-	}
+	
 
 }
