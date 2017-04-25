@@ -1,6 +1,7 @@
 package pageobjects;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +30,15 @@ public class PageObject {
 	{
 		element.clear();
 		element.sendKeys(text);
+	}
+	
+	public boolean isElementPresent(By locatorKey) {
+	    try {
+	        driver.findElement(locatorKey);
+	        return true;
+	    } catch (org.openqa.selenium.NoSuchElementException e) {
+	        return false;
+	    }
 	}
 	
 	

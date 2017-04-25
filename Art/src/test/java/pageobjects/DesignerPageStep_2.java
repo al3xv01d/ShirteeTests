@@ -23,16 +23,58 @@ public class DesignerPageStep_2 extends PageObject{
 	
 	@FindAll({@FindBy(xpath="//*[@id='custom-list']/li")})
 	private List<WebElement> productList;
+	
+	//Color Picker
+	@FindBy(id = "calculation-colors-link")
+	private WebElement colorPicker;
 
+	@FindBy(xpath="//span[@title='Gold']")
+	private WebElement colorGold;
+	
+	@FindBy(xpath="//*[@id='calculation-selected-colors']/span[2]")
+	private WebElement addedColor;
+	
+	//Product Block
+	@FindBy(xpath="//*[@id='assignto-1337']/td[3]/span")
+	private WebElement removeAdditionalProductButton;
+	
+	
 	public DesignerPageStep_2(WebDriver driver)
 	{
 		super(driver);
 	}
 	
-	public void clickProductSelect()
+	public void chooseProductFromSelect()
 	{
 		productSelectSpan.click();
+		productList.get(0).click();
 	}
+	
+	public void removeAdditionalProduct()
+	{
+		removeAdditionalProductButton.click();
+	}
+	
+	public void colorPickerClick()
+	{
+		colorPicker.click();
+	}
+	
+	public void addedColorClick()
+	{
+		addedColor.click();
+	}
+	
+	public void waitforPicker()
+	{
+		waitForElement(colorPicker);
+	}
+	
+	public void chooseGoldColor()
+	{
+		colorGold.click();
+	}
+	
 	
 	public void chooseAllProducts()
 	{
@@ -41,7 +83,7 @@ public class DesignerPageStep_2 extends PageObject{
 		
 		for (int i=0; i<size; i++)
 		{
-			clickProductSelect();
+			productSelectSpan.click();
 			productList.get(i).click();
 		}
 	}

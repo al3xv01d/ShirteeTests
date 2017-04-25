@@ -42,7 +42,7 @@ public class DesignerPageStep_1 extends PageObject{
 	private WebElement backSide;
 	
 	@FindBy(xpath="//*[@id='uploadedImages']/img")
-	private WebElement img;
+	private WebElement uploadedImagePreview;
 	
 	@FindBy(id="remove-img-btn")
 	private WebElement removeImgBtn;
@@ -73,8 +73,33 @@ public class DesignerPageStep_1 extends PageObject{
 	@FindBy(id="font-selector")
 	private WebElement fontSelect;
 	
+	//Font Colors
+	@FindBy(className="new-text-color-toggle")
+	private WebElement textColorPicker;
+	
+	//@FindBy(xpath="//*[@id='add_text_colors_panel']/span[3]")
+	@FindBy(xpath="//span[@colorname='Monza']")
+	private WebElement fontRedColor;
+	
+	@FindBy(xpath="//*[@id='add_text_colors_panel']/span[8]")
+	private WebElement fontBlueColor;
+	//*[@id="add_text_colors_panel"]/span[8]
+
+	//Product Block
+	@FindBy(id="category_selector")
+	private WebElement categorySelect;
+	
+	@FindBy(xpath="//a[@title='Herren Tank-Top']")
+	private WebElement productHerrenTankTop;
+	
+	@FindBy(xpath="//a[@title='Unisex  Hoodie']")
+	private WebElement productUnisexHoodie;
+	
+	@FindBy(xpath="//a[@title='DIN A3 Poster (hochformat)']")
+	private WebElement productPoster;
+	
 	//Error popup - upload image too big
-	@FindBy(xpath = "//*[@id='product_designer_image_upload-loading']/div[2]")
+	@FindBy(xpath = "//*[@id='product_designer_image_upload-loading']/div[3]")
 	private WebElement imgTooBigErrorPopup;
 	
 	public enum Image {FIRST, SECOND, BIG};
@@ -91,12 +116,80 @@ public class DesignerPageStep_1 extends PageObject{
 		waitForElement(imgTooBigErrorPopup);
 	}
 	
+	//product block
+	public void returnHerrenTankTopPage()
+	{
+		productHerrenTankTop.click();
+	}
+	
+	public void returnUnisexHoodiePage()
+	{
+		productUnisexHoodie.click();
+	}
+	
+	public void returnPosterPage()
+	{
+		productPoster.click();
+	}
 	
 	//Font select
 	public void selectFont(String font)
 	{
 		Select sel = new Select(fontSelect);
 		sel.selectByVisibleText(font);
+	}
+	
+	public void selectCategory(String category)
+	{
+		Select sel = new Select(categorySelect);
+		sel.selectByVisibleText(category);
+	}
+	
+	public void waitForColorPickerToShow()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.
+				presenceOfElementLocated(By.
+						xpath("//*[@id='add_text_colors_panel']"
+								+ "[contains(@style, 'display: block')]")));
+
+	}
+	
+
+	public void waitForProductBlock()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.
+				presenceOfElementLocated(By.
+						xpath("//*[@id='designer-load-info']"
+								+ "[contains(@style, 'display: none')]")));
+
+	}
+	
+	public WebElement returnRedFontColorElm()
+	{
+		return fontRedColor;
+	}
+	
+	public WebElement returnBlueFontColorElm()
+	{
+		return fontBlueColor;
+	}
+	
+	//Text color
+	public void textColorPickerClick()
+	{
+		textColorPicker.click();
+	}
+	
+	public void textColorRedClick()
+	{
+		fontRedColor.click();
+	}
+	
+	public void textColorBlueClick()
+	{
+		fontBlueColor.click();
 	}
 	
 	//Color block
@@ -143,8 +236,15 @@ public class DesignerPageStep_1 extends PageObject{
 	
 	public void chooseImg()
 	{
-		img.click();
+		uploadedImagePreview.click();
 	}
+	
+	public WebElement returnUploadedImagePreview()
+	{
+		return uploadedImagePreview;
+	}
+	
+
 	
 	public WebElement returnProductImageContainer()
 	{
@@ -152,14 +252,7 @@ public class DesignerPageStep_1 extends PageObject{
 	}
 	
 	public void removeImgs(){
-		
-		if (removeImgBtn.isDisplayed()){
 		removeImgBtn.click();
-		
-		WebDriverWait wait = new WebDriverWait(driver, 5);
-		wait.until(ExpectedConditions.elementToBeClickable(imgLink));
-		}
-		
 	}
 	
 	public void waitForImgLink()
@@ -172,7 +265,13 @@ public class DesignerPageStep_1 extends PageObject{
 	{
 		imgLink.click();
 
-		Screen s = new Screen();
+		
+		//Added parameter "1" for multi-screen support
+		//Currently selects primary screen
+		//Removing parameter may be required for single-monitor setup
+		
+		Screen s = new Screen(1);
+		
 		
 		try
 		{
@@ -181,8 +280,8 @@ public class DesignerPageStep_1 extends PageObject{
 			case FIRST: 
 				s.wait("Resources/img/folder.png");
 				s.click("Resources/img/folder.png");
-				s.wait("Resources/img/image.png");
-				s.click("Resources/img/image.png");
+				s.wait("Resources/img/1stimage.png");
+				s.click("Resources/img/1stimage.png");
 				s.click("Resources/img/open-button.png");
 				break;
 				
