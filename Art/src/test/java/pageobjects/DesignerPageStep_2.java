@@ -38,21 +38,77 @@ public class DesignerPageStep_2 extends PageObject{
 	@FindBy(xpath="//*[@id='assignto-1337']/td[3]/span")
 	private WebElement removeAdditionalProductButton;
 	
+	@FindBy(xpath="//*[@id='profit']/span[1]")
+	private WebElement profitFirstProduct;
+	
+	//@FindBy(xpath="//*[@id='1337']/td/strong/span[1]")
+	@FindBy(className="price profit")
+	private WebElement profitSecondProduct;
+	
+	@FindBy(xpath="//*[@id='sales_price']")
+	private WebElement priceFirstProduct;
+	
 	
 	public DesignerPageStep_2(WebDriver driver)
 	{
 		super(driver);
 	}
 	
-	public void chooseProductFromSelect()
+	public void chooseProductFromSelect(int i)
 	{
 		productSelectSpan.click();
-		productList.get(0).click();
+		productList.get(i).click();
+	}
+	
+	public int getProductListSize()
+	{
+		int i = productList.size();
+			return i;
+	}
+	
+	public void productSelectSpanClick()
+	{
+		productSelectSpan.click();
 	}
 	
 	public void removeAdditionalProduct()
 	{
 		removeAdditionalProductButton.click();
+	}
+	
+	public String getProfitForFirstProduct()
+	{
+		return profitFirstProduct.getText();
+	}
+	
+	public String getProfitForSecondProduct()
+	{
+		return profitSecondProduct.getText();
+	}
+	
+	
+	public String getPriceForFirstProduct() 
+	{
+		return priceFirstProduct.getText();//WHERE?
+	}
+	
+	public void inputPriceForFirstProduct(String str)
+	{
+		priceFirstProduct.clear();
+		priceFirstProduct.sendKeys(str);
+	}
+	
+	public void profitClick()
+	{
+		profitFirstProduct.click();
+	}
+	
+	public void waitForProfitToChange(String str)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		wait.until(ExpectedConditions.
+				textToBePresentInElementLocated(By.xpath("//*[@id='profit']/span[1]"),
+						str));
 	}
 	
 	public void colorPickerClick()

@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import base.FunctionalTest;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -41,11 +42,12 @@ public class DesignerStep1Tests extends FunctionalTest{
 	
 	//TODO: Store methods in array and implement through for loop
 	@Test
-	public void colorsTests()
+	public void colorsTest()
 	{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
+		
 		
 		//Initial Color Test
 		WebElement image = driver.findElement(By.id("pd_container"));
@@ -137,7 +139,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 	
 	
 	@Test
-	public void fontTests()
+	public void fontTest()
 	{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
@@ -174,7 +176,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
-		
+			
 		step1.sendKeysDesign();
 		WebElement image = driver.findElement(By.id("pd_container"));
 		
@@ -259,7 +261,6 @@ public class DesignerStep1Tests extends FunctionalTest{
 		//TODO: Ask about popup that appears after remove 
 		
 		
-		
 	}
 	
 	@Test
@@ -268,8 +269,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
-		
-		
+
 		
 		//Hoodie Test
 		step1.selectCategory("Hoodies & Sweatshirts");
@@ -334,6 +334,8 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
+
+		
 		step1.continueClick();
 		
 		Assert.assertEquals(true, step1.returnCanvasError());
@@ -346,6 +348,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
+
 		
 		step1.goToImgTab();
 		step1.waitForImgLink();
