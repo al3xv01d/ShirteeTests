@@ -38,22 +38,47 @@ public class DesignerPageStep_2 extends PageObject{
 	@FindBy(xpath="//*[@id='assignto-1337']/td[3]/span")
 	private WebElement removeAdditionalProductButton;
 	
+	@FindBy(xpath="//tr[starts-with(@id, 'assignto-')]/td[3]/span")
+	private WebElement removeAdditionalProductButtonNew;
+	
 	@FindBy(xpath="//*[@id='profit']/span[1]")
 	private WebElement profitFirstProduct;
 	
 	//@FindBy(xpath="//*[@id='1337']/td/strong/span[1]")
-	@FindBy(className="price profit")
-	private WebElement profitSecondProduct;
+	@FindBy(xpath="//*[@id='1337']/td/strong/span[1]")
+	private WebElement profitSecondProduct; //*[@id="1658"]/td/strong/span[1]
+	
+	@FindAll({@FindBy(xpath="//*[@class='pd-items']/tbody/"
+			+ "tr[contains(@class,'calculation-adition-product')]/td/strong/span[1]")})
+	private List<WebElement> productsProfitList;
 	
 	@FindBy(xpath="//*[@id='sales_price']")
 	private WebElement priceFirstProduct;
 	
+	//Potential profit block
+	@FindBy(xpath = "//*[@id='profit-total']")
+	private WebElement potentialProfit;
+	
+	@FindBy(id = "keypress_input")
+	private WebElement potentialProfitPerItemField;
 	
 	public DesignerPageStep_2(WebDriver driver)
 	{
 		super(driver);
 	}
 	
+	//Potential profit
+	public String getPotentialProfit()
+	{
+		return potentialProfit.getText();
+	}
+	
+	public void sendKeysItemsPotentialProfit(String text)
+	{
+		sendKeys(potentialProfitPerItemField, text);
+	}
+	
+	//Products
 	public void chooseProductFromSelect(int i)
 	{
 		productSelectSpan.click();
@@ -66,6 +91,26 @@ public class DesignerPageStep_2 extends PageObject{
 			return i;
 	}
 	
+	public int getProductPriceListSize()
+	{
+		int i = productsProfitList.size();
+		return i;
+	}
+	
+	public void getTextTest()
+	{
+		int size = productsProfitList.size();
+		
+		for (int i = 0; i < size; i++) {
+			System.out.println(productsProfitList.get(i).getText());
+		}
+	}
+	
+	public String getProductProfit(int i)
+	{
+		return productsProfitList.get(i).getText();
+	}
+	
 	public void productSelectSpanClick()
 	{
 		productSelectSpan.click();
@@ -76,9 +121,19 @@ public class DesignerPageStep_2 extends PageObject{
 		removeAdditionalProductButton.click();
 	}
 	
+	public void removeAdditionalProductNew()
+	{
+		removeAdditionalProductButtonNew.click();
+	}
+	
 	public String getProfitForFirstProduct()
 	{
 		return profitFirstProduct.getText();
+	}
+	
+	public String getProfitForsecondProductFromList(int i)
+	{
+		return productsProfitList.get(i).getText();
 	}
 	
 	public String getProfitForSecondProduct()
@@ -130,7 +185,6 @@ public class DesignerPageStep_2 extends PageObject{
 	{
 		colorGold.click();
 	}
-	
 	
 	public void chooseAllProducts()
 	{

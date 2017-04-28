@@ -40,6 +40,42 @@ public class DesignerStep1Tests extends FunctionalTest{
 	
 	private String fontSelects[] = {"Agent Orange", "Florence", "Canterbury", "LDFComicSans", "LeArchitect"};
 	
+	private String basePrice = "2,50 €";
+	private String frontPrice = "9,00 €";
+	private String backPrice = "9,00 €";
+	private String frontAndBackPrice = "15,50 €";
+	private String categories[] = {"Herren-Shirts", "Hoodies & Sweatshirts", "Tank-Tops", "V-Neck-Shirts",
+			"Damen-Shirts", "Taschen", "Kinder-Shirts", "Übergrößen", "Jacken", "Ac­ces­soires", "Poster", "Küchentextilien"};
+	
+	private String[][] basePriceArray = new String [][] {{"2,50 €", "4,50 €", "4,50 €"},//Herren-Shirts
+														{"12,00 €", "9,00 €"},//Hoodies & Sweatshirts
+														{"4,00 €", "4,00 €"},//Tank-Tops
+														{"4,00 €", "4,00 €"},//V-Neck-Shirts
+														{"2,50 €","4,50 €","4,50 €" },//Damen-Shirts
+														{"2,50 €", "1,20 €"},//Taschen
+														{"2,50 €"},//Kinder-Shirts
+														{"6,00 €"},//Übergrößen
+														{"22,50 €"},//Jacken
+														{"3,50 €", "13,45 €", "7,50 €"},//Ac­ces­soires
+														{"0,00 €", "3,50 €", "9,50 €"},//Poster
+														{"8,50 €"}};//Küchentextilien
+	
+	private String[][] frontPriceArray = new String [][] {{"9,00 €", "11,00 €", "11,00 €"},//Herren-Shirts
+															{"18,50 €", "15,50 €"},//Hoodies & Sweatshirts
+															{"10,50 €", "10,50 €"},//Tank-Tops
+															{"10,50 €", "10,50 €"},//V-Neck-Shirts
+															{"9,00 €","11,00 €","11,00 €" },//Damen-Shirts
+															{"9,00 €", "7,70 €"},//Taschen
+															{"9,00 €"},//Kinder-Shirts
+															{"12,50 €"},//Übergrößen
+															{"29,00 €"},//Jacken
+															{"10,00 €", "19,95 €", "14,00 €"},//Ac­ces­soires
+															{"6,50 €", "10,00 €", "16,00 €"},//Poster
+															{"15,00 €"}};//Küchentextilien
+	
+	private String backPriceArray[] = {"9,00 €"};
+	
+	private String frontAndBackPriceArray[] = {"15,50 €"};
 	//TODO: Store methods in array and implement through for loop
 	@Test
 	public void colorsTest()
@@ -328,6 +364,56 @@ public class DesignerStep1Tests extends FunctionalTest{
 				Util.CompareImage.Result.Matched);
 	}
 	
+	@Test
+	public void pricePerProductTest()
+	{
+		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.manage().window().maximize();
+		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
+		
+//		Assert.assertEquals(step1.getBasePrice(), basePrice);
+//		
+//		step1.sendKeysDesign();
+//		Assert.assertEquals(step1.getFrontPrice(), frontPrice);
+//		
+//		step1.deleteDesignClick();
+//		Assert.assertEquals(step1.getBasePrice(), basePrice);
+//		
+//		step1.backSideClick();
+//		step1.sendKeysDesign();
+//		Assert.assertEquals(step1.getBackPrice(), backPrice);
+//		
+//		step1.frontSideClick();
+//		step1.sendKeysDesign();
+//		Assert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
+//		
+//		driver.get("https://www.shirtee.de/designer/?id=1140");
+		
+		
+		
+		for (int i = 2; i < categories.length; i++) {
+			step1.selectCategory(categories[i]);
+			step1.waitForProductBlock();
+			
+			for (int j = 0; j < step1.getCarouselSize(); j++) {
+				
+				if (j == 3) {
+					break;
+				}
+				step1.carouselElement(j).click();
+				Assert.assertEquals(step1.getBasePrice(), basePriceArray[i][j])	;
+				
+				//TODO:Add asserts for front, back and front+back prices
+				step1.sendKeysDesign();
+				Assert.assertEquals(step1.getFrontPrice(), frontPriceArray[i][j]);
+				step1.deleteDesignClick();
+				}
+				
+			}
+			
+		}
+		
+	
 	@Test 
 	public void noDesignTest()
 	{
@@ -339,6 +425,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		step1.continueClick();
 		
 		Assert.assertEquals(true, step1.returnCanvasError());
+
 
 	}
 	

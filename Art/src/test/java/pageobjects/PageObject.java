@@ -1,6 +1,7 @@
 package pageobjects;
 
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
@@ -19,6 +20,12 @@ public class PageObject {
 	public PageObject(WebDriver driver){
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		
+		if (isAlertPresent())
+		{
+			Alert alert = driver.switchTo().alert();
+			alert.accept();
+		}
 	}
 	
 	public void waitForElement(WebElement element)

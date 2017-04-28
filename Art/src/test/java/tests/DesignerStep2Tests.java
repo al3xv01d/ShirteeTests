@@ -15,7 +15,7 @@ public class DesignerStep2Tests extends FunctionalTest{
 	private String profits[] = {"16,45 €", "13,45 €", "13,95 €", "12,95 €", "11,95 €", "11,45 €",
 			"11,45 €", "9,45 €", "9,45 €", "12,95 €", "11,95 €", "7,95 €", "6,25 €", "12,45 €",
 			"10,95 €", "20,95 €", "4,95 €", "10,00 €", "10,90 €", "8,45 €", "9,95 €", "9,95 €",
-			"9,95 €", "9,45 € ", "9,95 €", "9,95 €", "9,95 €", "9,95 €"};
+			"9,95 €", "9,45 €", "9,95 €", "9,95 €", "9,95 €", "9,95 €"};
 	
 	@Test
 	public void colorPickerTest()
@@ -74,32 +74,55 @@ public class DesignerStep2Tests extends FunctionalTest{
 		step2.waitForContinueButton();
 		
 		Assert.assertEquals(step2.getProfitForFirstProduct(), "13,95 €");
-//		
-//		step2.inputPriceForFirstProduct("25");
-//		step2.profitClick();
-//		step2.waitForProfitToChange("16,00 €");
-//		Assert.assertEquals(step2.getProfitForFirstProduct(), "16,00 €");
-//		
-//		step2.inputPriceForFirstProduct("0");
-//		step2.profitClick();
-//		step2.waitForProfitToChange("0,01 €");
-//		Assert.assertEquals(step2.getProfitForFirstProduct(), "0,01 €");
-//		
-//		step2.chooseProductFromSelect(0);
-//		Assert.assertEquals(step2.getProfitForSecondProduct(), "16,45 €");
+		
+		step2.inputPriceForFirstProduct("25");
+		step2.profitClick();
+		step2.waitForProfitToChange("16,00 €");
+		Assert.assertEquals(step2.getProfitForFirstProduct(), "16,00 €");
+		
+		step2.inputPriceForFirstProduct("0");
+		step2.profitClick();
+		step2.waitForProfitToChange("0,01 €");
+		Assert.assertEquals(step2.getProfitForFirstProduct(), "0,01 €");
+		
+		step2.chooseProductFromSelect(0);
+		Assert.assertEquals(step2.getProfitForSecondProduct(), "16,45 €");
+		step2.removeAdditionalProduct();
 		
 		int size = step2.getProductListSize();
-		
-		for (int i=0; i<size; i++)
-		{
-			//step2.productSelectSpanClick();
-			step2.chooseProductFromSelect(i);
-			//step2.waitForProfitToChange(profits[i]);
-			Assert.assertEquals(step2.getProfitForSecondProduct(), profits[i]);
-			step2.removeAdditionalProduct();
+
+		step2.chooseAllProducts();
+		for (int i = 0; i < size; i++) {
+			Assert.assertEquals(step2.getProductProfit(i), profits[i]);
+			
 		}
 		
 		
+	}
+	
+	@Test
+	public void potentialProfitTest()
+	{
+		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.manage().window().maximize();
+		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
+		
+		step1.sendKeysDesign();
+		step1.continueClick();
+		
+		DesignerPageStep_2 step2 = new DesignerPageStep_2(driver);
+		step2.waitForContinueButton();
+		step2.chooseProductFromSelect(0);
+		Assert.assertEquals(step2.getPotentialProfit(), "279,00 € - 329,00 €");
+		
+		step2.sendKeysItemsPotentialProfit("5");
+		Assert.assertEquals(step2.getPotentialProfit(), "69,75 € - 82,25 €");
+		
+		step2.sendKeysItemsPotentialProfit("test");
+		Assert.assertEquals(step2.getPotentialProfit(), "13,95 € - 16,45 €");
+		
+		step2.sendKeysItemsPotentialProfit("");
+		Assert.assertEquals(step2.getPotentialProfit(), "13,95 € - 16,45 €");
 	}
 	
 }

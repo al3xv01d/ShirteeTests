@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -40,6 +42,9 @@ public class DesignerPageStep_1 extends PageObject{
 	
 	@FindBy(xpath="//*[@id='pd_sides']/ul/li[2]/img")
 	private WebElement backSide;
+	
+	@FindBy(xpath="//*[@id='pd_sides']/ul/li[1]/img")
+	private WebElement frontSide;
 	
 	@FindBy(xpath="//*[@id='uploadedImages']/img")
 	private WebElement uploadedImagePreview;
@@ -98,9 +103,31 @@ public class DesignerPageStep_1 extends PageObject{
 	@FindBy(xpath="//a[@title='DIN A3 Poster (hochformat)']")
 	private WebElement productPoster;
 	
+	@FindAll({@FindBy(xpath="//*[@id='carousel-content']/li/a")})
+	private List<WebElement> productsCarouselItems;
+	
+	@FindBy(xpath="//*[@id='navigation_listing']/div/a[2]")
+	private WebElement carouselControl;
+	
 	//Error popup - upload image too big
 	@FindBy(xpath = "//*[@id='product_designer_image_upload-loading']/div[3]")
 	private WebElement imgTooBigErrorPopup;
+	
+	//Price per product
+	@FindBy(xpath="//*[@id='base_price']/span")
+	private WebElement basePrice;
+	
+	@FindBy(xpath="//*[@id='front_price']/span")
+	private WebElement frontPrice;
+	
+	@FindBy(xpath="//*[@id='back_price']/span")
+	private WebElement backPrice;
+	
+	@FindBy(xpath="//*[@id='front_back_price']/span")
+	private WebElement frontAndBackPrice;
+	
+	@FindBy(id="pd_delete")
+	private WebElement deleteDesignButton;
 	
 	public enum Image {FIRST, SECOND, BIG};
 
@@ -114,6 +141,32 @@ public class DesignerPageStep_1 extends PageObject{
 	public void waitForErrorPopup()
 	{
 		waitForElement(imgTooBigErrorPopup);
+	}
+	
+	//Price per product block
+	public String getBasePrice()
+	{
+		return basePrice.getText();
+	}
+	
+	public String getFrontPrice()
+	{
+		return frontPrice.getText();
+	}
+	
+	public String getBackPrice()
+	{
+		return backPrice.getText();
+	}
+	
+	public String getFrontAndBackPrice()
+	{
+		return frontAndBackPrice.getText();
+	}
+
+	public void deleteDesignClick()
+	{
+		deleteDesignButton.click();
 	}
 	
 	//product block
@@ -130,6 +183,22 @@ public class DesignerPageStep_1 extends PageObject{
 	public void returnPosterPage()
 	{
 		productPoster.click();
+	}
+	
+	public int getCarouselSize()
+	{
+		int i = productsCarouselItems.size();
+		return i;
+	}
+	
+	public WebElement carouselElement(int i)
+	{
+		return productsCarouselItems.get(i);
+	}
+	
+	public void carouselControlClick()
+	{
+		carouselControl.click();
 	}
 	
 	//Font select
@@ -163,6 +232,16 @@ public class DesignerPageStep_1 extends PageObject{
 				presenceOfElementLocated(By.
 						xpath("//*[@id='designer-load-info']"
 								+ "[contains(@style, 'display: none')]")));
+
+	}
+	
+	public void waitForProductToShowInCarousel()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 7);
+		wait.until(ExpectedConditions.
+				presenceOfElementLocated(By.
+						xpath("//*[@id='navigation_listing']/div/a[2]"
+								+ "[contains(@class, 'carousel-control')]")));
 
 	}
 	
@@ -232,6 +311,11 @@ public class DesignerPageStep_1 extends PageObject{
 	public void backSideClick()
 	{
 		backSide.click();
+	}
+	
+	public void frontSideClick()
+	{
+		frontSide.click();
 	}
 	
 	public void chooseImg()
