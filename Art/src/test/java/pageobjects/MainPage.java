@@ -29,9 +29,9 @@ public class MainPage extends PageObject{
 	@FindBy(xpath="//*[@id='header-login-form']/div/div/div[3]/div/button")
 	private WebElement submitButton;
 		
-	private String eMail = "placeholder";
+	//private String eMail = "placeholder";
 	
-	private String password = "placeholder";
+	//private String password = "placeholder";
 
 	public MainPage(WebDriver driver)
 	{
@@ -39,12 +39,12 @@ public class MainPage extends PageObject{
 		Assert.assertTrue(shirteeLogo.isDisplayed());
 	}
 	
-	public void performLogin()
+	public void performLogin(String eMail, String passWord)
 	{
 		loginLink.click();
 		waitForElement(loginEmail);
 		sendKeys(loginEmail, eMail);
-		sendKeys(loginPassword, password);
+		sendKeys(loginPassword, passWord);
 		submitButton.click();
 	}
 	

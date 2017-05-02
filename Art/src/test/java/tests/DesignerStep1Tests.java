@@ -371,45 +371,45 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
-//		Assert.assertEquals(step1.getBasePrice(), basePrice);
-//		
-//		step1.sendKeysDesign();
-//		Assert.assertEquals(step1.getFrontPrice(), frontPrice);
-//		
-//		step1.deleteDesignClick();
-//		Assert.assertEquals(step1.getBasePrice(), basePrice);
-//		
-//		step1.backSideClick();
-//		step1.sendKeysDesign();
-//		Assert.assertEquals(step1.getBackPrice(), backPrice);
-//		
-//		step1.frontSideClick();
-//		step1.sendKeysDesign();
-//		Assert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
-//		
-//		driver.get("https://www.shirtee.de/designer/?id=1140");
+		Assert.assertEquals(step1.getBasePrice(), basePrice);
+		
+		step1.sendKeysDesign();
+		Assert.assertEquals(step1.getFrontPrice(), frontPrice);
+		
+		step1.deleteDesignClick();
+		Assert.assertEquals(step1.getBasePrice(), basePrice);
+		
+		step1.backSideClick();
+		step1.sendKeysDesign();
+		Assert.assertEquals(step1.getBackPrice(), backPrice);
+		
+		step1.frontSideClick();
+		step1.sendKeysDesign();
+		Assert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
+		
+		driver.get("https://www.shirtee.de/designer/?id=1140");
 		
 		
-		
-		for (int i = 2; i < categories.length; i++) {
-			step1.selectCategory(categories[i]);
-			step1.waitForProductBlock();
-			
-			for (int j = 0; j < step1.getCarouselSize(); j++) {
-				
-				if (j == 3) {
-					break;
-				}
-				step1.carouselElement(j).click();
-				Assert.assertEquals(step1.getBasePrice(), basePriceArray[i][j])	;
-				
-				//TODO:Add asserts for front, back and front+back prices
-				step1.sendKeysDesign();
-				Assert.assertEquals(step1.getFrontPrice(), frontPriceArray[i][j]);
-				step1.deleteDesignClick();
-				}
-				
-			}
+//		
+//		for (int i = 2; i < categories.length; i++) {
+//			step1.selectCategory(categories[i]);
+//			step1.waitForProductBlock();
+//			
+//			for (int j = 0; j < step1.getCarouselSize(); j++) {
+//				
+//				if (j == 3) {
+//					break;
+//				}
+//				step1.carouselElement(j).click();
+//				Assert.assertEquals(step1.getBasePrice(), basePriceArray[i][j])	;
+//				
+//				//TODO:Add asserts for front, back and front+back prices
+//				step1.sendKeysDesign();
+//				Assert.assertEquals(step1.getFrontPrice(), frontPriceArray[i][j]);
+//				step1.deleteDesignClick();
+//				}
+//				
+//			}
 			
 		}
 		

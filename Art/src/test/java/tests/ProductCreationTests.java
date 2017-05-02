@@ -76,7 +76,7 @@ public class ProductCreationTests extends FunctionalTest{
 		driver.get("https://www.shirtee.de");
 		driver.manage().window().maximize();
 		MainPage mainPage = new MainPage(driver);
-		mainPage.performLogin();
+		//mainPage.performLogin();
 		
 		driver.get("https://www.shirtee.de/designer/?id=1140");
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);

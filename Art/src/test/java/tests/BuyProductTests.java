@@ -22,7 +22,7 @@ public class BuyProductTests extends FunctionalTest{
 		driver.get("https://www.shirtee.de");
 		driver.manage().window().maximize();
 		MainPage mainPage = new MainPage(driver);
-		mainPage.performLogin();
+		//mainPage.performLogin();
 		
 		
 		driver.get("https://www.shirtee.de/testurlll");
