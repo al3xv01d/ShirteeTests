@@ -5,7 +5,7 @@ import pageobjects.AdminInvoicePage;
 import pageobjects.AdminMainPage;
 import pageobjects.AdminOrderPage;
 import pageobjects.AdminOrdersPage;
-import pageobjects.CartPage;
+import pageobjects.CheckoutPage;
 import pageobjects.DashboardPage;
 import pageobjects.MainPage;
 import pageobjects.ProductPage;
@@ -111,10 +111,11 @@ public class ProfitsTests extends FunctionalTest{
 		productPage.waitForPopup();
 		productPage.gotoCart();
 		
-		CartPage cartPage = new CartPage(driver);
+		CheckoutPage cartPage = new CheckoutPage(driver);
 		cartPage.checkVorkrasse();
 		cartPage.waitForVorkrasseInfo();
-		cartPage.submitBtn();
+		cartPage.submitOrder();
+		Assert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		driver.get("https://www.shirtee.de/checkout/onepage/success/");
 
@@ -160,7 +161,7 @@ public class ProfitsTests extends FunctionalTest{
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufeSold(), verkaufeSold + 1);
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufeProduction(), verkaufeProduction);
 		
-		//VerkHeute assert - doesnt work now. Blocked by a bug
+		//VerkHeute assert - doesn't work now. Blocked by a bug
 		
 		softAssertion.assertEquals(dashboardMainPage.getVerkGesternSold(), verkGesternSold);
 		softAssertion.assertEquals(dashboardMainPage.getVerkGesternProduction(), verkGesternProduction);

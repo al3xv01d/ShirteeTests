@@ -30,7 +30,7 @@ public class PageObject {
 	
 	public void waitForElement(WebElement element)
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 10);
+		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	

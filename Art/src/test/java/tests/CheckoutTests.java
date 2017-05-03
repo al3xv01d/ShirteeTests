@@ -1,0 +1,275 @@
+package tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.asserts.*;
+
+import base.FunctionalTest;
+import pageobjects.CheckoutPage;
+import pageobjects.ProductPage;
+
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
+public class CheckoutTests extends FunctionalTest{
+
+	
+	@DataProvider
+	public Object[][] vornameTestData()
+	{
+		return new Object[][] {
+			new Object[] {"asd()","NÄchname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"asd,,!@","NachnÜame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as,d","NacÖhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as+d","Nacßhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as_d","Nächname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as*d","Nachnöame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as§d","Nacühname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"as;:d","ßhname","email@mail.com", "address 11", "123456", "City"}
+		};
+	}
+	
+	@DataProvider
+	public Object[][] nachnameTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","()Nchname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÜname","NachnÜame!@","email@mail.com", "addrÜess 11", "123Ü456", "CiÜty"},
+			new Object[] {"VorÖname",",NacÖhn+ame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vorßname","Nac_ßhname","emÜail@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Väorname","Nächna*me","email@ma_il.com", "address 11", "123456", "City"},
+			new Object[] {"Voröname","Nac§hnöame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Voürname","Nacühname/","email@ma-il.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame",":ßhname;","email@mail.com", "address 11", "123456", "City"}
+		};
+	}
+	
+	@DataProvider
+	public Object[][] emailTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","Nchname","ema!il@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÜname","NachnÜame","em()ail@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÖname","NacÖhname","&email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vorßname","Nacßhname","ema%il@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Väorname","Nächname","em=ail@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Voröname","Nachnöame","email@mai,;l.com", "address 11", "123456", "City"},
+			new Object[] {"Voürname","Nacühname","emai l@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@ma:il.com:", "address 11", "123456", "City"}
+		};
+	}
+	
+	@DataProvider
+	public Object[][] addressTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","Nchname","email@mail.com", "()address 11", "123456", "City"},
+			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11=", "123456", "City"},
+			new Object[] {"VorÖname","NacÖhname","email@mail.com", "+address 11", "123456", "City"},
+			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11_", "123456", "City"},
+			new Object[] {"Väorname","Nächname","email@mail.com", ";address 11", "123456", "City"},
+			new Object[] {"Voröname","Nachnöame","email@mail.com", "$address 11", "123456", "City"},
+			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11:", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "#address 11", "123456", "City"}
+		};
+	}
+
+	@Test
+	public void emptyFieldsTest()
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		productPage.waitForPopup();
+		productPage.gotoCart();
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+		
+		cartPage.checkVorkrasse();
+		cartPage.waitForVorkrasseInfo();
+		cartPage.submitOrder();
+		
+		softAssert.assertTrue(cartPage.getVorNameIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.getNachNameIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.geteMailIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.getAddressIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.getPostcodeIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.getCityIsEmptyMessage().isDisplayed());
+		
+		//if order succeed - success page is displayed
+		//if not - redirect to cart page
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+
+	}
+	
+	@Test(dataProvider = "vornameTestData")
+	public void vornameTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city){
+		
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		cartPage.checkVorkrasse();
+		cartPage.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		
+		softAssert.assertTrue(cartPage.getVorNameIsIncorrectMessage().isDisplayed());
+		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_lastname")));
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
+	@Test(dataProvider = "nachnameTestData")
+	public void nachnameTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		cartPage.checkVorkrasse();
+		cartPage.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.getNachNameIsIncorrectMessage().isDisplayed());
+		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
+	@Test(dataProvider = "emailTestData")
+	public void eMailTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		cartPage.checkVorkrasse();
+		cartPage.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.geteMailIsIncorrectMessage().isDisplayed());
+		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
+	@Test(dataProvider = "addressTestData")
+	public void addressTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		cartPage.checkVorkrasse();
+		cartPage.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.getAddressIsIncorrectMessage().isDisplayed());
+		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+}
