@@ -6,6 +6,7 @@ import pageobjects.AdminMainPage;
 import pageobjects.AdminOrderPage;
 import pageobjects.AdminOrdersPage;
 import pageobjects.CheckoutPage;
+import pageobjects.CheckoutPageBlock2;
 import pageobjects.DashboardPage;
 import pageobjects.MainPage;
 import pageobjects.ProductPage;
@@ -111,11 +112,13 @@ public class ProfitsTests extends FunctionalTest{
 		productPage.waitForPopup();
 		productPage.gotoCart();
 		
-		CheckoutPage cartPage = new CheckoutPage(driver);
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
-		cartPage.submitOrder();
-		Assert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		CheckoutPage cartPage1 = new CheckoutPage(driver);
+		
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
+		cartPage1.submitOrder();
+		Assert.assertTrue(cartPage1.getSubmitButton().isDisplayed());
 		
 		driver.get("https://www.shirtee.de/checkout/onepage/success/");
 

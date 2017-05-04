@@ -10,13 +10,14 @@ import org.testng.asserts.*;
 
 import base.FunctionalTest;
 import pageobjects.CheckoutPage;
+import pageobjects.CheckoutPageBlock2;
 import pageobjects.ProductPage;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
-public class CheckoutTests extends FunctionalTest{
+public class CheckoutBlock1Tests extends FunctionalTest{
 
 	
 	@DataProvider
@@ -30,7 +31,8 @@ public class CheckoutTests extends FunctionalTest{
 			new Object[] {"as_d","Nächname","email@mail.com", "address 11", "123456", "City"},
 			new Object[] {"as*d","Nachnöame","email@mail.com", "address 11", "123456", "City"},
 			new Object[] {"as§d","Nacühname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"as;:d","ßhname","email@mail.com", "address 11", "123456", "City"}
+			new Object[] {"as;:d","ßhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"asролd","ßhname","email@mail.com", "address 11", "123456", "City"},
 		};
 	}
 	
@@ -42,10 +44,11 @@ public class CheckoutTests extends FunctionalTest{
 			new Object[] {"VorÜname","NachnÜame!@","email@mail.com", "addrÜess 11", "123Ü456", "CiÜty"},
 			new Object[] {"VorÖname",",NacÖhn+ame","email@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Vorßname","Nac_ßhname","emÜail@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Väorname","Nächna*me","email@ma_il.com", "address 11", "123456", "City"},
+			new Object[] {"Väorname","Nächna*me","email@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Voröname","Nac§hnöame","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Voürname","Nacühname/","email@ma-il.com", "address 11", "123456", "City"},
-			new Object[] {"Vornßame",":ßhname;","email@mail.com", "address 11", "123456", "City"}
+			new Object[] {"Voürname","Nacühname/","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname;","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","прhname","email@mail.com:", "address 11", "123456", "City"},
 		};
 	}
 	
@@ -60,7 +63,8 @@ public class CheckoutTests extends FunctionalTest{
 			new Object[] {"Väorname","Nächname","em=ail@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Voröname","Nachnöame","email@mai,;l.com", "address 11", "123456", "City"},
 			new Object[] {"Voürname","Nacühname","emai l@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Vornßame","ßhname","email@ma:il.com:", "address 11", "123456", "City"}
+			new Object[] {"Vornßame","ßhname","emfail@ma:il.com:", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","emfail@maолil.com:", "address 11", "123456", "City"},
 		};
 	}
 	
@@ -75,10 +79,62 @@ public class CheckoutTests extends FunctionalTest{
 			new Object[] {"Väorname","Nächname","email@mail.com", ";address 11", "123456", "City"},
 			new Object[] {"Voröname","Nachnöame","email@mail.com", "$address 11", "123456", "City"},
 			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11:", "123456", "City"},
-			new Object[] {"Vornßame","ßhname","email@mail.com", "#address 11", "123456", "City"}
+			new Object[] {"Vornßame","ßhname","email@mail.com", "#address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "оролaddress 11", "123456", "City"}
 		};
 	}
+	
+	@DataProvider
+	public Object[][] postcodeTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","Nchname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÖname","NacÖhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Väorname","Nächname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Voröname","Nachnöame","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City"}
+		};
+	}
+	
+	@DataProvider
+	public Object[][] cityTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","Nchname","email@mail.com", "address 11", "123456", "City!"},
+			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11", "123456", "Cit(y"},
+			new Object[] {"VorÖname","NacÖhname","email@mail.com", "address 11", "123456", "&City"},
+			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11", "123456", "%City"},
+			new Object[] {"Väorname","Nächname","email@mail.com", "address 11", "123456", "City="},
+			new Object[] {"Voröname","Nachnöame","email@mail.com", "address 11", "123456", ",City;"},
+			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11", "123456", "прCity"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City@"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", ":City"}
+		};
+	}
+	
+	@DataProvider
+	public Object[][] phoneTestData()
+	{
+		return new Object[][] {
+			new Object[] {"VoÄrname","Nchname","email@mail.com", "address 11", "123456", "City", "7894562!"},
+			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11", "123456", "City", "78 94562"},
+			new Object[] {"VorÖname","NacÖhname","email@mail.com", "address 11", "123456", "City", "()7894562"},
+			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11", "123456", "City", ",7894562"},
+			new Object[] {"Väorname","Nächname","email@mail.com", "address 11", "123456", "City", "7894562@"},
+			new Object[] {"Voröname","Nachnöame","email@mail.com", "address 11", "123456", "City", "ß7894562"},
+			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11", "123456", "City", "78смп94562"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City", "78945.62"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City", ";7894562"}
+		};
+	}
+	 
 
+	//Non latin symbols!!!
+	
 	@Test
 	public void emptyFieldsTest()
 	{
@@ -96,8 +152,10 @@ public class CheckoutTests extends FunctionalTest{
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 		
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		cartPage.submitOrder();
 		
 		softAssert.assertTrue(cartPage.getVorNameIsEmptyMessage().isDisplayed());
@@ -142,8 +200,10 @@ public class CheckoutTests extends FunctionalTest{
 		cartPage.sendPostcode(postalCode);
 		cartPage.sendCity(city);
 		
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		
 		cartPage.submitOrder();
 		
@@ -182,8 +242,10 @@ public class CheckoutTests extends FunctionalTest{
 		cartPage.sendPostcode(postalCode);
 		cartPage.sendCity(city);
 		
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		
 		cartPage.submitOrder();
 		softAssert.assertTrue(cartPage.getNachNameIsIncorrectMessage().isDisplayed());
@@ -221,8 +283,10 @@ public class CheckoutTests extends FunctionalTest{
 		cartPage.sendPostcode(postalCode);
 		cartPage.sendCity(city);
 		
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		
 		cartPage.submitOrder();
 		softAssert.assertTrue(cartPage.geteMailIsIncorrectMessage().isDisplayed());
@@ -260,8 +324,10 @@ public class CheckoutTests extends FunctionalTest{
 		cartPage.sendPostcode(postalCode);
 		cartPage.sendCity(city);
 		
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		
 		cartPage.submitOrder();
 		softAssert.assertTrue(cartPage.getAddressIsIncorrectMessage().isDisplayed());
@@ -272,4 +338,90 @@ public class CheckoutTests extends FunctionalTest{
 		
 		softAssert.assertAll();
 	}
+	
+	@Test(dataProvider = "cityTestData")
+	public void cityTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.getCityIsIncorrectMessage().isDisplayed());
+		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
+	//TODO: POSTCODE VALIDATION
+	
+	@Test(dataProvider = "phoneTestData")
+	public void phoneTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city, String phoneNum)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		//productPage.waitForPopup();
+		//productPage.gotoCart();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		cartPage.sendPhoneNumber(phoneNum);
+		
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.getPhoneIsIncorrectMessage().isDisplayed());
+
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
 }

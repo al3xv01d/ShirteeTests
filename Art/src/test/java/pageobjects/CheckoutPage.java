@@ -12,16 +12,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class CheckoutPage extends PageObject{
-
-	
-	@FindBy(id="p_method_banktransfer")
-	private WebElement vorkasseRadioButton;
 	
 	@FindBy(id="submit-btn")
 	private WebElement submitButton;
-	
-	@FindBy(xpath="//*[@id='payment_form_banktransfer']/li/div")
-	private WebElement vorkrasseInfo;
 	
 	//1st Block
 	@FindBy(id="billing_firstname")
@@ -151,15 +144,7 @@ public class CheckoutPage extends PageObject{
 		return phoneIsIncorrectMessage;
 	}
 	
-	public void checkVorkrasse()
-	{
-		vorkasseRadioButton.click();
-	}
-	
-	public void waitForVorkrasseInfo()
-	{
-		waitForElement(vorkrasseInfo);
-	}
+
 	
 	public void sendKeysVorname(String str)
 	{
@@ -239,14 +224,23 @@ public class CheckoutPage extends PageObject{
 	    cityInputField.sendKeys(Keys.CLEAR);
 	}
 	
+	public void sendPhoneNumber(String str)
+	{
+		phoneInputField.clear();
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+	    Clipboard clipboard = toolkit.getSystemClipboard();
+	    StringSelection strSelection = new StringSelection(str);
+	    clipboard.setContents(strSelection, null);
+		
+	    phoneInputField.sendKeys(Keys.CONTROL + "v");
+	    phoneInputField.sendKeys(Keys.CLEAR);
+	}
+	
 	public void submitOrder()
 	{
 		getSubmitButton().click();
 	}
-
-
-
-
 
 	
 	

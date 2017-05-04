@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import base.FunctionalTest;
 import pageobjects.CheckoutPage;
+import pageobjects.CheckoutPageBlock2;
 import pageobjects.DashboardBestellungen;
 import pageobjects.DashboardPage;
 import pageobjects.MainPage;
@@ -33,8 +34,10 @@ public class BuyProductTests extends FunctionalTest{
 		productPage.gotoCart();
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
-		cartPage.checkVorkrasse();
-		cartPage.waitForVorkrasseInfo();
+		
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
 		cartPage.submitOrder();
 		
 		driver.get("https://www.shirtee.de/checkout/onepage/success/");
