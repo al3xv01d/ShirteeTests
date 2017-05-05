@@ -5,6 +5,8 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -48,6 +50,28 @@ public class PageObject {
 	        return false;
 	    }
 	}
+	
+	public static ExpectedCondition<Boolean> absenceOfElementLocated(
+		      final By locator) {
+		    return new ExpectedCondition<Boolean>() {
+		      @Override
+		      public Boolean apply(WebDriver driver) {
+		        try {
+		          driver.findElement(locator);
+		          return false;
+		        } catch (NoSuchElementException e) {
+		          return true;
+		        } catch (StaleElementReferenceException e) {
+		          return true;
+		        }
+		      }
+
+		      @Override
+		      public String toString() {
+		        return "element to not being present: " + locator;
+		      }
+		    };
+		  }
 	
 	public  boolean isAlertPresent() 
 	{ 
