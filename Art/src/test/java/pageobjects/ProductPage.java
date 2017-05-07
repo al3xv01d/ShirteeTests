@@ -25,11 +25,18 @@ public class ProductPage extends PageObject{
 	@FindBy(id = "go_to_checkout")
 	private WebElement goToCheckout;
 	
+	@FindBy(xpath = "//*[@class='regular-price']/span")
+	private WebElement price;
+	
 	public ProductPage(WebDriver driver)
 	{
 		super(driver);
 	}
 	
+	public String getPrice()
+	{
+		return price.getText();
+	}
 	
 	public void getSize()
 	{

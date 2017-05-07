@@ -387,8 +387,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		step1.sendKeysDesign();
 		Assert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
 		
-	//	driver.get("https://www.shirtee.de/designer/?id=1140");
-		
+
 		
 //		
 //		for (int i = 2; i < categories.length; i++) {
