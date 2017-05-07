@@ -227,7 +227,7 @@ public class DesignerPageStep_1 extends PageObject{
 
 	public void waitForProductBlock()
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 5);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.
 				presenceOfElementLocated(By.
 						xpath("//*[@id='designer-load-info']"
@@ -354,7 +354,7 @@ public class DesignerPageStep_1 extends PageObject{
 		//Currently selects primary screen
 		//Removing parameter may be required for single-monitor setup
 		
-		Screen s = new Screen(1);
+		Screen s = new Screen();
 		
 		
 		try
