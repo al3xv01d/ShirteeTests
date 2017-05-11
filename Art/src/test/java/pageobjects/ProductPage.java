@@ -42,8 +42,6 @@ public class ProductPage extends PageObject{
 	{
 		Select size = new Select(sizeSelect);
 		size.selectByVisibleText("M");
-		
-		
 	}
 	
 	public void waitForPopup(){

@@ -34,6 +34,12 @@ public class CheckoutPageBlock3 extends PageObject{
 	@FindBy(xpath="//*[@id='checkout-review-table']/tfoot/tr[2]/td[2]/span")
 	private WebElement charges;
 	
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[2]/td[1]/a")
+	private WebElement deleteSecondItemIcon;
+
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")
+	private WebElement secondItemProductName;
+
 	
 	public CheckoutPageBlock3(WebDriver driver)
 	{
@@ -48,6 +54,11 @@ public class CheckoutPageBlock3 extends PageObject{
 	public void decreaseQuantity()
 	{
 		decQuantityButton.click();
+	}
+	
+	public void deleteSecondItemClick()
+	{
+		deleteSecondItemIcon.click();
 	}
 	
 	public void waitForCalculationToFinish()
@@ -86,5 +97,10 @@ public class CheckoutPageBlock3 extends PageObject{
 	{
 		return total.getText();
 	}
+
+	public WebElement getSecondItemProductName() {
+		return secondItemProductName;
+	}
+
 	
 }

@@ -88,15 +88,15 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	public Object[][] postcodeTestData()
 	{
 		return new Object[][] {
-			new Object[] {"VoÄrname","Nchname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"VorÖname","NacÖhname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Väorname","Nächname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Voröname","Nachnöame","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City"},
-			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456", "City"}
+			new Object[] {"VoÄrname","Nchname","email@mail.com", "address 11", "asd", "City"},
+			new Object[] {"VorÜname","NachnÜame","email@mail.com", "address 11", ":123456", "City"},
+			new Object[] {"VorÖname","NacÖhname","email@mail.com", "address 11", "123456;", "City"},
+			new Object[] {"Vorßname","Nacßhname","email@mail.com", "address 11", "12 3456", "City"},
+			new Object[] {"Väorname","Nächname","email@mail.com", "address 11", "/123456", "City"},
+			new Object[] {"Voröname","Nachnöame","email@mail.com", "address 11", "123456*", "City"},
+			new Object[] {"Voürname","Nacühname","email@mail.com", "address 11", "()123456", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "123456%", "City"},
+			new Object[] {"Vornßame","ßhname","email@mail.com", "address 11", "@123456", "City"}
 		};
 	}
 	
@@ -133,8 +133,6 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	}
 	 
 
-	//Non latin symbols!!!
-	
 	@Test
 	public void emptyFieldsTest()
 	{
@@ -187,8 +185,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
@@ -229,8 +226,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
@@ -270,8 +266,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
@@ -311,8 +306,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
@@ -339,6 +333,44 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
+	@Test(dataProvider = "postcodeTestData")
+	public void postcodeTest(String vorname, String nachname, String eMail, String address, 
+			String postalCode, String city)
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		productPage.getSize();
+		productPage.buy();
+		driver.get("https://www.shirtee.de/checkout/onepage/");
+		
+		CheckoutPage cartPage = new CheckoutPage(driver);
+	    cartPage.sendKeysVorname(vorname);
+	    
+		cartPage.sendKeysNachname(nachname);
+		cartPage.sendKeysEMail(eMail);
+		cartPage.sendKeysAddress(address);
+		cartPage.sendPostcode(postalCode);
+		cartPage.sendCity(city);
+		
+		CheckoutPageBlock2 cartPage2 = new CheckoutPageBlock2(driver);
+		
+		cartPage2.checkVorkrasse();
+		cartPage2.waitForVorkrasseInfo();
+		
+		cartPage.submitOrder();
+		softAssert.assertTrue(cartPage.getPostcodeIsIncorrectMessage().isDisplayed());
+		
+		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
+		
+		softAssert.assertAll();
+	}
+	
 	@Test(dataProvider = "cityTestData")
 	public void cityTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
@@ -352,8 +384,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+		
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
@@ -379,9 +410,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		softAssert.assertAll();
 	}
-	
-	//TODO: POSTCODE VALIDATION
-	
+
 	@Test(dataProvider = "phoneTestData")
 	public void phoneTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city, String phoneNum)
@@ -395,8 +424,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		productPage.getSize();
 		productPage.buy();
-		//productPage.waitForPopup();
-		//productPage.gotoCart();
+
 		driver.get("https://www.shirtee.de/checkout/onepage/");
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);

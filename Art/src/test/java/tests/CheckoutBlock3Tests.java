@@ -157,6 +157,41 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	}
 	
 	@Test
+	public void deleteProductTest()
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.manage().window().maximize();
+		
+		ProductPage productPage = new ProductPage(driver);
+		
+		price = productPage.getPrice();
+		
+		productPage.getSize();
+		productPage.buy();
+		productPage.waitForPopup();
+
+		driver.get("https://www.shirtee.de/testautocampaign1");
+		
+		productPage.getSize();
+		productPage.buy();
+		productPage.waitForPopup();
+		productPage.gotoCart();
+		
+		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
+		
+		cartBlock3.deleteSecondItemClick();
+		cartBlock3.waitForCalculationToFinish();
+		
+		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €");
+		softAssert.assertTrue(!cartBlock3.isElementPresent(
+				By.xpath("//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")));
+		
+		softAssert.assertAll();
+	}
+	
+	@Test
 	public void databaseTest() throws SQLException, ClassNotFoundException
 	{
 		
@@ -164,22 +199,20 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		 
 		String login = data.getPropertie("databaseLogin");
 		String password = data.getPropertie("databasePassword");
-		//String password = "4562";
 		
-		String url = "http://db.shirtee.de:43006";
+
 		
 		//Class.forName("com.mysql.jdbc.Driver");	
-		System.out.println(login);
-		System.out.println(password);
+
 		//Creating a connection to the database
-		Connection conn = DriverManager.getConnection("jdbc:mysql://213.32.76.33:43006/shirtee",login,password);
+		Connection conn = DriverManager.getConnection("jdbc:mysql://db.shirtee.de:33006/shirtee",login,password);
 		
 		//Executing SQL query and fetching the result
 		Statement st = conn.createStatement();
 		String sqlStr = "SELECT * FROM `gomage_productdesigner_campaign_products` WHERE `product_id` = 20000";
 		ResultSet rs = st.executeQuery(sqlStr);
 		while (rs.next()) {
-			System.out.println(rs.getString("name"));
+			System.out.println(rs.getString("price"));
 		}		
 		
 		

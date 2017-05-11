@@ -352,9 +352,9 @@ public class DesignerPageStep_1 extends PageObject{
 		
 		//Added parameter "1" for multi-screen support
 		//Currently selects primary screen
-		//Removing parameter may be required for single-monitor setup
+		//Removing parameter is required for single-monitor setup
 		
-		Screen s = new Screen();
+		Screen s = new Screen(1);
 		
 		
 		try

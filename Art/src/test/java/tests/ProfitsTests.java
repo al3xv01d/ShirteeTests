@@ -164,6 +164,7 @@ public class ProfitsTests extends FunctionalTest{
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufeSold(), verkaufeSold + 1);
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufeProduction(), verkaufeProduction);
 		
+		//TODO: VerkHeute assert
 		//VerkHeute assert - doesn't work now. Blocked by a bug
 		
 		softAssertion.assertEquals(dashboardMainPage.getVerkGesternSold(), verkGesternSold);
