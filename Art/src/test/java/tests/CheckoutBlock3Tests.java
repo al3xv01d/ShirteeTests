@@ -199,9 +199,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		 
 		String login = data.getPropertie("databaseLogin");
 		String password = data.getPropertie("databasePassword");
-		
-
-		
+	
 		//Class.forName("com.mysql.jdbc.Driver");	
 
 		//Creating a connection to the database
