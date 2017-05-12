@@ -251,7 +251,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 	}
 	
-	@Test
+	@Test()
 	public void pictureTabTest()
 	{
 		driver.get("https://www.shirtee.de/designer/?id=1140");
@@ -280,22 +280,13 @@ public class DesignerStep1Tests extends FunctionalTest{
 		Assert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']")));
 		
 		step1.removeImgs();
-		//Assert.assertFalse(step1.returnRemovePreviewButton().isDisplayed());
-		//driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		//step1.waitForPictureToLoad();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		step1.waitForDeletePicturePopupToDisappear();
 		
 		Assert.assertFalse(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img"))); 
 		Assert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']"
 				+ "[contains(@style, 'display: none')]")));
 		//Assert.assertFalse(step1.returnUploadedImagePreview().isDisplayed()); //FAILS
-		//TODO: Ask about popup that appears after remove 
-		
 		
 	}
 	
@@ -348,7 +339,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		//Poster Test
 		step1.selectCategory("Poster");
 		step1.waitForProductBlock();
-		step1.returnPosterPage();;
+		step1.returnPosterPage();
 		
 		WebElement image3 = driver.findElement(By.id("pd_container"));
 		

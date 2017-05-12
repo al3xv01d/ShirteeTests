@@ -99,4 +99,5 @@ public class PageObject {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(pageLoadCondition);
 		}
+	
 }

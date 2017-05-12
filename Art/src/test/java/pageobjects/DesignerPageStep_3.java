@@ -132,7 +132,7 @@ public class DesignerPageStep_3 extends PageObject{
 								+ "[contains(@style, 'display: none')]")));
 	}
 	
-	public void waitForURLExistingInputValidationToDisappear() //URL wrong input
+	public void waitForURLExistingInputValidationToDisappear() //URL existing input
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 6);
 		wait.until(ExpectedConditions.

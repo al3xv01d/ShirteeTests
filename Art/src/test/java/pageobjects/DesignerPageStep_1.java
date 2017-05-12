@@ -216,7 +216,7 @@ public class DesignerPageStep_1 extends PageObject{
 	
 	public void waitForColorPickerToShow()
 	{
-		WebDriverWait wait = new WebDriverWait(driver, 3);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.
 				presenceOfElementLocated(By.
 						xpath("//*[@id='add_text_colors_panel']"
@@ -224,7 +224,15 @@ public class DesignerPageStep_1 extends PageObject{
 
 	}
 	
-
+	public void waitForDeletePicturePopupToDisappear()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.
+				presenceOfElementLocated(By.
+						xpath("//*[@id='designer-load-info']"
+								+ "[contains(@style, 'display: none')]")));
+	}
+	
 	public void waitForProductBlock()
 	{
 		WebDriverWait wait = new WebDriverWait(driver, 10);
