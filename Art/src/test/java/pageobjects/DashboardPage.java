@@ -15,16 +15,18 @@ public class DashboardPage extends PageObject{
 	private WebElement ubersicht;
 	
 	//Header Product/Profits
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[1]/span[2]")
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[1]/span[2]")
+	//*[@id="top"]/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[1]/span[2]
 	private WebElement verkaufteProducte; //format = x/y
 	
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[2]/span[2]/span")
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[2]/span[2]/span")
 	private WebElement gesamtgewinn;
+	//*[@id="top"]/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[2]/span[2]/span
 	
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[3]/span[2]/span")
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[3]/span[2]/span")
 	private WebElement gewinnVerfugbar;
 	
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[4]/span[2]/span")
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[4]/span[2]/span")
 	private WebElement gewinnAusstehend;
 	
 	//Campaign data
