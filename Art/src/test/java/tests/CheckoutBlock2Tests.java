@@ -4,6 +4,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import base.FunctionalTest;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import pageobjects.CheckoutPage;
 import pageobjects.CheckoutPageBlock2;
@@ -16,7 +18,8 @@ public class CheckoutBlock2Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		//driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get("https://dev.shirtee.de/shir2-3");
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -47,7 +50,7 @@ public class CheckoutBlock2Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test
+	@Test(enabled = false)// disabled because telephone field is no longer present
 	public void klarnaPhoneNumberTest()
 	{
 		String str = "123456789";

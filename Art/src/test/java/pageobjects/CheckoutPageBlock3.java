@@ -13,19 +13,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckoutPageBlock3 extends PageObject{
 	
-	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[3]/span/span")
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[1]/td/div/div[4]/div[1]/span/span")
+	//*[@id="checkout-review-table"]/tbody/tr[1]/td/div/div[4]/div[1]/span/span
 	private WebElement price;
 	
-	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[5]/span/span")
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td/div/div[4]/div[2]/span/span")
 	private WebElement summe;
 	
-	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[4]/strong[2]")
+	//@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[4]/strong[2]")
+	@FindBy(xpath="//div[@class='checkout-product-qty']/strong[2]")
 	private WebElement incQuantityButton;
+	//*[@id="checkout-review-table"]/tbody/tr/td/div/div[3]/strong[2]
 	
-	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[4]/strong[1]")
+	//@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td[4]/strong[1]")
+	@FindBy(xpath="//div[@class='checkout-product-qty']/strong[1]")
 	private WebElement decQuantityButton;
 	
-	@FindBy(xpath="//tr[@class='last']/td[@class='a-right last']/strong[2]/span")
+	@FindBy(xpath="//tr[@class='last']/td[@class='a-right last']/strong/span")
 	private WebElement total;
 	
 	@FindBy(xpath="//*[@id='checkout-review-table']/tfoot/tr[2]/td[2]/span")
@@ -37,7 +41,8 @@ public class CheckoutPageBlock3 extends PageObject{
 	@FindBy(xpath="//*[@id='checkout-review-table']/tfoot/tr[2]/td[2]/span")
 	private WebElement charges;
 	
-	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[2]/td[1]/a")
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[2]/td/div/div[1]/a")
+	//*[@id="checkout-review-table"]/tbody/tr[2]/td/div/div[1]/a
 	private WebElement deleteSecondItemIcon;
 
 	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")

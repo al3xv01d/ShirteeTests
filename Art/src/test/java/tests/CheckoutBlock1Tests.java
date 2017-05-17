@@ -19,6 +19,14 @@ import java.awt.datatransfer.StringSelection;
 
 public class CheckoutBlock1Tests extends FunctionalTest{
 
+	private String devCmpUrl = "https://dev.shirtee.de/shir2-3";
+	private String liveCmpUrl = "https://www.shirtee.de/testautocampaign2";
+	
+	private String liveCheckoutURL = "https://www.shirtee.de/checkout/onepage/";
+	private String devCheckoutURL  = "https://dev.shirtee.de/checkout/onepage/";
+	
+	private String devSuccessURL = "https://dev.shirtee.de/checkout/onepage/success/";
+	private String liveSuccessURL = "https://www.shirtee.de/checkout/onepage/success/";
 	
 	@DataProvider
 	public Object[][] vornameTestData()
@@ -56,9 +64,9 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	public Object[][] emailTestData()
 	{
 		return new Object[][] {
-			new Object[] {"VoÄrname","Nchname","ema!il@mail.com", "address 11", "123456", "City"},
-			new Object[] {"VorÜname","NachnÜame","em()ail@mail.com", "address 11", "123456", "City"},
-			new Object[] {"VorÖname","NacÖhname","&email@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VoÄrname","Nchname","ema!(il@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÜname","NachnÜame","em)ail@mail.com", "address 11", "123456", "City"},
+			new Object[] {"VorÖname","NacÖhname","' 'email@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Vorßname","Nacßhname","ema%il@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Väorname","Nächname","em=ail@mail.com", "address 11", "123456", "City"},
 			new Object[] {"Voröname","Nachnöame","email@mai,;l.com", "address 11", "123456", "City"},
@@ -138,7 +146,8 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
+		
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -165,7 +174,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		//if order succeed - success page is displayed
 		//if not - redirect to cart page
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		//driver.get("https://www.shirtee.de/checkout/onepage/success/");
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -178,7 +187,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -186,7 +195,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -207,7 +216,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getVorNameIsIncorrectMessage().isDisplayed());
 		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_lastname")));
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -219,7 +228,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -227,7 +236,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -247,7 +256,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getNachNameIsIncorrectMessage().isDisplayed());
 		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -259,7 +268,8 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		//driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -267,7 +277,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -287,7 +297,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.geteMailIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -299,7 +309,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -307,7 +317,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -327,7 +337,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getAddressIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -339,14 +349,14 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
 		
 		productPage.getSize();
 		productPage.buy();
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -365,7 +375,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		cartPage.submitOrder();
 		softAssert.assertTrue(cartPage.getPostcodeIsIncorrectMessage().isDisplayed());
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -377,7 +387,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -385,7 +395,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(devCheckoutURL);
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -405,13 +415,13 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getCityIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(devSuccessURL);
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
 	}
 
-	@Test(dataProvider = "phoneTestData")
+	@Test(dataProvider = "phoneTestData", enabled = false)//disabled because field is set off
 	public void phoneTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city, String phoneNum)
 	{

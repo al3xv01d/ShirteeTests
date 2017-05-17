@@ -29,12 +29,20 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	private String charges = "2,52 €";
 	private String shipping = "4,50 €";
 	
+	private String devCmpUrl1 = "https://dev.shirtee.de/shir2-3";
+	private String devCmpUrl2 = "https://dev.shirtee.de/shir2sub";
+	private String liveCmpUrl1 = "https://www.shirtee.de/testautocampaign2";
+	private String liveCmpUrl2 = "https://www.shirtee.de/testautocampaign1";
+	
+	private String liveCheckoutURL = "https://www.shirtee.de/checkout/onepage/";
+	private String devCheckoutURL  = "https://dev.shirtee.de/checkout/onepage/";
+	
 	@Test
 	public void oneProductpricesTest()
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl1);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -53,8 +61,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertEquals(cartBlock3.getTotal(), price);
 		
 		CheckoutPageBlock2 cartBlock2 = new CheckoutPageBlock2(driver);
-		//cartBlock2.checkPayPal();
-		//cartBlock2.waitForPayPalInfo();
+
 		cartBlock2.checkKlarna();
 		cartBlock2.waitForKlarnaInfo();
 		softAssert.assertEquals(cartBlock3.getShippingKlarna(), shipping);
@@ -68,7 +75,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl1);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -99,7 +106,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl1);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -110,7 +117,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.buy();
 		productPage.waitForPopup();
 
-		driver.get("https://www.shirtee.de/testautocampaign1");
+		driver.get(devCmpUrl2);
 		
 		productPage.getSize();
 		productPage.buy();
@@ -131,13 +138,13 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void breadcrumbsTest()
 	{
 
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl1);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -161,7 +168,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(devCmpUrl1);
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -172,7 +179,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.buy();
 		productPage.waitForPopup();
 
-		driver.get("https://www.shirtee.de/testautocampaign1");
+		driver.get(devCmpUrl2);
 		
 		productPage.getSize();
 		productPage.buy();
@@ -215,5 +222,6 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		
 		
 	}
+	
 	
 }

@@ -6,25 +6,26 @@ import org.openqa.selenium.support.FindBy;
 
 public class CheckoutPageBlock2 extends PageObject{
 
-	@FindBy(id="p_method_paypal_express")
+	//@FindBy(id="p_method_paypal_express")
+	@FindBy(xpath="//*[@id='p_method_paypal_express']/parent::dt")
 	private WebElement payPalRadioButton;
 	
 	@FindBy(id="payment_form_paypal_express")
 	private WebElement payPalInfo;
 	
-	@FindBy(id="p_method_paymentnetwork_pnsofortueberweisung")
+	@FindBy(xpath="//*[@id='p_method_paymentnetwork_pnsofortueberweisung']/parent::dt")
 	private WebElement sofortRadioButton;
 	
 	@FindBy(id="payment_form_paymentnetwork_pnsofortueberweisung")
 	private WebElement sofortInfo;
 	
-	@FindBy(id="p_method_vaimo_klarna_invoice")
+	@FindBy(xpath="//*[@id='p_method_vaimo_klarna_invoice']/parent::dt")
 	private WebElement klarnaRadioButton;
 	
 	@FindBy(id="vaimo_klarna_invoice_input_fields")
 	private WebElement klarnaInfo;
 	
-	@FindBy(id="p_method_banktransfer")
+	@FindBy(xpath="//*[@id='p_method_banktransfer']/parent::dt")
 	private WebElement vorkasseRadioButton;
 	
 	@FindBy(xpath="//*[@id='payment_form_banktransfer']/li/div")
@@ -64,7 +65,7 @@ public class CheckoutPageBlock2 extends PageObject{
 			
 	public void checkPayPal()
 			{
-				payPalRadioButton.click();
+				getPayPalRadioButton().click();
 			}
 			
 	public void checkSofort()
@@ -101,5 +102,10 @@ public class CheckoutPageBlock2 extends PageObject{
 	{
 		return klarnaPhoneNumberBlock.getAttribute("value");
 	}
+
+	public WebElement getPayPalRadioButton() {
+		return payPalRadioButton;
+	}
+
 	
 }

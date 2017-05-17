@@ -6,10 +6,12 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckoutPage extends PageObject{
 	
@@ -80,6 +82,32 @@ public class CheckoutPage extends PageObject{
 	@FindBy(id="advice-billing_telephone-billing_telephone")
 	private WebElement phoneIsIncorrectMessage;
 	
+	//Packstation Block
+	@FindBy(xpath = "//*[@id='billing_tabs_packstation_tabbed']/a")
+	private WebElement packstationTab;
+	
+	@FindBy(xpath = "//*[@id='billing_tabs_packstation_tabbed_contents']/li[5]/div/a")
+	private WebElement zumPackstationLink;
+	
+	@FindBy(id = "billing_dhl_pack")
+	private WebElement postNumberInput;
+	
+	@FindBy(id = "advice-required-entry-billing_dhl_pack")
+	private WebElement postNumberEmptyInputMsg;
+	
+	@FindBy(id = "billing_pack")
+	private WebElement packstationNumberInput;
+	
+	@FindBy(id = "advice-required-entry-billing_pack")
+	private WebElement packstationNumberEmptyInputMsg;
+	
+	//RadioButtons
+	@FindBy(xpath = "//*[@id='billing_select-company-gender']/div[3]/label")
+	private WebElement firmaRadioButton;
+	
+	@FindBy(xpath = "//*[@id='billing_select-company-gender']/div[1]/label")
+	private WebElement herrRadioButton;
+
 	public CheckoutPage(WebDriver driver)
 	{
 		super(driver);
@@ -144,7 +172,43 @@ public class CheckoutPage extends PageObject{
 		return phoneIsIncorrectMessage;
 	}
 	
+	public WebElement getPackstationTab() {
+		return packstationTab;
+	}
+	
 
+	public WebElement getPostNumberEmptyInputMsg() {
+		return postNumberEmptyInputMsg;
+	}
+
+	public WebElement getPackstationNumberEmptyInputMsg() {
+		return packstationNumberEmptyInputMsg;
+	}
+
+	public void  herrRadioButtonClick()
+	{
+		herrRadioButton.click();
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(absenceOfElementLocated(By.xpath("//div[@class = 'loadinfo']")));
+	}
+	
+	public void firmaRadioButtonClick()
+	{
+		firmaRadioButton.click();
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(absenceOfElementLocated(By.xpath("//div[@class = 'loadinfo']")));
+	}
+	
+	public void packstationClick()
+	{
+		getPackstationTab().click();
+	}
+	
+	public String getPackstationLink()
+	{
+		String str = zumPackstationLink.getAttribute("href");
+		return str;
+	}
 	
 	public void sendKeysVorname(String str)
 	{
@@ -242,6 +306,10 @@ public class CheckoutPage extends PageObject{
 		getSubmitButton().click();
 	}
 
-	
+
+
+
+
+
 	
 }
