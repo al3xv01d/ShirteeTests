@@ -340,7 +340,7 @@ public class DesignerPageStep_1 extends PageObject{
 	
 	public WebElement returnProductImageContainer()
 	{
-		return productImgContainer;
+		return getProductImgContainer();
 	}
 	
 	public void removeImgs(){
@@ -426,7 +426,10 @@ public class DesignerPageStep_1 extends PageObject{
 		continueButton.click();
 
 	}
-	
+
+	public WebElement getProductImgContainer() {
+		return productImgContainer;
+	}
 	
 	
 }

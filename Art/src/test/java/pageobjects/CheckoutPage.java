@@ -60,6 +60,9 @@ public class CheckoutPage extends PageObject{
 	@FindBy(id="advice-required-entry-billing_city")
 	private WebElement cityIsEmptyMessage;
 	
+	@FindBy(id="advice-validate-one-required-by-name-p_method_paypal_express")
+	private WebElement paymentOptionRequiredMsg;
+	
 	//incorrect input messages 
 	@FindBy(id="advice-validate-name-billing_firstname")
 	private WebElement vorNameIsIncorrectMessage;
@@ -176,6 +179,11 @@ public class CheckoutPage extends PageObject{
 		return packstationTab;
 	}
 	
+
+	public WebElement getPaymentOptionRequiredMsg() {
+		return paymentOptionRequiredMsg;
+	}
+
 
 	public WebElement getPostNumberEmptyInputMsg() {
 		return postNumberEmptyInputMsg;
@@ -305,11 +313,6 @@ public class CheckoutPage extends PageObject{
 	{
 		getSubmitButton().click();
 	}
-
-
-
-
-
 
 	
 }

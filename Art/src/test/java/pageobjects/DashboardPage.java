@@ -61,6 +61,12 @@ public class DashboardPage extends PageObject{
 		super(driver);
 	}
 	
+	public void waitForData()
+	{
+		waitForElement(verkaufteProducte);
+		
+	}
+	
 	public int[] getVerkaufteProducte()
 	{
 		String[] str = verkaufteProducte.getText().split("/");

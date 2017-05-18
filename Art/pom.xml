@@ -26,6 +26,63 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+    		<plugins>
+      			<plugin>
+       				 <groupId>org.apache.maven.plugins</groupId>
+        			 <artifactId>maven-surefire-plugin</artifactId>
+        			 <version>2.19.1</version>
+       					 <configuration>
+       						 <systemPropertyVariables>
+       						 	<mainPageURL>https://www.shirtee.de</mainPageURL>
+       							 <designerURL>https://www.shirtee.de/designer/?id=1140/</designerURL>
+       							 <campaignURL1>https://www.shirtee.de/testautocampaign2</campaignURL1>
+       							 <campaignURL2>https://www.shirtee.de/testautocampaign2</campaignURL2>
+       							 <dashboardURL>https://www.shirtee.de/dashboard/index/index/</dashboardURL>
+       				 			<checkoutURL>https://www.shirtee.de/checkout/onepage/</checkoutURL>
+       				 			  <ffadminURL>https://www.shirtee.de/index.php/ffadmin</ffadminURL>
+       				 			  <ffadminOrdersURL>https://www.shirtee.de/index.php/ffadmin/sales_order/index</ffadminOrdersURL>
+       				 			<successPageURL>https://www.shirtee.de/checkout/onepage/success/</successPageURL>
+       						 </systemPropertyVariables>
+        				 </configuration>
+      			</plugin>
+    		 </plugins>
+  			</build>
+		</profile>
+		
+		<profile>
+			<id>dev</id>
+			<build>
+    		<plugins>
+      			<plugin>
+       				 <groupId>org.apache.maven.plugins</groupId>
+        			 <artifactId>maven-surefire-plugin</artifactId>
+        			 <version>2.19.1</version>
+       					 <configuration>
+       						 <systemPropertyVariables>
+       						    <mainPageURL>https://dev.shirtee.de</mainPageURL>
+       							 <designerURL>https://dev.shirtee.de/designer/?id=1140/</designerURL>
+       							 <campaignURL1>https://dev.shirtee.de/testautocampaign2</campaignURL1>
+       							 <campaignURL2>https://dev.shirtee.de/testautocampaign1</campaignURL2>
+       							 <ffadminURL>"https://dev.shirtee.de/index.php/ffadmin"</ffadminURL>
+       							 <dashboardURL>https://dev.shirtee.de/dashboard/index/index/</dashboardURL>
+       				 			<checkoutURL>https://dev.shirtee.de/checkout/onepage/</checkoutURL>
+       				 			 <ffadminOrdersURL>https://dev.shirtee.de/index.php/ffadmin/sales_order/index</ffadminOrdersURL>
+       				 			<successPageURL>https://dev.shirtee.de/checkout/onepage/success/</successPageURL>
+       						 </systemPropertyVariables>
+        				 </configuration>
+      			</plugin>
+    		 </plugins>
+  			</build>
+		</profile>
+	</profiles>
+
   <dependencies>
     	<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -57,14 +114,5 @@
  			<version>5.1.42</version>
  			<scope>test</scope>
 		</dependency>
-		<dependency>
-       		 <groupId>org.mariadb.jdbc</groupId>
-        	<artifactId>mariadb-java-client</artifactId>
-        	<version>1.4.2</version>
-		</dependency>
-
-
-
-
   </dependencies>
 </project>

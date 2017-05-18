@@ -29,20 +29,13 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	private String charges = "2,52 €";
 	private String shipping = "4,50 €";
 	
-	private String devCmpUrl1 = "https://dev.shirtee.de/shir2-3";
-	private String devCmpUrl2 = "https://dev.shirtee.de/shir2sub";
-	private String liveCmpUrl1 = "https://www.shirtee.de/testautocampaign2";
-	private String liveCmpUrl2 = "https://www.shirtee.de/testautocampaign1";
-	
-	private String liveCheckoutURL = "https://www.shirtee.de/checkout/onepage/";
-	private String devCheckoutURL  = "https://dev.shirtee.de/checkout/onepage/";
 	
 	@Test
-	public void oneProductpricesTest()
+	public void oneProductPricesTest()
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl1);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -75,7 +68,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl1);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -106,7 +99,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl1);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -117,7 +110,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.buy();
 		productPage.waitForPopup();
 
-		driver.get(devCmpUrl2);
+		driver.get(System.getProperty("campaignURL2"));
 		
 		productPage.getSize();
 		productPage.buy();
@@ -144,7 +137,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl1);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -168,7 +161,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl1);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -179,7 +172,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.buy();
 		productPage.waitForPopup();
 
-		driver.get(devCmpUrl2);
+		driver.get(System.getProperty("campaignURL2"));
 		
 		productPage.getSize();
 		productPage.buy();

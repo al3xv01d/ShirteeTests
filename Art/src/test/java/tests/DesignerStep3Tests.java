@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
@@ -14,7 +15,9 @@ public class DesignerStep3Tests extends FunctionalTest{
 	@Test
 	public void titleAndUrlTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
@@ -32,9 +35,9 @@ public class DesignerStep3Tests extends FunctionalTest{
 		
 		//Title tests
 		
-		Assert.assertEquals(step3.getTitleNoInputValidationText(),"Dies ist ein Pflichtfeld.");
-		Assert.assertEquals(step3.getTitleLengthValidationText(), "");
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='title-lenght-error']"
+		softAssert.assertEquals(step3.getTitleNoInputValidationText(),"Dies ist ein Pflichtfeld.");
+		softAssert.assertEquals(step3.getTitleLengthValidationText(), "");
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='title-lenght-error']"
 				+ "[contains(@style, 'display: none')]")));
 		
 		step3.sendKeysToTitle("titleqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
@@ -55,60 +58,64 @@ public class DesignerStep3Tests extends FunctionalTest{
 		step3.waitForTitleLengthValidationToShow();
 		step3.waitForTitleNoInputValidationToDisappear();
 		
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='title-lenght-error']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='title-lenght-error']"
 				+ "[contains(@style, 'display: block')]")));
-		Assert.assertEquals(step3.getTitleLengthValidationText(),"Max title length is 40 symbols");
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_name']"
+		softAssert.assertEquals(step3.getTitleLengthValidationText(),"Max title length is 40 symbols");
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_name']"
 				+ "[contains(@style, 'display: none')]")));
 
 		
 		//URL Tests
 		//No input test
-		Assert.assertEquals(step3.getUrlNoInputValidationText(),"Dies ist ein Pflichtfeld.");
+		softAssert.assertEquals(step3.getUrlNoInputValidationText(),"Dies ist ein Pflichtfeld.");
 		step3.sendKeysToUrl("123test");
 		step3.submitCampaignClick();
 		
 		//Wrong input test 1
 		step3.waitForURLNoInputValidationToDisappear();
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
-		Assert.assertEquals(step3.getUrlWrongInputValidationText(),"Deine URL darf nur Kleinbuchstaben, "
+		softAssert.assertEquals(step3.getUrlWrongInputValidationText(),"Deine URL darf nur Kleinbuchstaben, "
 				+ "Zahlen und Bindestriche enthalten.");
 		
 		//Wrong input test 2
 		step3.sendKeysToUrl("Test");
 		step3.submitCampaignClick();
 		step3.waitForURLNoInputValidationToDisappear();
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
-		Assert.assertEquals(step3.getUrlWrongInputValidationText(),"Deine URL darf nur Kleinbuchstaben, "
+		softAssert.assertEquals(step3.getUrlWrongInputValidationText(),"Deine URL darf nur Kleinbuchstaben, "
 				+ "Zahlen und Bindestriche enthalten.");
 		
 		//Existing URL Test
 		step3.sendKeysToUrl("test");
 		step3.submitCampaignClick();
 		step3.waitForURLWrongInputValidationToDisappear();
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-validate-code-pd-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-validate-code-pd-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
-		Assert.assertEquals(step3.getExistingURLValidationText(),"Is unavailable");
+		softAssert.assertEquals(step3.getExistingURLValidationText(),"Is unavailable");
 		
 		//Valid URL
 		step3.sendKeysToUrl("test134658");
 		step3.submitCampaignClick();
 		step3.waitForURLExistingInputValidationToDisappear();
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-pd-url-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-pd-url-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-validate-code-pd-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-validate-code-pd-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
-		Assert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
+		softAssert.assertTrue(step3.isElementPresent(By.xpath("//*[@id='advice-required-entry-sales_url']"
 				+ "[contains(@style, 'display: none')]")));
+		
+		softAssert.assertAll();
 	}
 	
 	@Test
 	public void tagsTest()
 	{
 
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
@@ -123,10 +130,10 @@ public class DesignerStep3Tests extends FunctionalTest{
 		step3.waitForTitle();
 		step3.sendTag("test");
 		step3.submitCampaignClick();
-		Assert.assertEquals(step3.getNameOfAddedTag(),"test");
+		softAssert.assertEquals(step3.getNameOfAddedTag(),"test");
 		
 		step3.removeTagClick();
-		Assert.assertTrue(!step3.isElementPresent(By.id("tag-id-test")));
+		softAssert.assertTrue(!step3.isElementPresent(By.id("tag-id-test")));
 		
 		for (int i = 0; i < 15; i++) {
 			
@@ -134,7 +141,9 @@ public class DesignerStep3Tests extends FunctionalTest{
 			step3.URLClick();
 		}
 
-		Assert.assertEquals(step3.returnTagsListSize(),10);
+		softAssert.assertEquals(step3.returnTagsListSize(),10);
+		
+		softAssert.assertAll();
 		
 	}
 	

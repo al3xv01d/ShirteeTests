@@ -17,10 +17,10 @@ import org.testng.Assert;
 public class BuyProductTests extends FunctionalTest{
 	
 
-	@Test(invocationCount = 1)
+	@Test(enabled = false)
 	public void orderNumTest()
 	{
-		driver.get("https://www.shirtee.de");
+		driver.get(System.getProperty("mainPageURL"));
 		driver.manage().window().maximize();
 		MainPage mainPage = new MainPage(driver);
 		//mainPage.performLogin();

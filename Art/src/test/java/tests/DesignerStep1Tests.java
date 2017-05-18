@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 
@@ -80,7 +81,9 @@ public class DesignerStep1Tests extends FunctionalTest{
 	@Test
 	public void colorsTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
@@ -95,7 +98,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/initial.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/initial.png", 
 				"Resources/img/Colors/Expected/initial.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -110,7 +113,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 			}
 			
-			Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/black.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/black.png", 
 					"Resources/img/Colors/Expected/black.png"),
 					Util.CompareImage.Result.Matched);
 			
@@ -125,7 +128,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 		}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/blue.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/blue.png", 
 				"Resources/img/Colors/Expected/blue.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -139,7 +142,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 		}
 			
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/green.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/green.png", 
 				"Resources/img/Colors/Expected/green.png"),
 				Util.CompareImage.Result.Matched);	
 		
@@ -154,7 +157,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 		}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/red.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/red.png", 
 				"Resources/img/Colors/Expected/red.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -168,16 +171,18 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 		}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/yellow.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/yellow.png", 
 				"Resources/img/Colors/Expected/yellow.png"),
 				Util.CompareImage.Result.Matched);
+		
+		softAssert.assertAll();
 	}
 	
 	
 	@Test
 	public void fontTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
@@ -209,7 +214,9 @@ public class DesignerStep1Tests extends FunctionalTest{
 	@Test
 	public void fontColorTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 			
@@ -225,7 +232,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			}
 		
 
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/BlackFont.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/BlackFont.png", 
 				"Resources/img/FontColors/Expected/BlackFont.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -245,7 +252,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 			}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/RedFont.png", 
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/RedFont.png", 
 				"Resources/img/FontColors/Expected/RedFont.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -254,7 +261,9 @@ public class DesignerStep1Tests extends FunctionalTest{
 	@Test()
 	public void pictureTabTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
@@ -272,28 +281,31 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 			}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ShirtWithImage/Actual/shirtWithImage.png",
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ShirtWithImage/Actual/shirtWithImage.png",
 				"Resources/img/ShirtWithImage/Expected/shirtWithImage.png"),
 				Util.CompareImage.Result.Matched);
 		
-		Assert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img")));
-		Assert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']")));
+		softAssert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img")));
+		softAssert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']")));
 		
 		step1.removeImgs();
 		
 		step1.waitForDeletePicturePopupToDisappear();
 		
-		Assert.assertFalse(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img"))); 
-		Assert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']"
+		softAssert.assertFalse(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img"))); 
+		softAssert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']"
 				+ "[contains(@style, 'display: none')]")));
 		//Assert.assertFalse(step1.returnUploadedImagePreview().isDisplayed()); //FAILS
 		
+		softAssert.assertAll();
 	}
 	
 	@Test
 	public void productBlockTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 
@@ -313,7 +325,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 			}
 		
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/UnisexHoodie.png",
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/UnisexHoodie.png",
 				"Resources/img/ProductImages/Expected/UnisexHoodie.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -332,7 +344,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			e.printStackTrace();
 			}
 
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/HerrenTankTop.png",
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/HerrenTankTop.png",
 				"Resources/img/ProductImages/Expected/HerrenTankTop.png"),
 				Util.CompareImage.Result.Matched);
 		
@@ -350,35 +362,39 @@ public class DesignerStep1Tests extends FunctionalTest{
 			} catch (Exception e) {
 			e.printStackTrace();
 			}
-		Assert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/PosterTest.png",
+		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ProductImages/Actual/PosterTest.png",
 				"Resources/img/ProductImages/Expected/PosterTest.png"),
 				Util.CompareImage.Result.Matched);
+		
+		softAssert.assertAll();
 	}
 	
 	@Test
 	public void pricePerProductTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		SoftAssert softAssert = new SoftAssert();
+		
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
-		Assert.assertEquals(step1.getBasePrice(), basePrice);
+		softAssert.assertEquals(step1.getBasePrice(), basePrice);
 		
 		step1.sendKeysDesign();
-		Assert.assertEquals(step1.getFrontPrice(), frontPrice);
+		softAssert.assertEquals(step1.getFrontPrice(), frontPrice);
 		
 		step1.deleteDesignClick();
-		Assert.assertEquals(step1.getBasePrice(), basePrice);
+		softAssert.assertEquals(step1.getBasePrice(), basePrice);
 		
 		step1.backSideClick();
 		step1.sendKeysDesign();
-		Assert.assertEquals(step1.getBackPrice(), backPrice);
+		softAssert.assertEquals(step1.getBackPrice(), backPrice);
 		
 		step1.frontSideClick();
 		step1.sendKeysDesign();
-		Assert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
+		softAssert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
 		
-
+		softAssert.assertAll();
 		
 //		
 //		for (int i = 2; i < categories.length; i++) {
@@ -407,7 +423,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 	@Test 
 	public void noDesignTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 
@@ -422,7 +438,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 	@Test
 	public void imageTooBigTest()
 	{
-		driver.get("https://www.shirtee.de/designer/?id=1140");
+		driver.get(System.getProperty("designerURL"));
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 

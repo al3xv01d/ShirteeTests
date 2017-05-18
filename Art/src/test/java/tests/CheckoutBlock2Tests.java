@@ -13,13 +13,14 @@ import pageobjects.ProductPage;
 
 public class CheckoutBlock2Tests extends FunctionalTest{
 
+	
 	@Test
 	public void paymentBlockTest()
 	{
+		
 		SoftAssert softAssert = new SoftAssert();
 		
-		//driver.get("https://www.shirtee.de/testautocampaign2");
-		driver.get("https://dev.shirtee.de/shir2-3");
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -55,7 +56,7 @@ public class CheckoutBlock2Tests extends FunctionalTest{
 	{
 		String str = "123456789";
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);

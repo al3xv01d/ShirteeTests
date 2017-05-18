@@ -63,15 +63,17 @@ public class ProfitsTests extends FunctionalTest{
 		adminPassword = data.getPropertie("adminPassword");
 		
 		
-		driver.get("https://www.shirtee.de");
+		driver.get(System.getProperty("mainPageURL"));
 		driver.manage().window().maximize();
 		
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(eMail, userPassword);
 		
-		driver.get("https://www.shirtee.de/dashboard/index/index/");
+		//driver.get(System.getProperty("dashboardURL"));
 		DashboardPage dashboardMainPage = new DashboardPage(driver);
 
+		dashboardMainPage.waitForData();
+		
 		verkaufteProducteSold = dashboardMainPage.getVerkaufteProducte()[0];
 		verkaufteProducteProduction = dashboardMainPage.getVerkaufteProducte()[1];
 		
@@ -104,7 +106,7 @@ public class ProfitsTests extends FunctionalTest{
 		System.out.println(dashboardMainPage.getVerkGesternProduction());
 		System.out.println(dashboardMainPage.getAktuellerGewinn());
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(System.getProperty("campaignURL1"));
 		ProductPage productPage = new ProductPage(driver);
 		
 		productPage.getSize();
@@ -120,15 +122,15 @@ public class ProfitsTests extends FunctionalTest{
 		cartPage1.submitOrder();
 		Assert.assertTrue(cartPage1.getSubmitButton().isDisplayed());
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(System.getProperty("successPageURL"));
 
-		driver.get("https://www.shirtee.de/index.php/ffadmin");
+		driver.get(System.getProperty("ffadminURL"));
 		driver.manage().window().maximize();
 		AdminMainPage adminPage = new AdminMainPage(driver);
 		adminPage.sendCredentials(adminUser, adminPassword);
 		adminPage.submit();
 		
-		driver.get("https://www.shirtee.de/index.php/ffadmin/sales_order/index");
+		driver.get(System.getProperty("ffadminOrdersURL"));
 		AdminOrdersPage adminOrdersPage = new AdminOrdersPage(driver);
 		
 		adminOrdersPage.orderRowClick();
@@ -140,7 +142,10 @@ public class ProfitsTests extends FunctionalTest{
 		invoicePage.checkShipmentCheckbox();
 		invoicePage.submitOrder();
 		
-		driver.get("https://www.shirtee.de/dashboard/index/index/");
+		driver.get(System.getProperty("dashboardURL"));
+		
+		dashboardMainPage.waitForData();
+		
 		System.out.println("New Profits");
 		System.out.println(dashboardMainPage.getGesamtgewinn());
 		System.out.println(dashboardMainPage.getGewinnVerfugbar());
@@ -154,6 +159,7 @@ public class ProfitsTests extends FunctionalTest{
 		System.out.println(dashboardMainPage.getVerkGesternSold());
 		System.out.println(dashboardMainPage.getVerkGesternProduction());
 		System.out.println(dashboardMainPage.getAktuellerGewinn());
+		
 		
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducte()[0], verkaufteProducteSold + 1);
 		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducte()[1], verkaufteProducteProduction);

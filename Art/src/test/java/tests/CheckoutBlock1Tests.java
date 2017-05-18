@@ -19,14 +19,6 @@ import java.awt.datatransfer.StringSelection;
 
 public class CheckoutBlock1Tests extends FunctionalTest{
 
-	private String devCmpUrl = "https://dev.shirtee.de/shir2-3";
-	private String liveCmpUrl = "https://www.shirtee.de/testautocampaign2";
-	
-	private String liveCheckoutURL = "https://www.shirtee.de/checkout/onepage/";
-	private String devCheckoutURL  = "https://dev.shirtee.de/checkout/onepage/";
-	
-	private String devSuccessURL = "https://dev.shirtee.de/checkout/onepage/success/";
-	private String liveSuccessURL = "https://www.shirtee.de/checkout/onepage/success/";
 	
 	@DataProvider
 	public Object[][] vornameTestData()
@@ -146,7 +138,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		
 		driver.manage().window().maximize();
 		
@@ -187,7 +179,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -195,7 +187,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -216,7 +208,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getVorNameIsIncorrectMessage().isDisplayed());
 		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_lastname")));
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -228,7 +220,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -236,7 +228,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -256,7 +248,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getNachNameIsIncorrectMessage().isDisplayed());
 		softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -269,7 +261,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		SoftAssert softAssert = new SoftAssert();
 		
 		//driver.get("https://www.shirtee.de/testautocampaign2");
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -277,7 +269,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -297,7 +289,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.geteMailIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -309,7 +301,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -317,7 +309,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -337,7 +329,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getAddressIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -349,14 +341,14 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
 		
 		productPage.getSize();
 		productPage.buy();
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -375,7 +367,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		cartPage.submitOrder();
 		softAssert.assertTrue(cartPage.getPostcodeIsIncorrectMessage().isDisplayed());
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
@@ -387,7 +379,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(devCmpUrl);
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -395,7 +387,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 		
-		driver.get(devCheckoutURL);
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -415,19 +407,19 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getCityIsIncorrectMessage().isDisplayed());
 		//softAssert.assertTrue(!cartPage.isElementPresent(By.id("advice-validate-name-billing_firstname")));
 		
-		driver.get(devSuccessURL);
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
 	}
 
-	@Test(dataProvider = "phoneTestData", enabled = false)//disabled because field is set off
+	@Test(dataProvider = "phoneTestData", enabled = false)//disabled because field is disabled
 	public void phoneTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city, String phoneNum)
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get("https://www.shirtee.de/testautocampaign2");
+		driver.get(System.getProperty("campaignURL1"));
 		driver.manage().window().maximize();
 		
 		ProductPage productPage = new ProductPage(driver);
@@ -435,7 +427,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		productPage.getSize();
 		productPage.buy();
 
-		driver.get("https://www.shirtee.de/checkout/onepage/");
+		driver.get(System.getProperty("checkoutURL"));
 		
 		CheckoutPage cartPage = new CheckoutPage(driver);
 	    cartPage.sendKeysVorname(vorname);
@@ -456,7 +448,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertTrue(cartPage.getPhoneIsIncorrectMessage().isDisplayed());
 
 		
-		driver.get("https://www.shirtee.de/checkout/onepage/success/");
+		driver.get(System.getProperty("successPageURL"));
 		softAssert.assertTrue(cartPage.getSubmitButton().isDisplayed());
 		
 		softAssert.assertAll();
