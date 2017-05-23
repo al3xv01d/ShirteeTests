@@ -17,7 +17,9 @@ public class MainPage extends PageObject{
 	@FindBy(xpath="//*[@id='header']/div/a/img[1]")
 	private WebElement shirteeLogo;
 	
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div/div[1]/div/div/div[2]/a")
+	//@FindBy(xpath="//*[@id='top']/body/div[1]/div/div[1]/div/div/div[2]/a")
+	//*[@id="top"]/body/div[4]/div/div[1]/div/div/div[2]/a
+	@FindBy(xpath="//*[@id='top']/body/div[4]/div/div[1]/div/div/div[2]/a")
 	private WebElement loginLink;
 	
 	@FindBy(id="header-login-form-email")
@@ -26,16 +28,17 @@ public class MainPage extends PageObject{
 	@FindBy(id="header-login-form-password")
 	private WebElement loginPassword;
 	
+	//@FindBy(xpath="//*[@id='header-login-form']/div/div/div[3]/div/button")
+	//*[@id="header-login-form"]/div/div/div[3]/div/button
 	@FindBy(xpath="//*[@id='header-login-form']/div/div/div[3]/div/button")
 	private WebElement submitButton;
-		
-	//private String eMail = "placeholder";
 	
-	//private String password = "placeholder";
+
 
 	public MainPage(WebDriver driver)
 	{
 		super(driver);
+		waitForElement(loginLink);
 		Assert.assertTrue(shirteeLogo.isDisplayed());
 	}
 	

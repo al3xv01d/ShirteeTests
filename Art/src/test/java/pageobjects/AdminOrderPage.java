@@ -13,6 +13,9 @@ public class AdminOrderPage extends PageObject{
 	@FindBy(xpath = "//button[contains(@title,'Rechnung')]")
 	private WebElement invoiceButton;
 	
+	@FindBy(xpath = "//button[contains(@title,'Stornieren')]")
+	private WebElement cancelButton;
+	
 	public AdminOrderPage(WebDriver driver)
 	{
 		super(driver);
@@ -26,6 +29,11 @@ public class AdminOrderPage extends PageObject{
 	public void invoiceButtonClick()
 	{
 		invoiceButton.click();
+	}
+	
+	public void cancelButtonClick()
+	{
+		cancelButton.click();
 	}
 	
 }

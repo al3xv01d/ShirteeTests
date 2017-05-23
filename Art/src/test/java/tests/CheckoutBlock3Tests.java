@@ -191,7 +191,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void databaseTest() throws SQLException, ClassNotFoundException
 	{
 		

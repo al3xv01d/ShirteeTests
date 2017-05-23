@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 public class DashboardPage extends PageObject{
 	
@@ -55,16 +56,22 @@ public class DashboardPage extends PageObject{
 	@FindBy(xpath="//*[@id='campaign_items_content']/tr[1]/td[7]/div/span/span")
 	private WebElement aktuellerGewinn;
 	
-	
+	@FindBy(xpath = "//*[@id='campaign_items_content']/tr[1]/td[9]/div/a[1]")
+	private WebElement campaignLink;
+		
 	public DashboardPage(WebDriver driver)
 	{
 		super(driver);
 	}
 	
-	public void waitForData()
+	public void waitForDataToShow()
 	{
 		waitForElement(verkaufteProducte);
-		
+	}
+	
+	public void campaignLinkClick()
+	{
+		campaignLink.click();
 	}
 	
 	public int[] getVerkaufteProducte()
@@ -76,6 +83,12 @@ public class DashboardPage extends PageObject{
 		verk[1] = Integer.parseInt(str[1]);
 		
 		return verk;
+	}
+	
+	public String test()
+	{
+		String s = gesamtgewinn.getText();
+		return s;
 	}
 	
 	public BigDecimal getGesamtgewinn()
@@ -162,7 +175,6 @@ public class DashboardPage extends PageObject{
 		newStr[0] = newStr[0].replaceAll(",", ".");
 		
 		BigDecimal a = new BigDecimal(newStr[0]);
-		//double d = Double.parseDouble(newStr[0]);
 		nf.format(a);
 		return a;
 	}

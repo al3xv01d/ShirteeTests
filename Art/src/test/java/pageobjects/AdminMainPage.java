@@ -26,6 +26,10 @@ public class AdminMainPage extends PageObject{
 		this.password.sendKeys(password);
 	}
 	
+	public void waitforButton()
+	{
+		waitForElement(confirmButton);
+	}
 	
 	public void submit()
 	{

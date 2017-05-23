@@ -10,7 +10,7 @@ import pageobjects.ProductPage;
 public class CheckoutPackstationBlockTests extends FunctionalTest{
 	
 	
-	@Test
+	@Test(enabled = false)
 	public void packstationFinderLinkTest()
 	{
 		SoftAssert softAssert = new SoftAssert();
@@ -35,7 +35,7 @@ public class CheckoutPackstationBlockTests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void emptyFieldsTest()
 	{
 		SoftAssert softAssert = new SoftAssert();
@@ -66,7 +66,7 @@ public class CheckoutPackstationBlockTests extends FunctionalTest{
 		
 	}
 	
-	@Test
+	@Test(enabled = false)
 	public void tabsTest()
 	{
 

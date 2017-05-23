@@ -173,7 +173,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 
 	}
 	
-	@Test(dataProvider = "vornameTestData")
+	@Test(dataProvider = "vornameTestData", enabled = false)
 	public void vornameTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city){
 		
@@ -214,7 +214,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(dataProvider = "nachnameTestData")
+	@Test(dataProvider = "nachnameTestData", enabled = false)
 	public void nachnameTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
 	{
@@ -254,7 +254,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(dataProvider = "emailTestData")
+	@Test(dataProvider = "emailTestData", enabled = false)
 	public void eMailTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
 	{
@@ -295,7 +295,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(dataProvider = "addressTestData")
+	@Test(dataProvider = "addressTestData", enabled = false)
 	public void addressTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
 	{
@@ -335,7 +335,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(dataProvider = "postcodeTestData")
+	@Test(dataProvider = "postcodeTestData", enabled = false)
 	public void postcodeTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
 	{
@@ -373,7 +373,7 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(dataProvider = "cityTestData")
+	@Test(dataProvider = "cityTestData", enabled = false)
 	public void cityTest(String vorname, String nachname, String eMail, String address, 
 			String postalCode, String city)
 	{
