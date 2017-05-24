@@ -51,12 +51,22 @@ public class CheckoutPageBlock3 extends PageObject{
 	@FindAll({@FindBy(xpath="//*[@id='carousel-content']/li/a")})
 	private List<WebElement> crossSellProducts;
 
+	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td/div/div[2]/div[2]/h3/a")
+	private WebElement campaignTitle;
 	
 	public CheckoutPageBlock3(WebDriver driver)
 	{
 		super(driver);
 	}
 
+	public WebElement getSecondItemProductName() {
+		return secondItemProductName;
+	}
+	
+	public WebElement getCampaignTitle(){
+		return campaignTitle;
+	}
+	
 	public void increaseQuantity()
 	{
 		incQuantityButton.click();
@@ -109,9 +119,7 @@ public class CheckoutPageBlock3 extends PageObject{
 		return total.getText();
 	}
 
-	public WebElement getSecondItemProductName() {
-		return secondItemProductName;
-	}
+
 
 	
 }

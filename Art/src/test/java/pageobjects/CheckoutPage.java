@@ -110,6 +110,9 @@ public class CheckoutPage extends PageObject{
 	
 	@FindBy(xpath = "//*[@id='billing_select-company-gender']/div[1]/label")
 	private WebElement herrRadioButton;
+	
+	@FindBy(xpath = "//div[@class='breadcrumbs-checkout-back']/a")
+	private WebElement backLink;
 
 	public CheckoutPage(WebDriver driver)
 	{
@@ -118,6 +121,10 @@ public class CheckoutPage extends PageObject{
 	}
 
 	//Getters
+	public WebElement getBackLink(){
+		return backLink;
+	}
+	
 	public WebElement getSubmitButton() {
 		return submitButton;
 	}

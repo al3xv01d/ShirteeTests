@@ -64,9 +64,53 @@ public class DashboardPage extends PageObject{
 		super(driver);
 	}
 	
+	public WebElement getVerkaufteProducte() {
+		return verkaufteProducte;
+	}
+
+	public WebElement getGesamtgewinn() {
+		return gesamtgewinn;
+	}
+
+	public WebElement getGewinnVerfugbar() {
+		return gewinnVerfugbar;
+	}
+
+	public WebElement getGewinnAusstehend() {
+		return gewinnAusstehend;
+	}
+
+	public WebElement getVerkaufeSoldItems() {
+		return verkaufeSoldItems;
+	}
+
+	public WebElement getVerkaufeProductionItems() {
+		return verkaufeProductionItems;
+	}
+
+	public WebElement getVerkHeuteSoldItems() {
+		return verkHeuteSoldItems;
+	}
+
+	public WebElement getVerkHeuteProductionItems() {
+		return verkHeuteProductionItems;
+	}
+
+	public WebElement getVerkGesternSoldItems() {
+		return verkGesternSoldItems;
+	}
+
+	public WebElement getVerkGesternProductionItems() {
+		return verkGesternProductionItems;
+	}
+
+	public WebElement getAktuellerGewinn() {
+		return aktuellerGewinn;
+	}
+	
 	public void waitForDataToShow()
 	{
-		waitForElement(verkaufteProducte);
+		waitForElement(getVerkaufteProducte());
 	}
 	
 	public void campaignLinkClick()
@@ -74,9 +118,9 @@ public class DashboardPage extends PageObject{
 		campaignLink.click();
 	}
 	
-	public int[] getVerkaufteProducte()
+	public int[] getVerkaufteProducteOld()
 	{
-		String[] str = verkaufteProducte.getText().split("/");
+		String[] str = getVerkaufteProducte().getText().split("/");
 		
 		int[] verk = {0,0};
 		verk[0] = Integer.parseInt(str[0]);
@@ -85,81 +129,76 @@ public class DashboardPage extends PageObject{
 		return verk;
 	}
 	
-	public String test()
-	{
-		String s = gesamtgewinn.getText();
-		return s;
-	}
 	
-	public BigDecimal getGesamtgewinn()
+	public BigDecimal getGesamtgewinnOld()
 	{
-		String s = gesamtgewinn.getText();
+		String s = getGesamtgewinn().getText();
 		BigDecimal d = formatStringProfits(s);
 		
 		return d;
 	}
 	
-	public BigDecimal getGewinnVerfugbar()
+	public BigDecimal getGewinnVerfugbarOld()
 	{
-		String s = gewinnVerfugbar.getText();
+		String s = getGewinnVerfugbar().getText();
 		BigDecimal d = formatStringProfits(s);
 		
 		return d;
 	}
 
-	public BigDecimal getGewinnAusstehend()
+	public BigDecimal getGewinnAusstehendOld()
 	{
-		String s = gewinnAusstehend.getText();
+		String s = getGewinnAusstehend().getText();
 		BigDecimal d = formatStringProfits(s);
 		
 		return d;
 	}
 	
-	public int getVerkaufeSold()
+	public int getVerkaufeSoldOld()
 	{
-		String s = verkaufeSoldItems.getText();
+		String s = getVerkaufeSoldItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public int getVerkaufeProduction()
+	public int getVerkaufeProductionOld()
 	{
-		String s =  verkaufeProductionItems.getText();
+		String s =  getVerkaufeProductionItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public int getVerkHeuteSold()
+	public int getVerkHeuteSoldOld()
 	{
-		String s = verkHeuteSoldItems.getText();
+		String s = getVerkHeuteSoldItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public int getVerkHeuteProduction()
+	public int getVerkHeuteProductionOld()
 	{
-		String s = verkHeuteProductionItems.getText();
+		String s = getVerkHeuteProductionItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public int getVerkGesternSold()
+	public int getVerkGesternSoldOld()
 	{
-		String s = verkGesternSoldItems.getText();
+		String s = getVerkGesternSoldItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public int getVerkGesternProduction()
+	public int getVerkGesternProductionOld()
 	{
-		String s = verkGesternProductionItems.getText();
+		String s = getVerkGesternProductionItems().getText();
 		int i = Integer.parseInt(s);
 		return i;
 	}
 	
-	public BigDecimal getAktuellerGewinn()
+	public BigDecimal getAktuellerGewinnOld()
 	{
-		String s = aktuellerGewinn.getText();
+		String s = getAktuellerGewinn().getText();
 		BigDecimal d = formatStringProfits(s);
 		
 		return d;
@@ -178,5 +217,8 @@ public class DashboardPage extends PageObject{
 		nf.format(a);
 		return a;
 	}
+
+
+
 	
 }

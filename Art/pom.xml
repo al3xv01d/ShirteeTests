@@ -43,7 +43,7 @@
        						 	<mainPageURL>https://www.shirtee.de</mainPageURL>
        							 <designerURL>https://www.shirtee.de/designer/?id=1140/</designerURL>
        							 <campaignURL1>https://www.shirtee.de/testautocampaign2</campaignURL1>
-       							 <campaignURL2>https://www.shirtee.de/testautocampaign2</campaignURL2>
+       							 <campaignURL2>https://www.shirtee.de/testautocampaign1</campaignURL2>
        							 <campaignURL3>https://www.shirtee.de/upright</campaignURL3>
        							 <dashboardURL>https://www.shirtee.de/dashboard/index/index/</dashboardURL>
        				 			<checkoutURL>https://www.shirtee.de/checkout/onepage/</checkoutURL>
@@ -74,6 +74,7 @@
        							 <campaignURL2>https://dev.shirtee.de/testautocampaign1</campaignURL2>
        							 <campaignURL3>https://dev.shirtee.de/test1705-2</campaignURL3>
        							 <ffadminURL>https://dev.shirtee.de/index.php/ffadmin</ffadminURL>
+       							 <shopURL>https://dev.shirtee.de/store/testfix</shopURL>
        							 <walletUrl>https://dev.shirtee.de/customdashboard/wallet/index/</walletUrl>
        							 <dashboardURL>https://dev.shirtee.de/dashboard/index/index/</dashboardURL>
        				 			<checkoutURL>https://dev.shirtee.de/checkout/onepage/</checkoutURL>

@@ -13,6 +13,7 @@ import pageobjects.ProductPage;
 import pageobjects.WalletMainPage;
 
 import java.math.BigDecimal;
+import java.security.cert.CertificateRevokedException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -32,22 +33,22 @@ public class ProfitsTests extends FunctionalTest{
 	private String adminUser;
 	private String adminPassword;
 	
-	private int verkaufteProducteSold;
-	private int verkaufteProducteProduction;
-	private BigDecimal gesamtGewinn;
-	private BigDecimal gewinnVerfugbar;
-	private BigDecimal gewinnAusstehend;
+	private int initVerkaufteProducteSold;
+	private int initVerkaufteProducteProduction;
+	private BigDecimal initGesamtGewinn;
+	private BigDecimal initGewinnVerfugbar;
+	private BigDecimal initGewinnAusstehend;
 	
-	private int verkaufeSold;
-	private int verkaufeProduction;
+	private int initVerkaufeSold;
+	private int initVerkaufeProduction;
 	
-	private int verkHeuteSold;
-	private int verkHeuteProduction;
+	private int initVerkHeuteSold;
+	private int initVerkHeuteProduction;
 	
-	private int verkGesternSold;
-	private int verkGesternProduction;
+	private int initVerkGesternSold;
+	private int initVerkGesternProduction;
 	
-	private BigDecimal aktuellerGewinn;
+	private BigDecimal initAktuellerGewinn;
 	
 	private BigDecimal orderProfit;
 	private String customerName = "Herr Test Account";
@@ -95,14 +96,6 @@ public class ProfitsTests extends FunctionalTest{
 		SoftAssert softAssertion = new SoftAssert();
 		orderProfit = new BigDecimal("21");
 		
-		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
-		
-		eMail = data.getPropertie("eMail");
-		userPassword = data.getPropertie("userPassword");
-		adminUser = data.getPropertie("adminUser");
-		adminPassword = data.getPropertie("adminPassword");
-		
-		
 		driver.get(System.getProperty("mainPageURL"));
 		driver.manage().window().maximize();
 		
@@ -115,43 +108,41 @@ public class ProfitsTests extends FunctionalTest{
 		dashboardMainPage.waitForDataToShow();
 		
 		ParseHelper parseHelper = new ParseHelper();
-
-		String sg = dashboardMainPage.test();
-		BigDecimal bd = parseHelper.profitStringToBigDecimal(sg);
 		
-		System.out.println(bd);
+		//verkaufteProducteSold = dashboardMainPage.getVerkaufteProducteOld()[0];
+		initVerkaufteProducteSold = parseHelper.stringToIntArrayBySplit(dashboardMainPage.
+				getVerkaufteProducte().getText(),"/")[0];
+		//verkaufteProducteProduction = dashboardMainPage.getVerkaufteProducteOld()[1];
+		initVerkaufteProducteProduction = parseHelper.stringToIntArrayBySplit(dashboardMainPage.
+				getVerkaufteProducte().getText(), "/")[1];
 		
-		verkaufteProducteSold = dashboardMainPage.getVerkaufteProducte()[0];
-		verkaufteProducteProduction = dashboardMainPage.getVerkaufteProducte()[1];
+		initGesamtGewinn = parseHelper.profitStringToBigDecimal(dashboardMainPage.getGesamtgewinn().getText());
+		initGewinnVerfugbar = parseHelper.profitStringToBigDecimal(dashboardMainPage.getGewinnVerfugbar().getText());
+		initGewinnAusstehend = parseHelper.profitStringToBigDecimal(dashboardMainPage.getGewinnAusstehend().getText());
 		
-		gesamtGewinn = dashboardMainPage.getGesamtgewinn();
-		gewinnVerfugbar = dashboardMainPage.getGewinnVerfugbar();
-		gewinnAusstehend = dashboardMainPage.getGewinnAusstehend();
+		initVerkaufeSold = parseHelper.stringToInt(dashboardMainPage.getVerkaufeSoldItems().getText());
+		initVerkaufeProduction = parseHelper.stringToInt(dashboardMainPage.getVerkaufeProductionItems().getText());
 		
-		verkaufeSold = dashboardMainPage.getVerkaufeSold();
-		verkaufeProduction = dashboardMainPage.getVerkaufeProduction();
+		initVerkHeuteSold = parseHelper.stringToInt(dashboardMainPage.getVerkHeuteSoldItems().getText());
+		initVerkHeuteProduction = parseHelper.stringToInt(dashboardMainPage.getVerkHeuteProductionItems().getText());
 		
-		verkHeuteSold = dashboardMainPage.getVerkHeuteSold();
-		verkHeuteProduction = dashboardMainPage.getVerkHeuteProduction();
+		initVerkGesternSold = parseHelper.stringToInt(dashboardMainPage.getVerkGesternSoldItems().getText());
+		initVerkGesternProduction = parseHelper.stringToInt(dashboardMainPage.getVerkGesternProductionItems().getText());
 		
-		verkGesternSold = dashboardMainPage.getVerkGesternSold();
-		verkGesternProduction = dashboardMainPage.getVerkGesternProduction();
+		initAktuellerGewinn = parseHelper.profitStringToBigDecimal(dashboardMainPage.getAktuellerGewinn().getText());
 		
-		aktuellerGewinn = dashboardMainPage.getAktuellerGewinn();
-		
-		
-		System.out.println(dashboardMainPage.getGesamtgewinn());
-		System.out.println(dashboardMainPage.getGewinnVerfugbar());
-		System.out.println(dashboardMainPage.getGewinnAusstehend());
+		System.out.println(dashboardMainPage.getGesamtgewinnOld());
+		System.out.println(dashboardMainPage.getGewinnVerfugbarOld());
+		System.out.println(dashboardMainPage.getGewinnAusstehendOld());
 		
 		System.out.println("/////////////////////////////////");
-		System.out.println(dashboardMainPage.getVerkaufeSold());
-		System.out.println(dashboardMainPage.getVerkaufeProduction());
-		System.out.println(dashboardMainPage.getVerkHeuteSold());
-		System.out.println(dashboardMainPage.getVerkHeuteProduction());
-		System.out.println(dashboardMainPage.getVerkGesternSold());
-		System.out.println(dashboardMainPage.getVerkGesternProduction());
-		System.out.println(dashboardMainPage.getAktuellerGewinn());
+		System.out.println(dashboardMainPage.getVerkaufeSoldOld());
+		System.out.println(dashboardMainPage.getVerkaufeProductionOld());
+		System.out.println(dashboardMainPage.getVerkHeuteSoldOld());
+		System.out.println(dashboardMainPage.getVerkHeuteProductionOld());
+		System.out.println(dashboardMainPage.getVerkGesternSoldOld());
+		System.out.println(dashboardMainPage.getVerkGesternProductionOld());
+		System.out.println(dashboardMainPage.getAktuellerGewinnOld());
 		
 		
 		makePurchase("campaignURL1");
@@ -180,36 +171,36 @@ public class ProfitsTests extends FunctionalTest{
 		dashboardMainPage.waitForDataToShow();
 		
 		System.out.println("New Profits");
-		System.out.println(dashboardMainPage.getGesamtgewinn());
-		System.out.println(dashboardMainPage.getGewinnVerfugbar());
-		System.out.println(dashboardMainPage.getGewinnAusstehend());
+		System.out.println(dashboardMainPage.getGesamtgewinnOld());
+		System.out.println(dashboardMainPage.getGewinnVerfugbarOld());
+		System.out.println(dashboardMainPage.getGewinnAusstehendOld());
 		
 		System.out.println("/////////////////////////////////");
-		System.out.println(dashboardMainPage.getVerkaufeSold());
-		System.out.println(dashboardMainPage.getVerkaufeProduction());
-		System.out.println(dashboardMainPage.getVerkHeuteSold());
-		System.out.println(dashboardMainPage.getVerkHeuteProduction());
-		System.out.println(dashboardMainPage.getVerkGesternSold());
-		System.out.println(dashboardMainPage.getVerkGesternProduction());
-		System.out.println(dashboardMainPage.getAktuellerGewinn());
+		System.out.println(dashboardMainPage.getVerkaufeSoldOld());
+		System.out.println(dashboardMainPage.getVerkaufeProductionOld());
+		System.out.println(dashboardMainPage.getVerkHeuteSoldOld());
+		System.out.println(dashboardMainPage.getVerkHeuteProductionOld());
+		System.out.println(dashboardMainPage.getVerkGesternSoldOld());
+		System.out.println(dashboardMainPage.getVerkGesternProductionOld());
+		System.out.println(dashboardMainPage.getAktuellerGewinnOld());
 		
 		
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducte()[0], verkaufteProducteSold + 1);
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducte()[1], verkaufteProducteProduction);
-		softAssertion.assertEquals(dashboardMainPage.getGesamtgewinn(), gesamtGewinn.add(orderProfit));
-		softAssertion.assertEquals(dashboardMainPage.getGewinnVerfugbar(), gewinnVerfugbar.add(orderProfit));
-		softAssertion.assertEquals(dashboardMainPage.getGewinnAusstehend(), gewinnAusstehend);
+		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducteOld()[0], initVerkaufteProducteSold + 1);
+		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducteOld()[1], initVerkaufteProducteProduction);
+		softAssertion.assertEquals(dashboardMainPage.getGesamtgewinnOld(), initGesamtGewinn.add(orderProfit));
+		softAssertion.assertEquals(dashboardMainPage.getGewinnVerfugbarOld(), initGewinnVerfugbar.add(orderProfit));
+		softAssertion.assertEquals(dashboardMainPage.getGewinnAusstehendOld(), initGewinnAusstehend);
 		
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufeSold(), verkaufeSold + 1);
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufeProduction(), verkaufeProduction);
+		softAssertion.assertEquals(dashboardMainPage.getVerkaufeSoldOld(), initVerkaufeSold + 1);
+		softAssertion.assertEquals(dashboardMainPage.getVerkaufeProductionOld(), initVerkaufeProduction);
 		
 		//TODO: VerkHeute assert
 		//VerkHeute assert - doesn't work now. Blocked by a bug
 		
-		softAssertion.assertEquals(dashboardMainPage.getVerkGesternSold(), verkGesternSold);
-		softAssertion.assertEquals(dashboardMainPage.getVerkGesternProduction(), verkGesternProduction);
+		softAssertion.assertEquals(dashboardMainPage.getVerkGesternSoldOld(), initVerkGesternSold);
+		softAssertion.assertEquals(dashboardMainPage.getVerkGesternProductionOld(), initVerkGesternProduction);
 		
-		softAssertion.assertEquals(dashboardMainPage.getAktuellerGewinn(), aktuellerGewinn.add(orderProfit));
+		softAssertion.assertEquals(dashboardMainPage.getAktuellerGewinnOld(), initAktuellerGewinn.add(orderProfit));
 		
 		softAssertion.assertAll();
 		
@@ -264,6 +255,7 @@ public class ProfitsTests extends FunctionalTest{
 				initialSaldo.add(orderProfit));
 	}
 	
+
 	@Test
 	public void orderCancelTest()
 	{
@@ -332,7 +324,6 @@ public class ProfitsTests extends FunctionalTest{
 		System.out.println(initialSaldo);
 		
 		makePurchase("campaignURL1", "campaignURL3");
-
 
 		driver.get(System.getProperty("ffadminURL"));
 		

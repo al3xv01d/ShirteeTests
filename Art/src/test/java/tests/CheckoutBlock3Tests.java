@@ -1,10 +1,7 @@
 package tests;
 
-import java.math.BigDecimal;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -21,6 +18,7 @@ import pageobjects.CheckoutPage;
 import pageobjects.CheckoutPageBlock2;
 import pageobjects.CheckoutPageBlock3;
 import pageobjects.ProductPage;
+import pageobjects.ShopPage;
 
 public class CheckoutBlock3Tests extends FunctionalTest{
 
@@ -29,9 +27,8 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	private String charges = "2,52 €";
 	private String shipping = "4,50 €";
 	
-	
 	@Test
-	public void oneProductPricesTest()
+	public void oneProductDataTest()
 	{
 		SoftAssert softAssert = new SoftAssert();
 		
@@ -48,6 +45,10 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.gotoCart();
 		
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
+		
+		softAssert.assertTrue(cartBlock3.getCampaignTitle().getAttribute("href").
+				contains(System.getProperty("campaignURL1")));
+		softAssert.assertEquals(cartBlock3.getCampaignTitle().getText(), "TESTAUTOCAMPAIGN2");
 		
 		softAssert.assertEquals(cartBlock3.getPrice(), price);
 		softAssert.assertEquals(cartBlock3.getSum(), price);
@@ -127,34 +128,55 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertEquals(cartBlock3.getShippingKlarna(), shipping);
 		softAssert.assertEquals(cartBlock3.getCharges(), charges);
 		
-		
 		softAssert.assertAll();
 	}
 	
-	@Test(enabled = false)
+	@Test()
 	public void breadcrumbsTest()
 	{
 
+		//TODO:  prod version
+		
 		SoftAssert softAssert = new SoftAssert();
 		
-		driver.get(System.getProperty("campaignURL1"));
+		driver.get(System.getProperty("shopURL"));
 		driver.manage().window().maximize();
 		
+		ShopPage shopPage = new ShopPage(driver);
+		shopPage.campaignItem1Click();
+		
 		ProductPage productPage = new ProductPage(driver);
-		
-		price = productPage.getPrice();
-		
+				
 		productPage.getSize();
 		productPage.buy();
 		productPage.waitForPopup();
 		productPage.gotoCart();
 		
-		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
-		softAssert.assertTrue(cartBlock3.isElementPresent(By.linkText("Store")));
-		softAssert.assertTrue(cartBlock3.isElementPresent(By.partialLinkText("storetestcreate")));
+		CheckoutPage checkoutPage = new CheckoutPage(driver);
+		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")));
+
+		softAssert.assertTrue(checkoutPage.getBackLink().getAttribute("href").
+				contains(System.getProperty("campaignURL2")));
+		
+		driver.get(System.getProperty("shopURL"));
+		
+		shopPage.campaignItem2Click();
+
+		productPage.getSize();
+		productPage.buy();
+		productPage.waitForPopup();
+		productPage.gotoCart();
+		
+		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")));
+
+		softAssert.assertTrue(checkoutPage.getBackLink().getAttribute("href").
+				contains(System.getProperty("campaignURL1")));
 		
 		softAssert.assertAll();
 	}
+
+	
+	//TODO: breadcrumbs test for 2 campaigns
 	
 	@Test
 	public void deleteProductTest()
