@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import Util.DatabaseHelper;
 import Util.ReadDataFromFile;
 
 import java.sql.DriverManager;
@@ -131,7 +132,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test()
+	@Test(enabled = true)
 	public void breadcrumbsTest()
 	{
 
@@ -213,29 +214,15 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void databaseTest() throws SQLException, ClassNotFoundException
 	{
-		
-		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
-		 
-		String login = data.getPropertie("databaseLogin");
-		String password = data.getPropertie("databasePassword");
-	
-		//Class.forName("com.mysql.jdbc.Driver");	
 
-		//Creating a connection to the database
-		Connection conn = DriverManager.getConnection("jdbc:mysql://db.shirtee.de:33006/shirtee",login,password);
+		DatabaseHelper databaseHelper = new DatabaseHelper("/home/dglazov/data.properties");
+
 		
-		//Executing SQL query and fetching the result
-		Statement st = conn.createStatement();
-		String sqlStr = "SELECT * FROM `gomage_productdesigner_campaign_products` WHERE `product_id` = 20000";
-		ResultSet rs = st.executeQuery(sqlStr);
-		while (rs.next()) {
-			System.out.println(rs.getString("price"));
-		}		
-		
-		
+		String str = databaseHelper.getAffiliateByType(Util.DatabaseHelper.AffiliateType.JB);
+		System.out.println(str);
 	}
 	
 	

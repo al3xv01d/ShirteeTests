@@ -17,9 +17,11 @@ public class MainPage extends PageObject{
 	@FindBy(xpath="//*[@id='header']/div/a/img[1]")
 	private WebElement shirteeLogo;
 	
-	//@FindBy(xpath="//*[@id='top']/body/div[1]/div/div[1]/div/div/div[2]/a")
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div/div[1]/div/div/div[2]/a")
+	//*[@id="top"]/body/div[3]/div/div[1]/div/div/div[2]/a
 	//*[@id="top"]/body/div[4]/div/div[1]/div/div/div[2]/a
-	@FindBy(xpath="//*[@id='top']/body/div[4]/div/div[1]/div/div/div[2]/a")
+	//*[@id="top"]/body/div[4]/div/div[1]/div/div/div[2]/a
+	//@FindBy(xpath="//*[@id='top']/body/div[4]/div/div[1]/div/div/div[2]/a")
 	private WebElement loginLink;
 	
 	@FindBy(id="header-login-form-email")

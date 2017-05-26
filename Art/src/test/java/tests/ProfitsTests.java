@@ -206,7 +206,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 	}
 	
-	@Test
+	@Test()
 	public void walletSaldoTest()
 	{
 		orderProfit = new BigDecimal("21");
@@ -256,7 +256,7 @@ public class ProfitsTests extends FunctionalTest{
 	}
 	
 
-	@Test
+	@Test()
 	public void orderCancelTest()
 	{
 		ParseHelper parseHelper = new ParseHelper();
@@ -303,8 +303,8 @@ public class ProfitsTests extends FunctionalTest{
 				initialSaldo);
 	}
 	
-	@Test
-	public void twoProductsInOrderTest()
+	@Test()
+	public void twoProductsInOrderTest() //Only profit for 1st product should count
 	{
 		orderProfit = new BigDecimal("21");
 		

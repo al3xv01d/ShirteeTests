@@ -49,6 +49,7 @@
        				 			<checkoutURL>https://www.shirtee.de/checkout/onepage/</checkoutURL>
        				 			<walletUrl>https://www.shirtee.de/customdashboard/wallet/index/</walletUrl>
        				 			  <ffadminURL>https://www.shirtee.de/index.php/ffadmin</ffadminURL>
+       				 			  <DBURL>jdbc:mysql://db.shirtee.de:33006/shirtee</DBURL>
        				 			  <ffadminOrdersURL>https://www.shirtee.de/index.php/ffadmin/sales_order/index</ffadminOrdersURL>
        				 			<successPageURL>https://www.shirtee.de/checkout/onepage/success/</successPageURL>
        						 </systemPropertyVariables>
@@ -75,6 +76,7 @@
        							 <campaignURL3>https://dev.shirtee.de/test1705-2</campaignURL3>
        							 <ffadminURL>https://dev.shirtee.de/index.php/ffadmin</ffadminURL>
        							 <shopURL>https://dev.shirtee.de/store/testfix</shopURL>
+       							 <DBURL>jdbc:mysql://db.shirtee.de:33006/shirtee_dev</DBURL>
        							 <walletUrl>https://dev.shirtee.de/customdashboard/wallet/index/</walletUrl>
        							 <dashboardURL>https://dev.shirtee.de/dashboard/index/index/</dashboardURL>
        				 			<checkoutURL>https://dev.shirtee.de/checkout/onepage/</checkoutURL>
