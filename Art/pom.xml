@@ -18,6 +18,15 @@
       				 <artifactId>maven-surefire-plugin</artifactId>
        				<version>2.19.1</version>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+   					 <artifactId>maven-compiler-plugin</artifactId>
+    				<version>3.6.1</version>
+    				<configuration>
+     					 <source>1.8</source>
+     					 <target>1.8</target>
+   					 </configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -76,6 +85,8 @@
        							 <campaignURL3>https://dev.shirtee.de/test1705-2</campaignURL3>
        							 <ffadminURL>https://dev.shirtee.de/index.php/ffadmin</ffadminURL>
        							 <shopURL>https://dev.shirtee.de/store/testfix</shopURL>
+       							 <JoinerCmpURL1>https://dev.shirtee.de/share2</JoinerCmpURL1>
+       							 <JoinerCmpURL2>https://dev.shirtee.de/join3</JoinerCmpURL2>
        							 <DBURL>jdbc:mysql://db.shirtee.de:33006/shirtee_dev</DBURL>
        							 <walletUrl>https://dev.shirtee.de/customdashboard/wallet/index/</walletUrl>
        							 <dashboardURL>https://dev.shirtee.de/dashboard/index/index/</dashboardURL>

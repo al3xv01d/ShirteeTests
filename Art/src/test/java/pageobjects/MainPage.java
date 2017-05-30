@@ -14,25 +14,23 @@ import java.util.Objects;
 
 public class MainPage extends PageObject{
 
-	@FindBy(xpath="//*[@id='header']/div/a/img[1]")
+	//@FindBy(xpath="//*[@id='header']/div/a/img[1]")
+	@FindBy(xpath="//a[@class='logo']")
 	private WebElement shirteeLogo;
 	
-	@FindBy(xpath="//*[@id='top']/body/div[3]/div/div[1]/div/div/div[2]/a")
-	//*[@id="top"]/body/div[3]/div/div[1]/div/div/div[2]/a
-	//*[@id="top"]/body/div[4]/div/div[1]/div/div/div[2]/a
-	//*[@id="top"]/body/div[4]/div/div[1]/div/div/div[2]/a
-	//@FindBy(xpath="//*[@id='top']/body/div[4]/div/div[1]/div/div/div[2]/a")
+	@FindBy(xpath="//div[@class='bhi-link-right']/a")
 	private WebElement loginLink;
 	
 	@FindBy(id="header-login-form-email")
 	private WebElement loginEmail;
 	
+	@FindBy(xpath="//*[@id='top']/body/div[3]/div/div[1]/div/div/div[2]/a[2]")
+	private WebElement logOutLink;
+	
 	@FindBy(id="header-login-form-password")
 	private WebElement loginPassword;
 	
-	//@FindBy(xpath="//*[@id='header-login-form']/div/div/div[3]/div/button")
-	//*[@id="header-login-form"]/div/div/div[3]/div/button
-	@FindBy(xpath="//*[@id='header-login-form']/div/div/div[3]/div/button")
+	@FindBy(className="btn-proceed-checkout")
 	private WebElement submitButton;
 	
 
@@ -40,12 +38,19 @@ public class MainPage extends PageObject{
 	public MainPage(WebDriver driver)
 	{
 		super(driver);
-		waitForElement(loginLink);
+
 		Assert.assertTrue(shirteeLogo.isDisplayed());
+	}
+	
+	public void logOut()
+	{
+		waitForElement(logOutLink);
+		logOutLink.click();
 	}
 	
 	public void performLogin(String eMail, String passWord)
 	{
+		waitForElement(loginLink);
 		loginLink.click();
 		waitForElement(loginEmail);
 		sendKeys(loginEmail, eMail);

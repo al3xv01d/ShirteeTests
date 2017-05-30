@@ -16,6 +16,12 @@ public class AdminOrderPage extends PageObject{
 	@FindBy(xpath = "//button[contains(@title,'Stornieren')]")
 	private WebElement cancelButton;
 	
+	@FindBy(xpath = "//button[contains(@title,'Rechnungskorrektur')]")
+	private WebElement creditMemoBtn;
+	
+	@FindBy(xpath = "//button[contains(@title,'Erstattung (offline)')]")
+	private WebElement submitCreditMemoBtn;
+	
 	public AdminOrderPage(WebDriver driver)
 	{
 		super(driver);
@@ -34,6 +40,13 @@ public class AdminOrderPage extends PageObject{
 	public void cancelButtonClick()
 	{
 		cancelButton.click();
+	}
+	
+	public void makeRefund()
+	{
+		creditMemoBtn.click();
+		waitForElement(submitCreditMemoBtn);
+		submitCreditMemoBtn.click();
 	}
 	
 }

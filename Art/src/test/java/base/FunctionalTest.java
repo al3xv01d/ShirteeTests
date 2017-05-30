@@ -3,6 +3,8 @@ package base;
 //import org.junit.AfterClass;
 //import org.junit.BeforeClass;
 import org.testng.annotations.*;
+
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,7 +23,7 @@ protected static WebDriver driver;
 	@AfterMethod
 	public void cleanUp(){
 		driver.manage().deleteAllCookies();
-		//driver.quit();
+		
 	}
 	
 	@AfterClass

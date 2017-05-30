@@ -10,6 +10,7 @@ import pageobjects.CheckoutPageBlock2;
 import pageobjects.DashboardPage;
 import pageobjects.MainPage;
 import pageobjects.ProductPage;
+import pageobjects.WalletDebitPage;
 import pageobjects.WalletMainPage;
 
 import java.math.BigDecimal;
@@ -19,6 +20,9 @@ import java.text.NumberFormat;
 
 import org.testng.annotations.Test;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -32,6 +36,9 @@ public class ProfitsTests extends FunctionalTest{
 	
 	private String adminUser;
 	private String adminPassword;
+	
+	private String zeroEmail;
+	private String zeroPassword;
 	
 	private int initVerkaufteProducteSold;
 	private int initVerkaufteProducteProduction;
@@ -61,6 +68,9 @@ public class ProfitsTests extends FunctionalTest{
 		userPassword = data.getPropertie("userPassword");
 		adminUser = data.getPropertie("adminUser");
 		adminPassword = data.getPropertie("adminPassword");
+		
+		zeroEmail = data.getPropertie("zeroEmail");
+		zeroPassword = data.getPropertie("zeroPassword");
 	}
 
 	public void makePurchase(String...campaignURL )
@@ -351,6 +361,32 @@ public class ProfitsTests extends FunctionalTest{
 		System.out.println(initialSaldo.add(orderProfit));
 		Assert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
 				initialSaldo.add(orderProfit));
+		
+	}
+	
+	@Test
+	public void zeroSaldoRefundTest()
+	{
+		driver.get(System.getProperty("mainPageURL"));
+		driver.manage().window().maximize();
+		
+		MainPage mainPage = new MainPage(driver);
+		mainPage.performLogin(zeroEmail, zeroPassword);
+		driver.get(System.getProperty("walletUrl"));
+		
+		WalletMainPage walletMainPage = new WalletMainPage(driver);
+		
+		WalletDebitPage debitPage = walletMainPage.goToDebitPage();
+		debitPage.requestRefundBtnClick();
+
+		if (debitPage.isAlertPresent()) {
+			Alert alert = driver.switchTo().alert();
+			
+			Assert.assertEquals(alert.getText(), "On your balance sheet zero");
+			alert.dismiss();
+		}
+		
+		else { Assert.fail("No alert was displayed!"); }
 		
 	}
 	

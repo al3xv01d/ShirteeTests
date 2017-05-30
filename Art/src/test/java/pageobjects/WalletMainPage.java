@@ -10,6 +10,9 @@ public class WalletMainPage extends PageObject{
 	@FindBy(xpath = "//table[@class='new-account-table']/tbody/tr/td/span")
 	private WebElement saldo;
 	
+	@FindBy(partialLinkText="Debit")
+	private WebElement debitPageLink;
+	
 	
 	public WalletMainPage(WebDriver driver)
 	{
@@ -22,4 +25,10 @@ public class WalletMainPage extends PageObject{
 		return	str;
 	}
 
+	public WalletDebitPage goToDebitPage()
+	{
+		debitPageLink.click();
+		return new WalletDebitPage(driver);
+	}
+	
 }

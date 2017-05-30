@@ -2,7 +2,10 @@ package tests;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -43,15 +46,15 @@ public class AffiliateTests extends FunctionalTest{
 	
 	public  AffiliateTests() {
 		
-		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properites");
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
 		
 		 sharerMail1 = data.getPropertie("sharerMail1");
 		 sharerMail2 = data.getPropertie("sharerMail2");
-		 sharerPass = data.getPropertie("sharerPass");
+		 currentSharerPass = data.getPropertie("sharerPass");
 		
-		 joinerMail1 = data.getPropertie("joiner.joiner2@mail.ru");
-		 joinerMail2 = data.getPropertie("joiner3.joiner3@mail.ru");
-		 joinerPass = data.getPropertie("renioj555");
+		 joinerMail1 = data.getPropertie("joiner1Mail");
+		 joinerMail2 = data.getPropertie("joiner2Mail");
+		 currentJoinerPass = data.getPropertie("joinerPass");
  
 	}
 	
@@ -59,47 +62,19 @@ public class AffiliateTests extends FunctionalTest{
 	public Object[][] affiliateTestData()
 	{
 		return new Object[][] {
-			new Object[] {"Sharer1", "Joiner1", 1 , 2},
-			new Object[] {"Sharer2", "Joiner2", 1, 2},
+			new Object[] {"Sharer1", "Joiner1", 1, 1, System.getProperty("JoinerCmpURL1")},
+			new Object[] {"Sharer2", "Joiner2", 2, 2, System.getProperty("JoinerCmpURL2")},
 			
 		};
 	}
 	
-//	public String getSharerMail(String sharer)
-//	{
-//		String mail;
-//		
-//		switch (sharer) {
-//		case "Sharer1":
-//			currentSharerMail = data.getPropertie("sharerMail1");
-//			break;
-//			
-//		case "Sharer2":
-//			currentSharerMail = data.getPropertie("sharerMail2");
-//
-//		default:
-//			break;
-//		}
-//	}
-	
-	public void getSharerLvl(int sharerLvl)
-	{
-		switch (sharerLvl) {
-		case 1:
-			
-			break;
-
-		default:
-			break;
-		}
-	}
 	
 	public void makePurchase(String...campaignURL )
 	{
 		for (String str : campaignURL )
 		{
 			
-			driver.get(System.getProperty(str));
+			driver.get(str);
 			ProductPage productPage = new ProductPage(driver);
 		
 			productPage.getSize();
@@ -121,13 +96,15 @@ public class AffiliateTests extends FunctionalTest{
 	}
 	
 	@Test(dataProvider = "affiliateTestData")
-	public void affiliateProfitsTest(String sharer, String joiner, int sharerLvl, int joinerLvl) throws SQLException
+	public void affiliateProfitsTest(String sharer, String joiner, int sharerLvl, int joinerLvl, String joinerURL) throws SQLException
 	{
-		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properites");
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
 		DatabaseHelper databaseHelper = new DatabaseHelper("/home/dglazov/data.properties");
 		
+		String joinURL = joinerURL;
+
 		String customerName = null;
-		
+		//currentJoinerPass = data.getPropertie("joinerPass");
 		String adminUser = data.getPropertie("adminUser");
 		String adminPassword = data.getPropertie("adminPassword");
 		
@@ -149,13 +126,13 @@ public class AffiliateTests extends FunctionalTest{
 		
 		switch (joiner) {
 		case "Joiner1":
-			currentJoinerMail = data.getPropertie("joiner.joiner2@mail.ru");
-			customerName = "Herr Joiner2 Joiner2";
+			currentJoinerMail = data.getPropertie("joiner1Mail");
+			customerName = "Herr joiner2 joiner2";
 			break;
-
+			
 		case "Joiner2":
-			currentJoinerMail = data.getPropertie("joiner3.joiner3@mail.ru");
-			customerName = "Herr Joiner3 Joiner3";
+			currentJoinerMail = data.getPropertie("joiner2Mail");
+			customerName = "Herr joiner3 joiner3";
 		default:
 			break;
 		}
@@ -169,6 +146,8 @@ public class AffiliateTests extends FunctionalTest{
 		}
 		
 		BigDecimal orderProfit = new BigDecimal("13.95");
+		BigDecimal joinerProfit = new BigDecimal(joinerLvlProfit);
+		BigDecimal sharerProfit = new BigDecimal(sharerLvlProfit);
 		
 		ParseHelper parseHelper = new ParseHelper();
 		
@@ -176,17 +155,28 @@ public class AffiliateTests extends FunctionalTest{
 		driver.manage().window().maximize();
 		
 		MainPage mainPage = new MainPage(driver);
+
+		//Check Joiner Saldo
 		mainPage.performLogin(currentJoinerMail, currentJoinerPass);
-		
 		driver.get(System.getProperty("walletUrl"));
-		
 		WalletMainPage walletMainPage = new WalletMainPage(driver);
 		
-		BigDecimal initialSaldo = parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo());
-		System.out.println(initialSaldo);
+		BigDecimal initialJoinerSaldo = parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo());
+		System.out.println(initialJoinerSaldo);
 		
-		makePurchase("campaignURL1");
+		makePurchase(joinURL);
 
+		//Check Sharer Saldo
+		driver.get(System.getProperty("mainPageURL"));
+		
+		mainPage.logOut();
+		mainPage.performLogin(currentSharerMail, currentSharerPass);
+		driver.get(System.getProperty("walletUrl"));
+		
+		BigDecimal initialSharerSaldo = parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo());
+		System.out.println(initialSharerSaldo);
+		
+		//Make purchase
 		driver.get(System.getProperty("ffadminURL"));
 		
 		AdminMainPage adminPage = new AdminMainPage(driver);
@@ -207,22 +197,106 @@ public class AffiliateTests extends FunctionalTest{
 		invoicePage.submitOrder();
 		
 		driver.get(System.getProperty("walletUrl"));
+		
+		//Sharer profits check
 		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
 		
-		System.out.println(initialSaldo.add(orderProfit));
-		Assert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialSaldo.add(orderProfit));
+		//System.out.println(initialSharerSaldo.add(orderProfit));
+		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
+				initialSharerSaldo.add(sharerProfit));
+		
+		driver.get(System.getProperty("mainPageURL"));
+		
+		mainPage.logOut();
+		mainPage.performLogin(currentJoinerMail, currentJoinerPass);
+		driver.get(System.getProperty("walletUrl"));
+		
+		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
+				initialJoinerSaldo.add(orderProfit).add(joinerProfit));
 		
 		softAssert.assertAll();
 	}
 	
 	@Test
-	public void affiliateChangeTest()
+	public void refundTest() throws SQLException
 	{
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
+		String adminUser = data.getPropertie("adminUser");
+		String adminPassword = data.getPropertie("adminPassword");
+		
+		currentJoinerMail = data.getPropertie("joiner1Mail");
+		currentSharerMail = data.getPropertie("sharerMail1");
+		String customerName = "Herr joiner2 joiner2";
+		
 		SoftAssert softAssert = new SoftAssert();
+
+		ParseHelper parseHelper = new ParseHelper();
 		
+		driver.get(System.getProperty("mainPageURL"));
+		driver.manage().window().maximize();
 		
+		MainPage mainPage = new MainPage(driver);
+
+		//Check Joiner Saldo
+		mainPage.performLogin(currentJoinerMail, currentJoinerPass);
+		driver.get(System.getProperty("walletUrl"));
+		WalletMainPage walletMainPage = new WalletMainPage(driver);
 		
+		BigDecimal initialJoinerSaldo = parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo());
+		System.out.println(initialJoinerSaldo);
+		
+		makePurchase(System.getProperty("JoinerCmpURL1"));
+
+		//Check Sharer Saldo
+		driver.get(System.getProperty("mainPageURL"));
+		
+		mainPage.logOut();
+		
+		mainPage.performLogin(currentSharerMail, currentSharerPass);
+		driver.get(System.getProperty("walletUrl"));
+		
+		BigDecimal initialSharerSaldo = parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo());
+		System.out.println(initialSharerSaldo);
+		
+		//Make purchase
+		driver.get(System.getProperty("ffadminURL"));
+		
+		AdminMainPage adminPage = new AdminMainPage(driver);
+		adminPage.waitforButton();
+		adminPage.sendCredentials(adminUser, adminPassword);
+		adminPage.submit();
+		
+		driver.get(System.getProperty("ffadminOrdersURL"));
+		AdminOrdersPage adminOrdersPage = new AdminOrdersPage(driver);
+		
+		adminOrdersPage.orderRowClick();
+		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		adminOrderPage.invoiceButtonClick();
+		
+		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
+		invoicePage.checkShipmentCheckbox();
+		invoicePage.submitOrder();
+		
+		adminOrderPage.makeRefund();
+		
+		driver.get(System.getProperty("walletUrl"));
+		
+		//Sharer profits check
+		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
+		
+		//System.out.println(initialSharerSaldo.add(orderProfit));
+		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
+				initialSharerSaldo);
+		
+		driver.get(System.getProperty("mainPageURL"));
+		
+		mainPage.logOut();
+		mainPage.performLogin(currentJoinerMail, currentJoinerPass);
+		driver.get(System.getProperty("walletUrl"));
+		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
+		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
+				initialJoinerSaldo);
 		
 		softAssert.assertAll();
 	}
