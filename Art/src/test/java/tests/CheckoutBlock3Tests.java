@@ -24,9 +24,10 @@ import pageobjects.ShopPage;
 public class CheckoutBlock3Tests extends FunctionalTest{
 
 	private String price;
-	private String sumFor2Items = "52,95 €";
-	private String charges = "2,52 €";
-	private String shipping = "4,50 €";
+	private static final String SUM_FOR_2_ITEMS = "52,95 €";
+	private static final String CHARGES = "2,52 €";
+	private static final String SHIPPING = "4,50 €";
+	private static final String CAMPAIGN_TITLE = "TestAutoCampaign2";
 	
 	@Test
 	public void oneProductDataTest()
@@ -49,7 +50,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		
 		softAssert.assertTrue(cartBlock3.getCampaignTitle().getAttribute("href").
 				contains(System.getProperty("campaignURL1")));
-		softAssert.assertEquals(cartBlock3.getCampaignTitle().getText(), "TESTAUTOCAMPAIGN2");
+		softAssert.assertEquals(cartBlock3.getCampaignTitle().getText(), CAMPAIGN_TITLE);
 		
 		softAssert.assertEquals(cartBlock3.getPrice(), price);
 		softAssert.assertEquals(cartBlock3.getSum(), price);
@@ -59,8 +60,8 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 
 		cartBlock2.checkKlarna();
 		cartBlock2.waitForKlarnaInfo();
-		softAssert.assertEquals(cartBlock3.getShippingKlarna(), shipping);
-		softAssert.assertEquals(cartBlock3.getCharges(), charges);
+		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING);
+		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES);
 		
 		softAssert.assertAll();
 	}
@@ -121,13 +122,13 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
 
-		softAssert.assertEquals(cartBlock3.getTotal(), sumFor2Items);
+		softAssert.assertEquals(cartBlock3.getTotal(), SUM_FOR_2_ITEMS);
 		
 		CheckoutPageBlock2 cartBlock2 = new CheckoutPageBlock2(driver);
 		cartBlock2.checkKlarna();
 		cartBlock2.waitForKlarnaInfo();
-		softAssert.assertEquals(cartBlock3.getShippingKlarna(), shipping);
-		softAssert.assertEquals(cartBlock3.getCharges(), charges);
+		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING);
+		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES);
 		
 		softAssert.assertAll();
 	}
@@ -214,7 +215,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void databaseTest() throws SQLException, ClassNotFoundException
 	{
 

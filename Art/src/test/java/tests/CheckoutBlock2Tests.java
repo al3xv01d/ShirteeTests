@@ -33,8 +33,8 @@ public class CheckoutBlock2Tests extends FunctionalTest{
 		CheckoutPageBlock2 cartPage = new CheckoutPageBlock2(driver);
 		
 		cartPage.checkPayPal();
-		cartPage.waitForPayPalInfo();
-		softAssert.assertTrue(cartPage.getPayPalInfo().isDisplayed());
+		//cartPage.waitForPayPalInfo();
+		softAssert.assertTrue(!cartPage.getPayPalInfo().isDisplayed());
 		
 		cartPage.checkSofort();
 		cartPage.waitForSofortInfo();

@@ -216,7 +216,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 	}
 	
-	@Test()
+	@Test(enabled=false)
 	public void walletSaldoTest()
 	{
 		orderProfit = new BigDecimal("21");
@@ -266,7 +266,7 @@ public class ProfitsTests extends FunctionalTest{
 	}
 	
 
-	@Test()
+	@Test(enabled=false)
 	public void orderCancelTest()
 	{
 		ParseHelper parseHelper = new ParseHelper();
@@ -313,7 +313,7 @@ public class ProfitsTests extends FunctionalTest{
 				initialSaldo);
 	}
 	
-	@Test()
+	@Test(enabled=false)
 	public void twoProductsInOrderTest() //Only profit for 1st product should count
 	{
 		orderProfit = new BigDecimal("21");
@@ -364,7 +364,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 	}
 	
-	@Test
+	@Test(enabled=false)
 	public void zeroSaldoRefundTest()
 	{
 		driver.get(System.getProperty("mainPageURL"));

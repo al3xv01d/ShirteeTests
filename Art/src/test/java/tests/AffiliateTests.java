@@ -95,7 +95,7 @@ public class AffiliateTests extends FunctionalTest{
 		driver.get(System.getProperty("successPageURL"));
 	}
 	
-	@Test(dataProvider = "affiliateTestData")
+	@Test(dataProvider = "affiliateTestData", enabled=false)
 	public void affiliateProfitsTest(String sharer, String joiner, int sharerLvl, int joinerLvl, String joinerURL) throws SQLException
 	{
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
@@ -217,7 +217,7 @@ public class AffiliateTests extends FunctionalTest{
 		softAssert.assertAll();
 	}
 	
-	@Test
+	@Test(enabled=false)
 	public void refundTest() throws SQLException
 	{
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
