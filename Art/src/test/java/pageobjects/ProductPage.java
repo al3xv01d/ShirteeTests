@@ -3,15 +3,19 @@ package pageobjects;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 public class ProductPage extends PageObject{
 
+	private boolean pageAvailability = true;
 	
 	@FindBy(id = "addition_size")
 	private WebElement sizeSelect;
@@ -28,14 +32,31 @@ public class ProductPage extends PageObject{
 	@FindBy(xpath = "//*[@class='regular-price']/span")
 	private WebElement price;
 	
+	@FindAll({@FindBy(xpath="//*[@class='regular-price']/span")})
+	private List<WebElement> priceList;
+	
+	@FindBy(xpath = "//img[@alt = 'Error 404']")
+	private WebElement error404Img;
+	
 	public ProductPage(WebDriver driver)
 	{
 		super(driver);
+		
+	}
+
+	public boolean checkPageAvailability()
+	{
+		if (priceList.isEmpty())
+		{
+			setPageAvailability(false);
+		}
+		
+		return getPageAvailability();
 	}
 	
 	public String getPrice()
 	{
-		return price.getText();
+		return priceList.get(0).getText();
 	}
 	
 	public void getSize()
@@ -56,6 +77,19 @@ public class ProductPage extends PageObject{
 	public void gotoCart(){
 		goToCheckout.click();
 	}
-	
+
+	public WebElement getError404Img() {
+		return error404Img;
+	}
+
+	public boolean getPageAvailability() {
+		return pageAvailability;
+	}
+
+	public void setPageAvailability(boolean pageAvailability) {
+		this.pageAvailability = pageAvailability;
+	}
+
+
 	
 }

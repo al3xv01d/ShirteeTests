@@ -4,9 +4,13 @@ package pageobjects;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class DashboardPage extends PageObject{
@@ -56,12 +60,52 @@ public class DashboardPage extends PageObject{
 	@FindBy(xpath="//*[@id='campaign_items_content']/tr[1]/td[7]/div/span/span")
 	private WebElement aktuellerGewinn;
 	
-	@FindBy(xpath = "//*[@id='campaign_items_content']/tr[1]/td[9]/div/a[1]")
+	@FindBy(xpath = "//a[@href='https://dev.shirtee.de/testautocampaign2']")
 	private WebElement campaignLink;
-		
+	
+	@FindBy(xpath = "//input[@type='checkbox'][1]")
+	private WebElement firstCampaignStatusCheckbox;
+	
+	@FindBy(xpath = "//div[@class='b-label-checkbox'][1]")
+	private WebElement firstCampaignStatusSwitcher;
+	
+	//pagination field input
+	@FindBy(id = "page_direct")
+	private WebElement pageNumberInput;
+	
+	@FindBy(xpath = "//p[@class = 'amount amount--has-pages']")
+	private WebElement pagesRange;
+	
+	//loading popup
+	@FindBy(id = "sort_campaigns-loading")
+	private WebElement sortingCampaignPopup;
+	
+	
 	public DashboardPage(WebDriver driver)
 	{
 		super(driver);
+	}
+	
+	public void waitForCampaignLoading()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 20);
+		wait.until(ExpectedConditions.presenceOfElementLocated(
+				By.xpath("//div[@id = 'sort_campaigns-loading']"
+				+ "[contains(@style, 'display: none')]")));
+	}
+	
+	public String getPageRange()
+	{
+		return pagesRange.getText();
+	}
+	
+	public void switchCampaignStatus()
+	{
+		getFirstCampaignStatusSwitcher().click();	
+	}
+
+	public WebElement getFirstCampaignStatusSwitcher() {
+		return firstCampaignStatusSwitcher;
 	}
 	
 	public WebElement getVerkaufteProducte() {
@@ -113,9 +157,21 @@ public class DashboardPage extends PageObject{
 		waitForElement(getVerkaufteProducte());
 	}
 	
+	public String getCampaignStatus()
+	{
+		return firstCampaignStatusCheckbox.getAttribute("checked");
+	}
+
 	public void campaignLinkClick()
 	{
 		campaignLink.click();
+	}
+	
+	public void sendPageNumber(String str)
+	{
+		pageNumberInput.clear();
+		pageNumberInput.sendKeys(str);
+		pageNumberInput.sendKeys(Keys.ENTER);
 	}
 	
 	public int[] getVerkaufteProducteOld()
