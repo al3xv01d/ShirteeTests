@@ -4,6 +4,7 @@ package base;
 //import org.junit.BeforeClass;
 import org.testng.annotations.*;
 
+import pageobjects.MainPage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,6 +19,15 @@ protected static WebDriver driver;
 		System.setProperty("webdriver.chrome.driver",
 				"Resources/chromedriver");
 		driver = new ChromeDriver();
+	}
+	
+	@BeforeMethod
+	public void setEnv(){
+		driver.get(System.getProperty("mainPageURL"));
+		MainPage mainPage = new MainPage(driver);
+		driver.manage().window().maximize();
+
+		//mainPage.switchToDELocale();
 	}
 	
 	@AfterMethod

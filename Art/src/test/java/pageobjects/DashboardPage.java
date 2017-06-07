@@ -15,23 +15,17 @@ import org.testng.Assert;
 
 public class DashboardPage extends PageObject{
 	
-	
-	@FindBy(xpath="//*[@id='top']/body/div[1]/div[2]/div[1]/div/div[2]/div/div[1]/div/div/span[1]")
-	private WebElement ubersicht;
-	
 	//Header Product/Profits
-	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[1]/span[2]")
-	//*[@id="top"]/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[1]/span[2]
+	@FindBy(xpath="//div[@class='new-account-stat sold-products']/span[2]")
 	private WebElement verkaufteProducte; //format = x/y
 	
-	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[2]/span[2]/span")
+	@FindBy(xpath="//div[@class='new-account-stat ttl-profit']/span[2]/span")
 	private WebElement gesamtgewinn;
-	//*[@id="top"]/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[2]/span[2]/span
 	
-	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[3]/span[2]/span")
+	@FindBy(xpath="//div[@class='new-account-stat balance'][1]/span[2]/span")
 	private WebElement gewinnVerfugbar;
 	
-	@FindBy(xpath="//*[@id='top']/body/div[3]/div[2]/div[1]/div/div[2]/div/div[2]/div/div[4]/span[2]/span")
+	@FindBy(xpath="//div[@class='new-account-stat balance'][2]/span[2]/span")
 	private WebElement gewinnAusstehend;
 	
 	//Campaign data
@@ -173,108 +167,6 @@ public class DashboardPage extends PageObject{
 		pageNumberInput.sendKeys(str);
 		pageNumberInput.sendKeys(Keys.ENTER);
 	}
-	
-	public int[] getVerkaufteProducteOld()
-	{
-		String[] str = getVerkaufteProducte().getText().split("/");
-		
-		int[] verk = {0,0};
-		verk[0] = Integer.parseInt(str[0]);
-		verk[1] = Integer.parseInt(str[1]);
-		
-		return verk;
-	}
-	
-	
-	public BigDecimal getGesamtgewinnOld()
-	{
-		String s = getGesamtgewinn().getText();
-		BigDecimal d = formatStringProfits(s);
-		
-		return d;
-	}
-	
-	public BigDecimal getGewinnVerfugbarOld()
-	{
-		String s = getGewinnVerfugbar().getText();
-		BigDecimal d = formatStringProfits(s);
-		
-		return d;
-	}
-
-	public BigDecimal getGewinnAusstehendOld()
-	{
-		String s = getGewinnAusstehend().getText();
-		BigDecimal d = formatStringProfits(s);
-		
-		return d;
-	}
-	
-	public int getVerkaufeSoldOld()
-	{
-		String s = getVerkaufeSoldItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public int getVerkaufeProductionOld()
-	{
-		String s =  getVerkaufeProductionItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public int getVerkHeuteSoldOld()
-	{
-		String s = getVerkHeuteSoldItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public int getVerkHeuteProductionOld()
-	{
-		String s = getVerkHeuteProductionItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public int getVerkGesternSoldOld()
-	{
-		String s = getVerkGesternSoldItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public int getVerkGesternProductionOld()
-	{
-		String s = getVerkGesternProductionItems().getText();
-		int i = Integer.parseInt(s);
-		return i;
-	}
-	
-	public BigDecimal getAktuellerGewinnOld()
-	{
-		String s = getAktuellerGewinn().getText();
-		BigDecimal d = formatStringProfits(s);
-		
-		return d;
-	}
-	
-	public BigDecimal formatStringProfits(String str)
-	{
-		NumberFormat nf = NumberFormat.getInstance();
-		nf.setMaximumFractionDigits(2);
-		nf.setMinimumFractionDigits(2);
-		
-		String[] newStr = str.split(" ");
-		newStr[0] = newStr[0].replaceAll(",", ".");
-		
-		BigDecimal a = new BigDecimal(newStr[0]);
-		nf.format(a);
-		return a;
-	}
 
 
-
-	
 }

@@ -20,6 +20,14 @@ import java.awt.datatransfer.StringSelection;
 public class CheckoutBlock1Tests extends FunctionalTest{
 
 	
+	private static final String VOR_NAME_IS_EMPTY_MSG = "'VorName is empty' msg is not displayed!";
+	private static final String NACH_NAME_IS_EMPTY_MSG = "'NachName is empty' msg is not displayed!";
+	private static final String EMAIL_IS_EMPTY_MSG = "'Email is empty' msg is not displayed!";
+	private static final String ADDRESS_IS_EMPTY_MSG = "'Address is empty' msg is not displayed!";
+	private static final String POSTCODE_IS_EMPTY_MSG = "'Postcode is empty' msg is not displayed!";
+	private static final String CITY_IS_EMPTY_MSG = "'City is empty' msg is not displayed!";
+	
+	
 	@DataProvider
 	public Object[][] vornameTestData()
 	{
@@ -157,12 +165,12 @@ public class CheckoutBlock1Tests extends FunctionalTest{
 		cartPage2.waitForVorkrasseInfo();
 		cartPage.submitOrder();
 		
-		softAssert.assertTrue(cartPage.getVorNameIsEmptyMessage().isDisplayed());
-		softAssert.assertTrue(cartPage.getNachNameIsEmptyMessage().isDisplayed());
-		softAssert.assertTrue(cartPage.geteMailIsEmptyMessage().isDisplayed());
-		softAssert.assertTrue(cartPage.getAddressIsEmptyMessage().isDisplayed());
-		softAssert.assertTrue(cartPage.getPostcodeIsEmptyMessage().isDisplayed());
-		softAssert.assertTrue(cartPage.getCityIsEmptyMessage().isDisplayed());
+		softAssert.assertTrue(cartPage.getVorNameIsEmptyMessage().isDisplayed(), VOR_NAME_IS_EMPTY_MSG);
+		softAssert.assertTrue(cartPage.getNachNameIsEmptyMessage().isDisplayed(), NACH_NAME_IS_EMPTY_MSG);
+		softAssert.assertTrue(cartPage.geteMailIsEmptyMessage().isDisplayed(), EMAIL_IS_EMPTY_MSG);
+		softAssert.assertTrue(cartPage.getAddressIsEmptyMessage().isDisplayed(), ADDRESS_IS_EMPTY_MSG);
+		softAssert.assertTrue(cartPage.getPostcodeIsEmptyMessage().isDisplayed(), POSTCODE_IS_EMPTY_MSG);
+		softAssert.assertTrue(cartPage.getCityIsEmptyMessage().isDisplayed(), CITY_IS_EMPTY_MSG);
 		
 		//if order succeed - success page is displayed
 		//if not - redirect to cart page

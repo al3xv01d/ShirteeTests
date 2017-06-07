@@ -28,7 +28,7 @@ public class DesignerPageStep_2 extends PageObject{
 	@FindBy(id = "calculation-colors-link")
 	private WebElement colorPicker;
 
-	@FindBy(xpath="//span[@title='Gold']")
+	@FindBy(xpath="//span[@data-color_id='1102']")
 	private WebElement colorGold;
 	
 	@FindBy(xpath="//*[@id='calculation-selected-colors']/span[2]")
@@ -164,6 +164,7 @@ public class DesignerPageStep_2 extends PageObject{
 		wait.until(ExpectedConditions.
 				textToBePresentInElementLocated(By.xpath("//*[@id='profit']/span[1]"),
 						str));
+
 	}
 	
 	public void colorPickerClick()

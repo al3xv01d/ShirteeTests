@@ -44,6 +44,11 @@ public class AffiliateTests extends FunctionalTest{
 	private String sharerLvlProfit;
 	private String joinerLvlProfit;
 	
+	private static final String SHARER_PROFIT_ERROR = "Sharer profit is not as expected!";
+	private static final String JOINER_PROFIT_ERROR = "Joiner profit is not as expected!";
+	private static final String ORDER_NAME_ERROR = "Order accountee name is not as expected!";
+
+	
 	public  AffiliateTests() {
 		
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
@@ -189,7 +194,7 @@ public class AffiliateTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName, ORDER_NAME_ERROR);
 		adminOrderPage.invoiceButtonClick();
 		
 		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
@@ -203,7 +208,7 @@ public class AffiliateTests extends FunctionalTest{
 		
 		//System.out.println(initialSharerSaldo.add(orderProfit));
 		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialSharerSaldo.add(sharerProfit));
+				initialSharerSaldo.add(sharerProfit), SHARER_PROFIT_ERROR);
 		
 		driver.get(System.getProperty("mainPageURL"));
 		
@@ -212,7 +217,7 @@ public class AffiliateTests extends FunctionalTest{
 		driver.get(System.getProperty("walletUrl"));
 		
 		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialJoinerSaldo.add(orderProfit).add(joinerProfit));
+				initialJoinerSaldo.add(orderProfit).add(joinerProfit), JOINER_PROFIT_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -231,10 +236,7 @@ public class AffiliateTests extends FunctionalTest{
 		SoftAssert softAssert = new SoftAssert();
 
 		ParseHelper parseHelper = new ParseHelper();
-		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
+
 		MainPage mainPage = new MainPage(driver);
 
 		//Check Joiner Saldo
@@ -271,7 +273,7 @@ public class AffiliateTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName, ORDER_NAME_ERROR);
 		adminOrderPage.invoiceButtonClick();
 		
 		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
@@ -287,7 +289,7 @@ public class AffiliateTests extends FunctionalTest{
 		
 		//System.out.println(initialSharerSaldo.add(orderProfit));
 		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialSharerSaldo);
+				initialSharerSaldo, SHARER_PROFIT_ERROR);
 		
 		driver.get(System.getProperty("mainPageURL"));
 		
@@ -296,7 +298,7 @@ public class AffiliateTests extends FunctionalTest{
 		driver.get(System.getProperty("walletUrl"));
 		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
 		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialJoinerSaldo);
+				initialJoinerSaldo, JOINER_PROFIT_ERROR);
 		
 		softAssert.assertAll();
 	}

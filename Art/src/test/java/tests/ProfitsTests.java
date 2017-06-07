@@ -57,8 +57,8 @@ public class ProfitsTests extends FunctionalTest{
 	
 	private BigDecimal initAktuellerGewinn;
 	
-	private BigDecimal orderProfit;
-	private String customerName = "Herr Test Account";
+	private static final BigDecimal ORDERPROFIT = new BigDecimal("21");
+	private static final  String CUSTOMERNAME = "Herr Test Account";
 	
 	public ProfitsTests()
 	{
@@ -104,10 +104,6 @@ public class ProfitsTests extends FunctionalTest{
 	public void simpleProfitTest()
 	{
 		SoftAssert softAssertion = new SoftAssert();
-		orderProfit = new BigDecimal("21");
-		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
 		
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(eMail, userPassword);
@@ -118,11 +114,9 @@ public class ProfitsTests extends FunctionalTest{
 		dashboardMainPage.waitForDataToShow();
 		
 		ParseHelper parseHelper = new ParseHelper();
-		
-		//verkaufteProducteSold = dashboardMainPage.getVerkaufteProducteOld()[0];
+
 		initVerkaufteProducteSold = parseHelper.stringToIntArrayBySplit(dashboardMainPage.
 				getVerkaufteProducte().getText(),"/")[0];
-		//verkaufteProducteProduction = dashboardMainPage.getVerkaufteProducteOld()[1];
 		initVerkaufteProducteProduction = parseHelper.stringToIntArrayBySplit(dashboardMainPage.
 				getVerkaufteProducte().getText(), "/")[1];
 		
@@ -140,21 +134,7 @@ public class ProfitsTests extends FunctionalTest{
 		initVerkGesternProduction = parseHelper.stringToInt(dashboardMainPage.getVerkGesternProductionItems().getText());
 		
 		initAktuellerGewinn = parseHelper.profitStringToBigDecimal(dashboardMainPage.getAktuellerGewinn().getText());
-		
-		System.out.println(dashboardMainPage.getGesamtgewinnOld());
-		System.out.println(dashboardMainPage.getGewinnVerfugbarOld());
-		System.out.println(dashboardMainPage.getGewinnAusstehendOld());
-		
-		System.out.println("/////////////////////////////////");
-		System.out.println(dashboardMainPage.getVerkaufeSoldOld());
-		System.out.println(dashboardMainPage.getVerkaufeProductionOld());
-		System.out.println(dashboardMainPage.getVerkHeuteSoldOld());
-		System.out.println(dashboardMainPage.getVerkHeuteProductionOld());
-		System.out.println(dashboardMainPage.getVerkGesternSoldOld());
-		System.out.println(dashboardMainPage.getVerkGesternProductionOld());
-		System.out.println(dashboardMainPage.getAktuellerGewinnOld());
-		
-		
+
 		makePurchase("campaignURL1");
 
 		driver.get(System.getProperty("ffadminURL"));
@@ -169,7 +149,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), CUSTOMERNAME);
 		adminOrderPage.invoiceButtonClick();
 		
 		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
@@ -180,52 +160,42 @@ public class ProfitsTests extends FunctionalTest{
 		
 		dashboardMainPage.waitForDataToShow();
 		
-		System.out.println("New Profits");
-		System.out.println(dashboardMainPage.getGesamtgewinnOld());
-		System.out.println(dashboardMainPage.getGewinnVerfugbarOld());
-		System.out.println(dashboardMainPage.getGewinnAusstehendOld());
-		
-		System.out.println("/////////////////////////////////");
-		System.out.println(dashboardMainPage.getVerkaufeSoldOld());
-		System.out.println(dashboardMainPage.getVerkaufeProductionOld());
-		System.out.println(dashboardMainPage.getVerkHeuteSoldOld());
-		System.out.println(dashboardMainPage.getVerkHeuteProductionOld());
-		System.out.println(dashboardMainPage.getVerkGesternSoldOld());
-		System.out.println(dashboardMainPage.getVerkGesternProductionOld());
-		System.out.println(dashboardMainPage.getAktuellerGewinnOld());
-		
-		
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducteOld()[0], initVerkaufteProducteSold + 1);
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufteProducteOld()[1], initVerkaufteProducteProduction);
-		softAssertion.assertEquals(dashboardMainPage.getGesamtgewinnOld(), initGesamtGewinn.add(orderProfit));
-		softAssertion.assertEquals(dashboardMainPage.getGewinnVerfugbarOld(), initGewinnVerfugbar.add(orderProfit));
-		softAssertion.assertEquals(dashboardMainPage.getGewinnAusstehendOld(), initGewinnAusstehend);
-		
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufeSoldOld(), initVerkaufeSold + 1);
-		softAssertion.assertEquals(dashboardMainPage.getVerkaufeProductionOld(), initVerkaufeProduction);
+		softAssertion.assertEquals(parseHelper.stringToIntArrayBySplit(
+				dashboardMainPage.getVerkaufteProducte().getText(), "/")[0],initVerkaufteProducteSold + 1);
+		softAssertion.assertEquals(parseHelper.stringToIntArrayBySplit(
+				dashboardMainPage.getVerkaufteProducte().getText(), "/")[1],initVerkaufteProducteProduction);
+		softAssertion.assertEquals(parseHelper.profitStringToBigDecimal(
+				dashboardMainPage.getGesamtgewinn().getText()), initGesamtGewinn.add(ORDERPROFIT));
+		softAssertion.assertEquals(parseHelper.profitStringToBigDecimal(
+				dashboardMainPage.getGewinnVerfugbar().getText()), initGewinnVerfugbar.add(ORDERPROFIT));
+		softAssertion.assertEquals(parseHelper.profitStringToBigDecimal(
+				dashboardMainPage.getGewinnAusstehend().getText()), initGewinnAusstehend);
+
+		softAssertion.assertEquals(parseHelper.stringToInt(
+				dashboardMainPage.getVerkaufeSoldItems().getText()),  initVerkaufeSold + 1);
+		softAssertion.assertEquals(parseHelper.stringToInt(
+				dashboardMainPage.getVerkaufeProductionItems().getText()),  initVerkaufeProduction);
 		
 		//TODO: VerkHeute assert
 		//VerkHeute assert - doesn't work now. Blocked by a bug
-		
-		softAssertion.assertEquals(dashboardMainPage.getVerkGesternSoldOld(), initVerkGesternSold);
-		softAssertion.assertEquals(dashboardMainPage.getVerkGesternProductionOld(), initVerkGesternProduction);
-		
-		softAssertion.assertEquals(dashboardMainPage.getAktuellerGewinnOld(), initAktuellerGewinn.add(orderProfit));
+	
+		softAssertion.assertEquals(parseHelper.stringToInt(
+				dashboardMainPage.getVerkGesternSoldItems().getText()),  initVerkGesternSold);
+		softAssertion.assertEquals(parseHelper.stringToInt(
+				dashboardMainPage.getVerkGesternProductionItems().getText()),  initVerkGesternProduction);
+		softAssertion.assertEquals(parseHelper.profitStringToBigDecimal(
+				dashboardMainPage.getAktuellerGewinn().getText()),  initAktuellerGewinn.add(ORDERPROFIT));
 		
 		softAssertion.assertAll();
 		
 	}
 	
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void walletSaldoTest()
 	{
-		orderProfit = new BigDecimal("21");
-
 		ParseHelper parseHelper = new ParseHelper();
 		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
+
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(eMail, userPassword);
 		
@@ -250,7 +220,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), CUSTOMERNAME);
 		adminOrderPage.invoiceButtonClick();
 		
 		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
@@ -260,21 +230,19 @@ public class ProfitsTests extends FunctionalTest{
 		driver.get(System.getProperty("walletUrl"));
 		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
 		
-		System.out.println(initialSaldo.add(orderProfit));
+		System.out.println(initialSaldo.add(ORDERPROFIT));
 		Assert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialSaldo.add(orderProfit));
+				initialSaldo.add(ORDERPROFIT));
 	}
 	
 
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void orderCancelTest()
 	{
 		ParseHelper parseHelper = new ParseHelper();
 		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
 		MainPage mainPage = new MainPage(driver);
+
 		mainPage.performLogin(eMail, userPassword);
 		
 		driver.get(System.getProperty("walletUrl"));
@@ -298,7 +266,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), CUSTOMERNAME);
 		adminOrderPage.cancelButtonClick();
 		
 		if (adminOrderPage.isAlertPresent())
@@ -313,16 +281,12 @@ public class ProfitsTests extends FunctionalTest{
 				initialSaldo);
 	}
 	
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void twoProductsInOrderTest() //Only profit for 1st product should count
 	{
-		orderProfit = new BigDecimal("21");
-		
+	
 		ParseHelper parseHelper = new ParseHelper();
-		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
+
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(eMail, userPassword);
 		
@@ -348,7 +312,7 @@ public class ProfitsTests extends FunctionalTest{
 		
 		adminOrdersPage.orderRowClick();
 		AdminOrderPage adminOrderPage = new AdminOrderPage(driver);
-		Assert.assertEquals(adminOrderPage.getCustomerName(), customerName);
+		Assert.assertEquals(adminOrderPage.getCustomerName(), CUSTOMERNAME);
 		adminOrderPage.invoiceButtonClick();
 		
 		AdminInvoicePage invoicePage = new  AdminInvoicePage(driver);
@@ -358,18 +322,15 @@ public class ProfitsTests extends FunctionalTest{
 		driver.get(System.getProperty("walletUrl"));
 		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
 		
-		System.out.println(initialSaldo.add(orderProfit));
+		System.out.println(initialSaldo.add(ORDERPROFIT));
 		Assert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
-				initialSaldo.add(orderProfit));
+				initialSaldo.add(ORDERPROFIT));
 		
 	}
 	
-	@Test(enabled=false)
+	@Test(enabled=true)
 	public void zeroSaldoRefundTest()
 	{
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(zeroEmail, zeroPassword);
 		driver.get(System.getProperty("walletUrl"));

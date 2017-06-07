@@ -6,6 +6,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
+import org.testng.asserts.SoftAssert;
 
 import Util.ReadDataFromFile;
 import base.FunctionalTest;
@@ -16,14 +18,14 @@ import pageobjects.ProductPage;
 
 public class DashboardPageTests extends FunctionalTest{
 
+	private static final String PAGINATION_RANGE_ERROR = "Pagination range is not as expected!";
+	private static final String PRODUCTPAGE_AVAILABILITY_ERROR = "Product page availability is not as expected!";
+	
 	@Test
 	public void campaignSwitchTest()
 	{
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
 
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(data.getPropertie("eMail"), data.getPropertie("userPassword"));
 		
@@ -37,7 +39,7 @@ public class DashboardPageTests extends FunctionalTest{
 		
 		ProductPage productPage = new ProductPage(driver);
 		boolean check = productPage.checkPageAvailability();
-		Assert.assertTrue(!check);
+		Assert.assertTrue(!check, PRODUCTPAGE_AVAILABILITY_ERROR);
 		
 		driver.get(System.getProperty("dashboardURL"));
 		dashboardPage.getFirstCampaignStatusSwitcher().click();		
@@ -45,13 +47,11 @@ public class DashboardPageTests extends FunctionalTest{
 	}
 	
 	@Test
-	public void paginationTest()
+	public void paginationTest() 
 	{
+		SoftAssert softAssert = new SoftAssert();
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
 
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
-		
 		MainPage mainPage = new MainPage(driver);
 		mainPage.performLogin(data.getPropertie("oldEmail"), data.getPropertie("oldPassword"));
 		
@@ -62,16 +62,18 @@ public class DashboardPageTests extends FunctionalTest{
 		System.out.println(str);
 		dashboardPage.sendPageNumber("5");
 		dashboardPage.waitForCampaignLoading();
-		Assert.assertEquals(dashboardPage.getPageRange(), "61-75 von 77");
+		softAssert.assertEquals(dashboardPage.getPageRange(), "61-75 von 78", PAGINATION_RANGE_ERROR);
 
 		dashboardPage.sendPageNumber("asd");
 		dashboardPage.waitForCampaignLoading();
 		
-		Assert.assertEquals(dashboardPage.getPageRange(), "1-15 von 77");
+		softAssert.assertEquals(dashboardPage.getPageRange(), "1-15 von 78", PAGINATION_RANGE_ERROR);
 		
 		dashboardPage.sendPageNumber("700");
 		dashboardPage.waitForCampaignLoading();
-		Assert.assertEquals(dashboardPage.getPageRange(), "76-77 von 77");
+		softAssert.assertEquals(dashboardPage.getPageRange(), "76-77 von 78", PAGINATION_RANGE_ERROR);
+		
+		softAssert.assertAll();
 		
 	}
 	

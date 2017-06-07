@@ -111,6 +111,9 @@ public class CheckoutPage extends PageObject{
 	@FindBy(xpath = "//*[@id='billing_select-company-gender']/div[1]/label")
 	private WebElement herrRadioButton;
 	
+	@FindBy(xpath = "//label[@for='billing[prefix]_Frau']")
+	private WebElement frauRadioButton;
+	
 	@FindBy(xpath = "//div[@class='breadcrumbs-checkout-back']/a")
 	private WebElement backLink;
 
@@ -203,6 +206,13 @@ public class CheckoutPage extends PageObject{
 	public void  herrRadioButtonClick()
 	{
 		herrRadioButton.click();
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(absenceOfElementLocated(By.xpath("//div[@class = 'loadinfo']")));
+	}
+	
+	public void frauRadioButtonClick()
+	{
+		frauRadioButton.click();
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(absenceOfElementLocated(By.xpath("//div[@class = 'loadinfo']")));
 	}

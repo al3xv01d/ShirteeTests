@@ -4,16 +4,6 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import Util.DatabaseHelper;
-import Util.ReadDataFromFile;
-
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-
 import base.FunctionalTest;
 import pageobjects.CheckoutPage;
 import pageobjects.CheckoutPageBlock2;
@@ -28,6 +18,21 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	private static final String CHARGES = "2,52 €";
 	private static final String SHIPPING = "4,50 €";
 	private static final String CAMPAIGN_TITLE = "TestAutoCampaign2";
+	
+	private static final String CAMPAIGN_TITLE_ERROR = "Campaign title is not as expected!";
+	private static final String PRICE_ERROR = "Price amount is not as expected!";
+	private static final String SUMM_ERROR = "Summe amount is not as expected!";
+	private static final String TOTAL_ERROR = "Total amount is not as expected!";
+	private static final String SHIPPING_KLARNA_ERROR = "Shipping amount is not as expected!";
+	private static final String CHARGES_ERROR = "Charges amount is not as expected!";
+	private static final String QUANTITY_ERROR = "Price after changing product quantity is not as expected!";
+	
+	private static final String BACKTOSHOP_EXIST_ERROR = "'Back to shop' link is not present!";
+	private static final String BACKTOSHOP_LINK_ERROR = "'Back to shop' link URL is not as expected!";
+	
+	private static final String DELETE_PRODUCT_ERROR = "Deleted product is still present!";
+
+
 	
 	@Test
 	public void oneProductDataTest()
@@ -48,20 +53,20 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
 		
-		softAssert.assertTrue(cartBlock3.getCampaignTitle().getAttribute("href").
-				contains(System.getProperty("campaignURL1")));
-		softAssert.assertEquals(cartBlock3.getCampaignTitle().getText(), CAMPAIGN_TITLE);
+//		softAssert.assertTrue(cartBlock3.getCampaignTitle().getAttribute("href").
+//				contains(System.getProperty("campaignURL1")));
+		softAssert.assertEquals(cartBlock3.getCampaignTitle().getText(), CAMPAIGN_TITLE, CAMPAIGN_TITLE_ERROR);
 		
-		softAssert.assertEquals(cartBlock3.getPrice(), price);
-		softAssert.assertEquals(cartBlock3.getSum(), price);
-		softAssert.assertEquals(cartBlock3.getTotal(), price);
+		softAssert.assertEquals(cartBlock3.getPrice(), price, PRICE_ERROR);
+		softAssert.assertEquals(cartBlock3.getSum(), price, SUMM_ERROR);
+		softAssert.assertEquals(cartBlock3.getTotal(), price, TOTAL_ERROR);
 		
 		CheckoutPageBlock2 cartBlock2 = new CheckoutPageBlock2(driver);
 
 		cartBlock2.checkKlarna();
 		cartBlock2.waitForKlarnaInfo();
-		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING);
-		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES);
+		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING, SHIPPING_KLARNA_ERROR);
+		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES, CHARGES_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -88,11 +93,11 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		cartBlock3.increaseQuantity();
 		cartBlock3.waitForCalculationToFinish();
 		
-		softAssert.assertEquals(cartBlock3.getTotal(), "64,50 €");
+		softAssert.assertEquals(cartBlock3.getTotal(), "64,50 €", QUANTITY_ERROR);
 		cartBlock3.decreaseQuantity();
 		cartBlock3.waitForCalculationToFinish();
 		
-		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €");
+		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €", QUANTITY_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -122,13 +127,13 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
 
-		softAssert.assertEquals(cartBlock3.getTotal(), SUM_FOR_2_ITEMS);
+		softAssert.assertEquals(cartBlock3.getTotal(), SUM_FOR_2_ITEMS, TOTAL_ERROR);
 		
 		CheckoutPageBlock2 cartBlock2 = new CheckoutPageBlock2(driver);
 		cartBlock2.checkKlarna();
 		cartBlock2.waitForKlarnaInfo();
-		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING);
-		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES);
+		softAssert.assertEquals(cartBlock3.getShippingKlarna(), SHIPPING, SHIPPING_KLARNA_ERROR);
+		softAssert.assertEquals(cartBlock3.getCharges(), CHARGES, CHARGES_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -155,10 +160,10 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.gotoCart();
 		
 		CheckoutPage checkoutPage = new CheckoutPage(driver);
-		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")));
+		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")), BACKTOSHOP_EXIST_ERROR);
 
 		softAssert.assertTrue(checkoutPage.getBackLink().getAttribute("href").
-				contains(System.getProperty("campaignURL2")));
+				contains(System.getProperty("campaignURL2")), BACKTOSHOP_LINK_ERROR);
 		
 		driver.get(System.getProperty("shopURL"));
 		
@@ -169,10 +174,10 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		productPage.waitForPopup();
 		productPage.gotoCart();
 		
-		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")));
+		Assert.assertTrue(checkoutPage.isElementPresent(By.linkText("Zurück zum Shop")), BACKTOSHOP_EXIST_ERROR);
 
 		softAssert.assertTrue(checkoutPage.getBackLink().getAttribute("href").
-				contains(System.getProperty("campaignURL1")));
+				contains(System.getProperty("campaignURL1")), BACKTOSHOP_LINK_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -208,22 +213,11 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		cartBlock3.deleteSecondItemClick();
 		cartBlock3.waitForCalculationToFinish();
 		
-		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €");
+		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €", TOTAL_ERROR);
 		softAssert.assertTrue(!cartBlock3.isElementPresent(
-				By.xpath("//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")));
+				By.xpath("//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")), DELETE_PRODUCT_ERROR);
 		
 		softAssert.assertAll();
-	}
-	
-	@Test(enabled = false)
-	public void databaseTest() throws SQLException, ClassNotFoundException
-	{
-
-		DatabaseHelper databaseHelper = new DatabaseHelper("/home/dglazov/data.properties");
-
-		
-		String str = databaseHelper.getAffiliateByType(Util.DatabaseHelper.AffiliateType.JB);
-		System.out.println(str);
 	}
 	
 	

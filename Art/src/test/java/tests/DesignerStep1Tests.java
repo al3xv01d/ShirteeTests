@@ -45,39 +45,19 @@ public class DesignerStep1Tests extends FunctionalTest{
 	private String frontPrice = "9,00 €";
 	private String backPrice = "9,00 €";
 	private String frontAndBackPrice = "15,50 €";
-	private String categories[] = {"Herren-Shirts", "Hoodies & Sweatshirts", "Tank-Tops", "V-Neck-Shirts",
-			"Damen-Shirts", "Taschen", "Kinder-Shirts", "Übergrößen", "Jacken", "Ac­ces­soires", "Poster", "Küchentextilien"};
 	
-	private String[][] basePriceArray = new String [][] {{"2,50 €", "4,50 €", "4,50 €"},//Herren-Shirts
-														{"12,00 €", "9,00 €"},//Hoodies & Sweatshirts
-														{"4,00 €", "4,00 €"},//Tank-Tops
-														{"4,00 €", "4,00 €"},//V-Neck-Shirts
-														{"2,50 €","4,50 €","4,50 €" },//Damen-Shirts
-														{"2,50 €", "1,20 €"},//Taschen
-														{"2,50 €"},//Kinder-Shirts
-														{"6,00 €"},//Übergrößen
-														{"22,50 €"},//Jacken
-														{"3,50 €", "13,45 €", "7,50 €"},//Ac­ces­soires
-														{"0,00 €", "3,50 €", "9,50 €"},//Poster
-														{"8,50 €"}};//Küchentextilien
-	
-	private String[][] frontPriceArray = new String [][] {{"9,00 €", "11,00 €", "11,00 €"},//Herren-Shirts
-															{"18,50 €", "15,50 €"},//Hoodies & Sweatshirts
-															{"10,50 €", "10,50 €"},//Tank-Tops
-															{"10,50 €", "10,50 €"},//V-Neck-Shirts
-															{"9,00 €","11,00 €","11,00 €" },//Damen-Shirts
-															{"9,00 €", "7,70 €"},//Taschen
-															{"9,00 €"},//Kinder-Shirts
-															{"12,50 €"},//Übergrößen
-															{"29,00 €"},//Jacken
-															{"10,00 €", "19,95 €", "14,00 €"},//Ac­ces­soires
-															{"6,50 €", "10,00 €", "16,00 €"},//Poster
-															{"15,00 €"}};//Küchentextilien
-	
-	private String backPriceArray[] = {"9,00 €"};
-	
-	private String frontAndBackPriceArray[] = {"15,50 €"};
-	//TODO: Store methods in array and implement through for loop
+	private static final String PRODUCT_COLOR_MISMATCH_ERROR = "Product color mismatch!";
+	private static final String FONT_MISMATCH_ERROR = "Font mismatch!";
+	private static final String FONT_COLOR_MISMATCH_ERROR = "Font color mismatch!";
+	private static final String PICTURE_IMAGE_MISMATCH_ERROR = "Uploaded picture mismatch!";
+	private static final String BASE_PRICE_ERROR = "Base product price is not as expected!";
+	private static final String FRONT_PRICE_ERROR = "Front product price is not as expected!";
+	private static final String BACK_PRICE_ERROR = "Back product price is not as expected!";
+	private static final String FRONT_AND_BACK_PRICE_ERROR = "Front and Back product price is not as expected!";
+	private static final String NO_DESIGN_ERROR = "'No design' popup is not displayed!";
+	private static final String IMAGE_TOO_BIG_ERROR = "'Image too big' popup is not displayed!";
+
+
 	@Test
 	public void colorsTest()
 	{
@@ -100,7 +80,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		}
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/initial.png", 
 				"Resources/img/Colors/Expected/initial.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);
 		
 		//Black color test
 		step1.chooseBlackColor();
@@ -115,7 +95,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/black.png", 
 					"Resources/img/Colors/Expected/black.png"),
-					Util.CompareImage.Result.Matched);
+					Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);
 			
 		//Blue color test	
 		step1.chooseBlueColor();
@@ -130,7 +110,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/blue.png", 
 				"Resources/img/Colors/Expected/blue.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);
 		
 		//Green Color Test
 		step1.chooseGreenColor();
@@ -144,7 +124,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 			
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/green.png", 
 				"Resources/img/Colors/Expected/green.png"),
-				Util.CompareImage.Result.Matched);	
+				Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);	
 		
 		//Red color Test
 		step1.chooseRedColor();
@@ -159,7 +139,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/red.png", 
 				"Resources/img/Colors/Expected/red.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);
 		
 		//Yellow color test
 		step1.chooseYellowColor();
@@ -173,7 +153,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/Colors/Actual/yellow.png", 
 				"Resources/img/Colors/Expected/yellow.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, PRODUCT_COLOR_MISMATCH_ERROR);
 		
 		softAssert.assertAll();
 	}
@@ -204,7 +184,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 				}
 			
 			Assert.assertEquals(Util.CompareImage.CompareImage(actualFonts[i], expectedFonts[i]),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, FONT_MISMATCH_ERROR);
 		}
 		
 		
@@ -234,7 +214,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/BlackFont.png", 
 				"Resources/img/FontColors/Expected/BlackFont.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, FONT_COLOR_MISMATCH_ERROR);
 		
 		//TEST RED COLOR
 		step1.textColorPickerClick();
@@ -254,7 +234,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/FontColors/Actual/RedFont.png", 
 				"Resources/img/FontColors/Expected/RedFont.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, FONT_COLOR_MISMATCH_ERROR);
 		
 	}
 	
@@ -283,7 +263,7 @@ public class DesignerStep1Tests extends FunctionalTest{
 		
 		softAssert.assertEquals(Util.CompareImage.CompareImage("Resources/img/ShirtWithImage/Actual/shirtWithImage.png",
 				"Resources/img/ShirtWithImage/Expected/shirtWithImage.png"),
-				Util.CompareImage.Result.Matched);
+				Util.CompareImage.Result.Matched, PICTURE_IMAGE_MISMATCH_ERROR);
 		
 		softAssert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='uploadedImages']/img")));
 		softAssert.assertTrue(step1.isElementPresent(By.xpath("//*[@id='remove-img-btn']")));
@@ -378,46 +358,25 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 		
-		softAssert.assertEquals(step1.getBasePrice(), basePrice);
+		softAssert.assertEquals(step1.getBasePrice(), basePrice, BASE_PRICE_ERROR);
 		
 		step1.sendKeysDesign();
-		softAssert.assertEquals(step1.getFrontPrice(), frontPrice);
+		softAssert.assertEquals(step1.getFrontPrice(), frontPrice, FRONT_PRICE_ERROR);
 		
 		step1.deleteDesignClick();
-		softAssert.assertEquals(step1.getBasePrice(), basePrice);
+		softAssert.assertEquals(step1.getBasePrice(), basePrice, BASE_PRICE_ERROR);
 		
 		step1.backSideClick();
 		step1.sendKeysDesign();
-		softAssert.assertEquals(step1.getBackPrice(), backPrice);
+		softAssert.assertEquals(step1.getBackPrice(), backPrice, BACK_PRICE_ERROR);
 		
 		step1.frontSideClick();
 		step1.sendKeysDesign();
-		softAssert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice);
+		softAssert.assertEquals(step1.getFrontAndBackPrice(), frontAndBackPrice, FRONT_AND_BACK_PRICE_ERROR);
 		
 		softAssert.assertAll();
-		
-//		
-//		for (int i = 2; i < categories.length; i++) {
-//			step1.selectCategory(categories[i]);
-//			step1.waitForProductBlock();
-//			
-//			for (int j = 0; j < step1.getCarouselSize(); j++) {
-//				
-//				if (j == 3) {
-//					break;
-//				}
-//				step1.carouselElement(j).click();
-//				Assert.assertEquals(step1.getBasePrice(), basePriceArray[i][j])	;
-//				
-//				//TODO:Add asserts for front, back and front+back prices
-//				step1.sendKeysDesign();
-//				Assert.assertEquals(step1.getFrontPrice(), frontPriceArray[i][j]);
-//				step1.deleteDesignClick();
-//				}
-//				
-//			}
 			
-		}
+	}
 		
 	
 	@Test 
@@ -427,12 +386,9 @@ public class DesignerStep1Tests extends FunctionalTest{
 		driver.manage().window().maximize();
 		DesignerPageStep_1 step1 = new DesignerPageStep_1(driver);
 
-		
 		step1.continueClick();
 		
-		Assert.assertEquals(true, step1.returnCanvasError());
-
-
+		Assert.assertEquals(true, step1.returnCanvasError(), NO_DESIGN_ERROR);
 	}
 	
 	@Test
@@ -448,6 +404,6 @@ public class DesignerStep1Tests extends FunctionalTest{
 		step1.sikuliBrowseAll(pageobjects.DesignerPageStep_1.Image.BIG);
 		step1.waitForErrorPopup();
 
-		Assert.assertTrue(step1.returnImgTooBigError());
+		Assert.assertTrue(step1.returnImgTooBigError(), IMAGE_TOO_BIG_ERROR);
 	}
 }

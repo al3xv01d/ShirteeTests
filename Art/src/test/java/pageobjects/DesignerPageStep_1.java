@@ -37,7 +37,7 @@ public class DesignerPageStep_1 extends PageObject{
 	@FindBy(id="pd_add_image")
 	private WebElement imgTab;
 	
-	@FindBy(partialLinkText="Computer durchsuchen")
+	@FindBy(xpath="//div[@class='upload-image-drop-zone-text-3']/a")
 	private WebElement imgLink;
 	
 	@FindBy(xpath="//*[@id='pd_sides']/ul/li[2]/img")

@@ -6,7 +6,12 @@ import org.openqa.selenium.support.FindBy;
 
 public class CheckoutPageBlock2 extends PageObject{
 
-	//@FindBy(id="p_method_paypal_express")
+	@FindBy(xpath="//*[@id='p_method_payone_creditcard']/parent::dt")
+	private WebElement creditCardRadioButton;
+	
+	@FindBy(id="payone_creditcard_cc_number")
+	private WebElement creditCardNumberField;
+	
 	@FindBy(xpath="//*[@id='p_method_paypal_express']/parent::dt")
 	private WebElement payPalRadioButton;
 	
@@ -22,6 +27,12 @@ public class CheckoutPageBlock2 extends PageObject{
 	@FindBy(xpath="//*[@id='p_method_vaimo_klarna_invoice']/parent::dt")
 	private WebElement klarnaRadioButton;
 	
+	@FindBy(id = "vaimo_klarna_invoice_gender_male")
+	private WebElement klarnaMaleRB;
+	
+	@FindBy(id = "vaimo_klarna_invoice_gender_female")
+	private WebElement klarnaFemaleRB;
+	
 	@FindBy(id="vaimo_klarna_invoice_input_fields")
 	private WebElement klarnaInfo;
 	
@@ -34,10 +45,27 @@ public class CheckoutPageBlock2 extends PageObject{
 	@FindBy(id="vaimo_klarna_invoice_phonenumber")
 	private WebElement klarnaPhoneNumberBlock;
 	
+	public CheckoutPageBlock2(WebDriver driver)
+	{
+		super(driver);
+	}
+	
+	public WebElement getKlarnaMaleRB(){
+		return klarnaMaleRB;
+	}
+	
+	public WebElement getKlarnaFemaleRB(){
+		return klarnaFemaleRB;
+	}
+	
 	//Payment block getters
 	public WebElement getPayPalInfo() {
 			return payPalInfo;
 		}
+	
+	public WebElement getCreditCardInfo() {
+		return creditCardNumberField;
+	}
 
 	public WebElement getSofortInfo() {
 			return sofortInfo;
@@ -51,11 +79,6 @@ public class CheckoutPageBlock2 extends PageObject{
 			return vorkrasseInfo;
 		}
 		
-
-	public CheckoutPageBlock2(WebDriver driver)
-	{
-		super(driver);
-	}
 	
 	//2nd block checkboxes click methods
 	public void checkVorkrasse()
@@ -63,6 +86,10 @@ public class CheckoutPageBlock2 extends PageObject{
 				vorkasseRadioButton.click();
 			}
 			
+	public void checkCreditCardBlock() {
+		creditCardRadioButton.click();
+	}
+	
 	public void checkPayPal()
 			{
 				getPayPalRadioButton().click();

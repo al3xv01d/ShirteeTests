@@ -8,10 +8,11 @@ import org.openqa.selenium.support.FindBy;
 public class ShopPage extends PageObject{
 
 	
-	@FindBy(xpath = "//a[@href = 'https://dev.shirtee.de/testautocampaign1']")
+	//@FindBy(xpath = "//a[@href = 'http://dev.shirtee.de/testautocampaign1']")
+	@FindBy(xpath = "//a[@href = 'http://dev.shirtee.de/testautocampaign1']")
 	private WebElement campaignItem1;
 	
-	@FindBy(xpath = "//a[@href = 'https://dev.shirtee.de/testautocampaign2']")
+	@FindBy(xpath = "//a[@href = 'http://dev.shirtee.de/testautocampaign2']")
 	private WebElement campaignItem2;
 	
 	public ShopPage(WebDriver driver)

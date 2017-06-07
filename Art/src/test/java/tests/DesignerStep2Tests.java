@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.hamcrest.core.AnyOf;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -114,6 +115,7 @@ public class DesignerStep2Tests extends FunctionalTest{
 	@Test
 	public void potentialProfitTest()
 	{
+		
 		SoftAssert softAssert = new SoftAssert();
 		
 		driver.get(System.getProperty("designerURL"));
@@ -126,7 +128,8 @@ public class DesignerStep2Tests extends FunctionalTest{
 		DesignerPageStep_2 step2 = new DesignerPageStep_2(driver);
 		step2.waitForContinueButton();
 		step2.chooseProductFromSelect(0);
-		softAssert.assertEquals(step2.getPotentialProfit(), "279,00 € - 329,00 €");
+		softAssert.assertEquals(step2.getPotentialProfit(), "279,00 € - 329,00 €" );
+		
 		
 		step2.sendKeysItemsPotentialProfit("5");
 		softAssert.assertEquals(step2.getPotentialProfit(), "69,75 € - 82,25 €");

@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Prod Test Suite" verbose="1" >
+  <test name="Method Test Cases" >
+    <classes>
+       <class name="tests.DesignerStep1Tests"></class>
+       <class name="tests.DesignerStep2Tests"></class>
+       <class name="tests.DesignerStep3Tests">
+       	<methods>
+       		<exclude name="breadcrumbsTest"></exclude>
+       	</methods>
+       </class>
+       <class name="tests.ProfitsTests">
+       	<methods>
+       		<include name="simpleProfitTest"></include>
+       	</methods>
+       </class>
+       <class name="tests.CheckoutBlock1Tests"></class>
+       <class name="tests.CheckoutBlock2Tests"></class>
+       <class name="tests.CheckoutBlock3Tests"></class>
+       <class name="tests.DashboardPageTests"></class>  
+    </classes>
+    </test>
+ </suite>

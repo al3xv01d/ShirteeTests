@@ -18,6 +18,12 @@ public class MainPage extends PageObject{
 	@FindBy(xpath="//a[@class='logo']")
 	private WebElement shirteeLogo;
 	
+	@FindBy(xpath="//div[@class='lang-dd-link']")
+	private WebElement localeToggle;
+	
+	@FindBy(xpath="//div[@class='lang-dd-more']/a")
+	private WebElement localeDEToggle;
+	
 	@FindBy(xpath="//div[@class='bhi-link-right']/a")
 	private WebElement loginLink;
 	
@@ -32,13 +38,11 @@ public class MainPage extends PageObject{
 	
 	@FindBy(className="btn-proceed-checkout")
 	private WebElement submitButton;
-	
 
 
 	public MainPage(WebDriver driver)
 	{
 		super(driver);
-
 		Assert.assertTrue(shirteeLogo.isDisplayed());
 	}
 	
@@ -46,6 +50,13 @@ public class MainPage extends PageObject{
 	{
 		waitForElement(logOutLink);
 		logOutLink.click();
+	}
+	
+	public void switchToDELocale()
+	{
+		localeToggle.click();
+		waitForElement(localeDEToggle);
+		localeDEToggle.click();
 	}
 	
 	public void performLogin(String eMail, String passWord)

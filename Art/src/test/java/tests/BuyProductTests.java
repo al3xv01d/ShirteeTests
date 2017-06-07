@@ -18,7 +18,7 @@ import org.testng.Assert;
 public class BuyProductTests extends FunctionalTest{
 	
 
-	@Test(enabled = false)
+	@Test()
 	public void orderNumTest()
 	{
 		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
@@ -27,9 +27,7 @@ public class BuyProductTests extends FunctionalTest{
 		String userPassword = data.getPropertie("userPassword");
 		String adminUser = data.getPropertie("adminUser");
 		String adminPassword = data.getPropertie("adminPassword");
-		
-		driver.get(System.getProperty("mainPageURL"));
-		driver.manage().window().maximize();
+
 		MainPage mainPage = new MainPage(driver);
 		//mainPage.performLogin();
 		mainPage.performLogin(eMail, userPassword);
