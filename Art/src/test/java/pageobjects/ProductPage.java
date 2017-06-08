@@ -5,13 +5,16 @@ import static org.junit.Assert.assertTrue;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProductPage extends PageObject{
 
@@ -38,12 +41,30 @@ public class ProductPage extends PageObject{
 	@FindBy(xpath = "//img[@alt = 'Error 404']")
 	private WebElement error404Img;
 	
+	@FindBy(id = "apply-promo-popup")
+	private WebElement promoPopUp;
+	
+	@FindBy(xpath = "//button[@class = 'close-popup button']")
+	private WebElement promoPopUpCloseButton;
+	
 	public ProductPage(WebDriver driver)
 	{
 		super(driver);
-		
 	}
 
+	public WebElement getPopUp()
+	{
+		return promoPopUp;
+	}
+	
+	public void closePopUp()
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.visibilityOf(promoPopUpCloseButton));
+		promoPopUpCloseButton.click();
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("apply-promo-popup")));
+	}
+	
 	public boolean checkPageAvailability()
 	{
 		if (priceList.isEmpty())
@@ -71,6 +92,7 @@ public class ProductPage extends PageObject{
 	
 	public void buy()
 	{
+		waitForElement(confirmButton);
 		confirmButton.click();
 	}
 	

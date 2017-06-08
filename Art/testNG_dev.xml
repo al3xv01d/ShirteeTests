@@ -11,6 +11,8 @@
        <class name="tests.CheckoutBlock3Tests"></class>
        <class name="tests.AffiliateTests"></class>  
        <class name="tests.DashboardPageTests"></class>  
+       <class name="tests.ShopTests"></class>
+       <class name="tests.PromoTests"></class>
     </classes>
     </test>
  </suite>

@@ -15,9 +15,23 @@ public class ShopPage extends PageObject{
 	@FindBy(xpath = "//a[@href = 'http://dev.shirtee.de/testautocampaign2']")
 	private WebElement campaignItem2;
 	
+	@FindBy(xpath = "//div[@class = 'custom-shop-desc-title']")
+	private WebElement shopTitle;
+	
+	@FindBy(xpath = "//div[@class = 'custom-shop-desc']/div[2]")
+	private WebElement shopDescription;
+	
 	public ShopPage(WebDriver driver)
 	{
 		super(driver);
+	}
+	
+	public WebElement getShopTitle() {
+		return shopTitle;
+	}
+
+	public WebElement getShopDescription() {
+		return shopDescription;
 	}
 	
 	public void campaignItem1Click()
@@ -29,4 +43,6 @@ public class ShopPage extends PageObject{
 	{
 		campaignItem2.click();
 	}
+
+
 }

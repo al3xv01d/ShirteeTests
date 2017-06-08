@@ -54,6 +54,12 @@ public class CheckoutPageBlock3 extends PageObject{
 	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td/div/div[2]/div[2]/h3/a")
 	private WebElement campaignTitle;
 	
+	@FindBy(xpath="//span[@class='discount-value']/span")
+	private WebElement discountValue;
+	
+	@FindBy(xpath="//div[@class='discount-applied-code']")
+	private WebElement discountCode;
+	
 	public CheckoutPageBlock3(WebDriver driver)
 	{
 		super(driver);
@@ -65,6 +71,14 @@ public class CheckoutPageBlock3 extends PageObject{
 	
 	public WebElement getCampaignTitle(){
 		return campaignTitle;
+	}
+	
+	public WebElement getDiscountValue(){
+		return discountValue;
+	}
+	
+	public WebElement getDiscountCode(){
+		return discountCode;
 	}
 	
 	public void increaseQuantity()
