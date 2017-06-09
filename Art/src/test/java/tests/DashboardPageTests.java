@@ -20,6 +20,8 @@ public class DashboardPageTests extends FunctionalTest{
 
 	private static final String PAGINATION_RANGE_ERROR = "Pagination range is not as expected!";
 	private static final String PRODUCTPAGE_AVAILABILITY_ERROR = "Product page availability is not as expected!";
+	private static final String SEARCH_KEYWORD = "test";
+	private static final String SEARCH_ERROR = "Number of found campaigns are not as expected!";
 	
 	@Test
 	public void campaignSwitchTest()
@@ -58,9 +60,9 @@ public class DashboardPageTests extends FunctionalTest{
 		
 		DashboardPage dashboardPage = new DashboardPage(driver);
 		dashboardPage.waitForDataToShow();
-		dashboardPage.searchCampaign("test");
+		dashboardPage.searchCampaign(SEARCH_KEYWORD);
 	
-		softAssert.assertEquals(dashboardPage.getSearchResults().size(), 2);
+		softAssert.assertEquals(dashboardPage.getSearchResults().size(), 2, SEARCH_ERROR);
 		softAssert.assertAll();
 	}
 	
