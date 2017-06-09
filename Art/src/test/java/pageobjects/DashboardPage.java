@@ -3,11 +3,13 @@ package pageobjects;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -74,10 +76,24 @@ public class DashboardPage extends PageObject{
 	@FindBy(id = "sort_campaigns-loading")
 	private WebElement sortingCampaignPopup;
 	
+	@FindBy(xpath = "//div[@class='b-dashboard-search-in']/input")
+	private WebElement searchInputField;
 	
+	@FindAll({@FindBy(xpath="//div[@id='search-result']/div")})
+	private List<WebElement> searchResults;
+
 	public DashboardPage(WebDriver driver)
 	{
 		super(driver);
+	}
+	
+	public void searchCampaign(String name)
+	{
+		searchInputField.sendKeys(name);
+	}
+	
+	public List<WebElement> getSearchResults(){
+		return searchResults;
 	}
 	
 	public void waitForCampaignLoading()

@@ -3,6 +3,8 @@ package pageobjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class CheckoutPageBlock3 extends PageObject{
 	
@@ -54,11 +57,24 @@ public class CheckoutPageBlock3 extends PageObject{
 	@FindBy(xpath="//*[@id='checkout-review-table']/tbody/tr/td/div/div[2]/div[2]/h3/a")
 	private WebElement campaignTitle;
 	
-	@FindBy(xpath="//span[@class='discount-value']/span")
+	@FindBy(xpath = DISCOUND_VALUE_LOCATOR)
 	private WebElement discountValue;
 	
-	@FindBy(xpath="//div[@class='discount-applied-code']")
+	@FindBy(xpath = DISCOUND_CODE_LOCATOR)
 	private WebElement discountCode;
+	
+	@FindBy(id="coupon_code")
+	private WebElement inputCodeField;
+	
+	@FindBy(xpath="//button[@class='nglc-button']")
+	private WebElement inputCodeButton;
+	
+	@FindBy(xpath="//a[@title='remove']")
+	private WebElement removeDiscountButton;
+	
+	private static final String DISCOUND_CODE_LOCATOR = "//div[@class='discount-applied-code']";
+	private static final String DISCOUND_VALUE_LOCATOR = "//span[@class='discount-value']/span";
+
 	
 	public CheckoutPageBlock3(WebDriver driver)
 	{
@@ -81,25 +97,61 @@ public class CheckoutPageBlock3 extends PageObject{
 		return discountCode;
 	}
 	
+	public boolean isDiscountCodePresent()
+	{
+		if (!isElementPresent(By.xpath(DISCOUND_CODE_LOCATOR))) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public boolean isDiscountValuePresent()
+	{
+		if (!isElementPresent(By.xpath(DISCOUND_VALUE_LOCATOR))) {
+			return false;
+		}
+		return true;
+	}
+	
+	public void inputDiscountCode(String code){
+		inputCodeField.sendKeys(code);
+		inputCodeButton.click();
+		waitForCalculationToFinish();
+	}
+	
+	public void removeDiscount(){
+		removeDiscountButton.click();
+		waitForCalculationToFinish();
+	}
+	
 	public void increaseQuantity()
 	{
 		incQuantityButton.click();
+		waitForCalculationToFinish();
 	}
 	
 	public void decreaseQuantity()
 	{
 		decQuantityButton.click();
+		waitForCalculationToFinish();
 	}
 	
 	public void deleteSecondItemClick()
 	{
 		deleteSecondItemIcon.click();
+		waitForCalculationToFinish();
 	}
 	
 	public void waitForCalculationToFinish()
 	{
+		try {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(absenceOfElementLocated(By.xpath("//div[@class = 'loadinfo']")));
+		}
+		catch (TimeoutException e) {
+			Assert.fail("Checkout calculation timeoute exception");
+		}
 	}
 	
 	public String getCharges()

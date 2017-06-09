@@ -47,6 +47,24 @@ public class DashboardPageTests extends FunctionalTest{
 	}
 	
 	@Test
+	public void campaignSearchTest()
+	{
+		SoftAssert softAssert = new SoftAssert();
+		
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
+
+		MainPage mainPage = new MainPage(driver);
+		mainPage.performLogin(data.getPropertie("eMail"), data.getPropertie("userPassword"));
+		
+		DashboardPage dashboardPage = new DashboardPage(driver);
+		dashboardPage.waitForDataToShow();
+		dashboardPage.searchCampaign("test");
+	
+		softAssert.assertEquals(dashboardPage.getSearchResults().size(), 2);
+		softAssert.assertAll();
+	}
+	
+	@Test
 	public void paginationTest() 
 	{
 		SoftAssert softAssert = new SoftAssert();

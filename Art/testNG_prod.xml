@@ -4,11 +4,7 @@
     <classes>
        <class name="tests.DesignerStep1Tests"></class>
        <class name="tests.DesignerStep2Tests"></class>
-       <class name="tests.DesignerStep3Tests">
-       	<methods>
-       		<exclude name="breadcrumbsTest"></exclude>
-       	</methods>
-       </class>
+       <class name="tests.DesignerStep3Tests"></class>
        <class name="tests.ProfitsTests">
        	<methods>
        		<include name="simpleProfitTest"></include>

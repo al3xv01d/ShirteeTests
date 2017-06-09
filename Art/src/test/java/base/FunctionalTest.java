@@ -27,7 +27,7 @@ protected static WebDriver driver;
 		MainPage mainPage = new MainPage(driver);
 		driver.manage().window().maximize();
 
-		//mainPage.switchToDELocale();
+		mainPage.switchToDELocale();
 	}
 	
 	@AfterMethod

@@ -91,12 +91,9 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
 		
 		cartBlock3.increaseQuantity();
-		cartBlock3.waitForCalculationToFinish();
-		
 		softAssert.assertEquals(cartBlock3.getTotal(), "64,50 €", QUANTITY_ERROR);
 		cartBlock3.decreaseQuantity();
-		cartBlock3.waitForCalculationToFinish();
-		
+
 		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €", QUANTITY_ERROR);
 		
 		softAssert.assertAll();
@@ -142,8 +139,6 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 	public void breadcrumbsTest()
 	{
 
-		//TODO:  prod version
-		
 		SoftAssert softAssert = new SoftAssert();
 		
 		driver.get(System.getProperty("shopURL"));
@@ -211,8 +206,7 @@ public class CheckoutBlock3Tests extends FunctionalTest{
 		CheckoutPageBlock3 cartBlock3 = new CheckoutPageBlock3(driver);
 		
 		cartBlock3.deleteSecondItemClick();
-		cartBlock3.waitForCalculationToFinish();
-		
+
 		softAssert.assertEquals(cartBlock3.getTotal(), "34,50 €", TOTAL_ERROR);
 		softAssert.assertTrue(!cartBlock3.isElementPresent(
 				By.xpath("//*[@id='checkout-review-table']/tbody/tr[2]/td[2]/h3")), DELETE_PRODUCT_ERROR);

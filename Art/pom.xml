@@ -53,6 +53,7 @@
        							 <designerURL>https://www.shirtee.de/designer/?id=1140/</designerURL>
        							 <campaignURL1>https://www.shirtee.de/testautocampaign2</campaignURL1>
        							 <campaignURL2>https://www.shirtee.de/testautocampaign1</campaignURL2>
+       							 <shopURL>https://www.shirtee.de/store/storetestcreate</shopURL>
        							 <campaignURL3>https://www.shirtee.de/upright</campaignURL3>
        							 <dashboardURL>https://www.shirtee.de/dashboard/index/index/</dashboardURL>
        							 <dashboardNewShopURL>https://www.shirtee.de/customdashboard/shops/newshop/</dashboardNewShopURL>
@@ -89,7 +90,7 @@
        							 <campaignURL2>http://dev.shirtee.de/testautocampaign1</campaignURL2>
        							 <campaignURL3>http://dev.shirtee.de/test1705-2</campaignURL3>
        							 <ffadminURL>http://dev.shirtee.de/index.php/ffadmin</ffadminURL>
-       							 <shopURL>http://dev.shirtee.de/store/testfix</shopURL>
+       							 <shopURL>http://dev.shirtee.de/store/sampleshop</shopURL>
        							 <JoinerCmpURL1>http://dev.shirtee.de/share2</JoinerCmpURL1>
        							 <JoinerCmpURL2>http://dev.shirtee.de/join3</JoinerCmpURL2>
        							 <DBURL>jdbc:mysql://db.shirtee.de:33006/shirtee_dev</DBURL>
