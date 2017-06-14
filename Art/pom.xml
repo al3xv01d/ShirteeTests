@@ -56,6 +56,7 @@
        							 <shopURL>https://www.shirtee.de/store/storetestcreate</shopURL>
        							 <campaignURL3>https://www.shirtee.de/upright</campaignURL3>
        							 <dashboardURL>https://www.shirtee.de/dashboard/index/index/</dashboardURL>
+       							 <dashboardPromoUrl>https://www.shirtee.de/promotion/dashboard/index/</dashboardPromoUrl>
        							 <dashboardNewShopURL>https://www.shirtee.de/customdashboard/shops/newshop/</dashboardNewShopURL>
        							 <dashboardShopsURL>https://www.shirtee.de/customdashboard/shops/index/</dashboardShopsURL>
        				 			<checkoutURL>https://www.shirtee.de/checkout/onepage/</checkoutURL>
@@ -96,6 +97,7 @@
        							 <DBURL>jdbc:mysql://db.shirtee.de:33006/shirtee_dev</DBURL>
        							 <walletUrl>http://dev.shirtee.de/customdashboard/wallet/index/</walletUrl>
        							 <dashboardURL>http://dev.shirtee.de/dashboard/index/index/</dashboardURL>
+       							 <dashboardPromoUrl>http://dev.shirtee.de/promotion/dashboard/index/</dashboardPromoUrl>
 								 <dashboardShopsURL>http://dev.shirtee.de/customdashboard/shops/index/</dashboardShopsURL>
        							 <dashboardNewShopURL>http://dev.shirtee.de/customdashboard/shops/newshop/</dashboardNewShopURL>
        				 			<checkoutURL>http://dev.shirtee.de/checkout/onepage/</checkoutURL>

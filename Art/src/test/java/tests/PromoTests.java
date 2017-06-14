@@ -1,11 +1,15 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import Util.ReadDataFromFile;
 import base.FunctionalTest;
 import pageobjects.CheckoutPage;
 import pageobjects.CheckoutPageBlock3;
+import pageobjects.DashboardPromoPage;
+import pageobjects.MainPage;
 import pageobjects.ProductPage;
 
 public class PromoTests extends FunctionalTest{
@@ -27,15 +31,86 @@ public class PromoTests extends FunctionalTest{
 	
 	private static final String PROMO_VALUE_AFTER_INC_ERROR =
 			"Promo value after products inc is not as expected!";
-	
 	private static final String PROMO_VALUE_AFTER_DEC_ERROR =
 			"Promo value after products dec is not as expected!";
-	
 	private static final String TOTAL_VALUE_AFTER_INC_ERROR =
 			"Total value after products inc is not as expected!";
-	
 	private static final String TOTAL_VALUE_AFTER_DEC_ERROR =
 			"Total value after products dec is not as expected!";
+	
+	private static final String EMPTY_INPUT = "";
+	private static final String PROMO_CREATED_ERROR = "Promo is not supposed to be created!";
+	
+	@Test
+	public void createPromoTest(){
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
+		String eMail = data.getPropertie("eMail");
+		String userPassword = data.getPropertie("userPassword");
+		SoftAssert softAssert = new SoftAssert();
+		
+		MainPage mainPage = new MainPage(driver);
+		mainPage.performLogin(eMail, userPassword);
+		
+		driver.get(System.getProperty("dashboardPromoUrl"));
+		
+		DashboardPromoPage promoPage = new DashboardPromoPage(driver);
+		promoPage.inputCode("newcode2");
+		promoPage.inputDiscountAmount("5");
+		promoPage.addCode();
+		promoPage.waitForElement(promoPage.getDeleteCreatedPromoButton());
+		Assert.assertTrue(promoPage.getPromoTableRows().size() == 2);
+		softAssert.assertEquals(promoPage.getCreatedPromoCode().getText(), "newcode2");
+		softAssert.assertEquals(promoPage.getCreatedPromoDiscount().getText(), "5 €");
+		promoPage.deleteSecondPromo();
+		Assert.assertTrue(promoPage.getPromoTableRows().size() == 1);
+		softAssert.assertAll();
+	}
+	
+	@Test
+	public void noInputValidationTest()
+	{
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
+		String eMail = data.getPropertie("eMail");
+		String userPassword = data.getPropertie("userPassword");
+		SoftAssert softAssert = new SoftAssert();
+		
+		MainPage mainPage = new MainPage(driver);
+		mainPage.performLogin(eMail, userPassword);
+		
+		driver.get(System.getProperty("dashboardPromoUrl"));
+		
+		DashboardPromoPage promoPage = new DashboardPromoPage(driver);
+		promoPage.inputCode(EMPTY_INPUT);
+		promoPage.inputDiscountAmount(EMPTY_INPUT);
+		promoPage.addCode();
+		
+		softAssert.assertTrue(promoPage.getPromoCodeValidationMsg().isDisplayed());
+		softAssert.assertTrue(promoPage.getEmtyProfitMsg().isDisplayed());
+
+		softAssert.assertAll();
+	}
+	
+	@Test
+	public void sameCodeValidationTest(){
+		SoftAssert softAssert = new SoftAssert();
+		ReadDataFromFile data = new ReadDataFromFile("/home/dglazov/data.properties");
+		String eMail = data.getPropertie("eMail");
+		String userPassword = data.getPropertie("userPassword");
+		
+		MainPage mainPage = new MainPage(driver);
+		mainPage.performLogin(eMail, userPassword);
+		
+		driver.get(System.getProperty("dashboardPromoUrl"));
+		
+		DashboardPromoPage promoPage = new DashboardPromoPage(driver);
+		
+		promoPage.inputCode(PROMO_CODE);
+		promoPage.inputDiscountAmount("5");
+		promoPage.addCode();
+		softAssert.assertTrue(promoPage.getPromoErrorPopup().isDisplayed());
+		softAssert.assertTrue(promoPage.getPromoTableRows().size() == 1, PROMO_CREATED_ERROR);
+		softAssert.assertAll();
+	}
 	
 	@Test
 	public void promoURLTest()
