@@ -286,8 +286,7 @@ public class AffiliateTests extends FunctionalTest{
 		
 		//Sharer profits check
 		System.out.println(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()));
-		
-		//System.out.println(initialSharerSaldo.add(orderProfit));
+
 		softAssert.assertEquals(parseHelper.profitStringToBigDecimal(walletMainPage.getSaldo()),
 				initialSharerSaldo, SHARER_PROFIT_ERROR);
 		

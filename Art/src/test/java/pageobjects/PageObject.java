@@ -92,19 +92,6 @@ public class PageObject {
 	        return false; 
 	    }   // catch 
 	}   // isAlertPresent()
-	
-	
-	
-	public void waitForLoad(WebDriver driver) {
-		
-		ExpectedCondition<Boolean> pageLoadCondition = new
-		    ExpectedCondition<Boolean>() {
-		        public Boolean apply(WebDriver driver) {
-		            return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
-		        }
-		    };
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(pageLoadCondition);
-		}
+
 	
 }

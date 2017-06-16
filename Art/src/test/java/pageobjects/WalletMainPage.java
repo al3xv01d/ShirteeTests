@@ -10,7 +10,7 @@ public class WalletMainPage extends PageObject{
 	@FindBy(xpath = "//table[@class='new-account-table']/tbody/tr/td/span")
 	private WebElement saldo;
 	
-	@FindBy(partialLinkText="Debit")
+	@FindBy(partialLinkText="Lastschrift")
 	private WebElement debitPageLink;
 	
 	
