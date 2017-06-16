@@ -91,7 +91,7 @@ public class PageObject {
 	    { 
 	        return false; 
 	    }   // catch 
-	}   // isAlertPresent()
+	}   
 
 	
 }
